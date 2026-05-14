@@ -31,3 +31,11 @@ Thumbs.db
 # Temporales
 *.bak
 *.tmp
+
+# Datos locales
+gestor_tareas/Tareas_FECAM.csv
+gestor_tareas/tareas.txt
+gestor_tareas/gestor_tareas.txt
+gestor_tareas/ambitos.txt
+gestor_tareas/estados.txt
+gestor_tareas/tecnicos.txt
