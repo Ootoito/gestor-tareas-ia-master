@@ -1,0 +1,192 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.listado-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.acciones-superiores {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.toolbar {
+    background: #fff;
+    border: 1px solid #dbe4ee;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    margin-bottom: 18px;
+}
+
+.toolbar-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.toolbar-form input,
+.toolbar-form select {
+    height: 36px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.92rem;
+    background: #fff;
+}
+
+.toolbar-form .texto-busqueda {
+    min-width: 220px;
+}
+
+.bloque-impresion {
+    background: #fff;
+    border: 1px solid #dbe4ee;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.titulo-listado {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0 0 18px 0;
+    color: #0f172a;
+}
+
+.cabecera-impresion {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+}
+
+.filtros-aplicados {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+}
+
+.filtros-aplicados h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 6px 10px;
+    font-size: 0.95rem;
+}
+
+.filtro-label {
+    font-weight: 700;
+}
+
+.tarea {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: #fff;
+    page-break-inside: avoid;
+}
+
+.tarea-meta {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #e5e7eb;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.tarea-meta-item {
+    padding: 10px 12px;
+    border-right: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+}
+
+.tarea-meta-item:last-child {
+    border-right: none;
+}
+
+.tarea-label {
+    font-weight: 700;
+}
+
+.tarea-titulo,
+.tarea-descripcion {
+    padding: 12px;
+}
+
+.tarea-titulo {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tarea-titulo-contenido {
+    margin-top: 6px;
+}
+
+.tarea-descripcion-contenido {
+    margin-top: 6px;
+    white-space: pre-wrap;
+    line-height: 1.35;
+}
+
+.sin-tareas {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+}
+
+@media print {
+    .acciones-superiores,
+    .toolbar {
+        display: none;
+    }
+
+    body {
+        background: #fff;
+    }
+
+    .listado-wrap {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .bloque-impresion {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .titulo-listado {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    .cabecera-impresion,
+    .filtros-grid,
+    .tarea-meta-item,
+    .tarea-titulo,
+    .tarea-descripcion {
+        font-size: 11px;
+    }
+
+    .filtros-aplicados {
+        background: #fff;
+    }
+}

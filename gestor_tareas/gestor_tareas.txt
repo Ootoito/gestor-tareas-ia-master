@@ -1,0 +1,76 @@
+ El volumen de la unidad C no tiene etiqueta.
+ El n£mero de serie del volumen es: 683E-05E8
+
+ Directorio de C:\Python\gestortareas\gestor_tareas
+
+16/04/2026  20:26    <DIR>          .
+16/04/2026  20:25    <DIR>          ..
+16/04/2026  20:07                66 admin.py
+16/04/2026  20:07                37 ambitos.txt
+16/04/2026  20:07               162 apps.py
+16/04/2026  20:16           131.072 db.sqlite3
+16/04/2026  20:07                59 estados.txt
+16/04/2026  20:26                 0 gestor_tareas.txt
+16/04/2026  20:07             4.394 import_fecam.py
+16/04/2026  20:14               684 manage.py
+16/04/2026  20:07           237.490 migracion_gestor_tareas.sql
+16/04/2026  20:17    <DIR>          migrations
+16/04/2026  20:07                60 models.py
+16/04/2026  20:07    <DIR>          static
+16/04/2026  20:07             2.420 storage.py
+16/04/2026  20:07            74.501 tareas.txt
+16/04/2026  20:07            21.143 Tareas_FECAM.csv
+16/04/2026  20:07                38 tecnicos.txt
+16/04/2026  20:07    <DIR>          templates
+16/04/2026  20:07                63 tests.py
+16/04/2026  20:07             4.941 txt_a_sql_gestor_tareas.py
+16/04/2026  20:07             1.032 urls.py
+16/04/2026  20:07            44.271 views.py
+16/04/2026  20:07                 0 __init__.py
+              19 archivos        522.433 bytes
+
+ Directorio de C:\Python\gestortareas\gestor_tareas\migrations
+
+16/04/2026  20:17    <DIR>          .
+16/04/2026  20:26    <DIR>          ..
+16/04/2026  20:17                 0 __init__.py
+               1 archivos              0 bytes
+
+ Directorio de C:\Python\gestortareas\gestor_tareas\static
+
+16/04/2026  20:07    <DIR>          .
+16/04/2026  20:26    <DIR>          ..
+16/04/2026  20:07    <DIR>          gestortareas
+               0 archivos              0 bytes
+
+ Directorio de C:\Python\gestortareas\gestor_tareas\static\gestortareas
+
+16/04/2026  20:07    <DIR>          .
+16/04/2026  20:07    <DIR>          ..
+16/04/2026  20:07             3.345 listado_tareas.css
+16/04/2026  20:07             6.593 style.css
+16/04/2026  20:07             5.699 style_detalle_tareas.css
+16/04/2026  20:07            10.975 style_gestor_tareas.css
+               4 archivos         26.612 bytes
+
+ Directorio de C:\Python\gestortareas\gestor_tareas\templates
+
+16/04/2026  20:07    <DIR>          .
+16/04/2026  20:26    <DIR>          ..
+16/04/2026  20:07    <DIR>          gestortareas
+               0 archivos              0 bytes
+
+ Directorio de C:\Python\gestortareas\gestor_tareas\templates\gestortareas
+
+16/04/2026  20:07    <DIR>          .
+16/04/2026  20:07    <DIR>          ..
+16/04/2026  20:07             4.939 detalle_tarea.html
+16/04/2026  20:07            10.777 gestor_tareas.html
+16/04/2026  20:07             4.440 listado_tareas.html
+16/04/2026  20:07             1.230 login.html
+16/04/2026  20:07             3.189 nueva_tarea.html
+               5 archivos         24.575 bytes
+
+     Total de archivos en la lista:
+              29 archivos        573.620 bytes
+              17 dirs  77.143.207.936 bytes libres

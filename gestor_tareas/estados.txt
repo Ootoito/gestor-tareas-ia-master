@@ -1,0 +1,5 @@
+Completada
+Pendiente
+Pendiente de firma
+Programada
+Urgente

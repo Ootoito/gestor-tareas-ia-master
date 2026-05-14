@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de tarea</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_detalle_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
+</head>
+<body>
+<div class="detalle-wrap">
+    <div class="title">
+        <h1>Detalle de tarea</h1>
+    </div>
+
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+        <div class="toast
+            {% if 'success' in message.tags %}toast-success{% elif 'error' in message.tags %}toast-error{% elif 'warning' in message.tags %}toast-warning{% else %}toast-info{% endif %}">
+            <div class="toast-content">
+                <span class="toast-title">
+                    {% if 'success' in message.tags %}
+                        Correcto
+                    {% elif 'error' in message.tags %}
+                        Error
+                    {% elif 'warning' in message.tags %}
+                        Atención
+                    {% else %}
+                        Información
+                    {% endif %}
+                </span>
+                <div class="toast-message">{{ message }}</div>
+            </div>
+            <button type="button" class="toast-close" aria-label="Cerrar">✕</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <section class="panel">
+        <form method="post" class="js-submit-once">
+            {% csrf_token %}
+
+            <div class="detalle-grid-top">
+                <div class="field">
+                    <label>ID</label>
+                    <input type="text" value="{{ tarea.id }}" readonly>
+                </div>
+
+                <div class="field">
+                    <label>Fecha</label>
+                    <input type="text" name="fecha" value="{{ tarea.fecha }}">
+                </div>
+
+                <div class="field">
+                    <label>Estado</label>
+                    <select name="estado">
+                        {% for estado in estados %}
+                            <option value="{{ estado }}" {% if tarea.estado == estado %}selected{% endif %}>{{ estado }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Prioridad</label>
+                    <select name="prioridad">
+                        {% for p in prioridades %}
+                            <option value="{{ p }}" {% if tarea.prioridad == p %}selected{% endif %}>{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Ámbito</label>
+                    <select name="ambito">
+                        {% for ambito in ambitos %}
+                            <option value="{{ ambito }}" {% if tarea.ambito == ambito %}selected{% endif %}>{{ ambito }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Técnico</label>
+                    <select name="tecnico">
+                        {% for tecnico in tecnicos %}
+                            <option value="{{ tecnico }}" {% if tarea.tecnico == tecnico %}selected{% endif %}>{{ tecnico }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid detalle-grid-main">
+                <div class="field field-full">
+                    <label>Título</label>
+                    <input type="text" name="titulo" value="{{ tarea.titulo }}">
+                </div>
+
+                <div class="field field-full">
+                    <label>Descripción</label>
+                    <textarea name="descripcion" rows="12">{{ tarea.descripcion }}</textarea>
+                </div>
+
+                <div class="field field-fecha-objetivo">
+                    <label>Fecha objetivo</label>
+                    <input type="datetime-local" name="fecha_objetivo" value="{{ tarea.fecha_objetivo }}">
+                </div>
+
+                <div class="field field-full">
+                    <label>Alertas</label>
+                    <div class="alertas-box">
+                        {% for alerta in tipos_alerta %}
+                        <label class="check-alerta">
+                            <input type="checkbox"
+                                   name="tipos_alerta"
+                                   value="{{ alerta.id_tipo_alerta }}"
+                                   {% if alerta.id_tipo_alerta in alertas_activas %}checked{% endif %}>
+                            {{ alerta.nombre }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="detalle-botones">
+                <button type="submit" class="btn-primary" data-loading-text="Guardando...">
+                    Guardar cambios
+                </button>
+                <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+            </div>
+
+        </form>
+    </section>
+
+    <!-- SISTEMA DE NOTAS -->
+    <section class="panel notas-panel">
+        <h2>Notas</h2>
+
+        {% if notas %}
+            <div class="notas-lista">
+                {% for nota in notas %}
+                <div class="nota-item">
+                    <div class="nota-meta">
+                        <strong>#{{ forloop.counter }} → {{ nota.usuario }}</strong>
+                        <span>{{ nota.fecha }}</span>
+                    </div>
+                    <div class="nota-texto">
+                        {{ nota.texto|linebreaksbr }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="sin-notas">No hay notas todavía.</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'anadir_nota' tarea.id %}" class="js-submit-once">
+            {% csrf_token %}
+            <div class="field field-full">
+                <label>Nueva nota</label>
+                <textarea name="texto_nota" rows="4" placeholder="Escribe una nota..."></textarea>
+            </div>
+
+            <div class="detalle-botones">
+                <button type="submit" class="btn-primary" data-loading-text="Añadiendo...">
+                    Añadir nota
+                </button>
+                <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+            </div>
+        </form>
+    </section>
+
+</div>
+
+<!-- SCRIPT GLOBAL DE BLOQUEO -->
+<script src="{% static 'gestortareas/form_feedback.js' %}"></script>
+<script src="{% static 'gestortareas/toast_messages.js' %}"></script>
+</body>
+</html>

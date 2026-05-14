@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso | Gestor de tareas</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+</head>
+<body>
+<div class="wrap">
+    <div class="title">
+        <h1>Gestor de tareas</h1>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="msg {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="panel" style="max-width: 420px; margin: 40px auto;">
+        <h2>Acceso</h2>
+        <form method="post" class="form-grid" style="grid-template-columns: 1fr;">
+            {% csrf_token %}
+
+            <div class="field">
+                <label>Usuario</label>
+                <input type="text" name="usuario" required>
+            </div>
+
+            <div class="field">
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-primary">Entrar</button>
+            </div>
+        </form>
+    </section>
+</div>
+</body>
+</html>

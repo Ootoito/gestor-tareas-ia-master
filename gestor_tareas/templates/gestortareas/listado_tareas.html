@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de tareas</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/listado_tareas.css' %}">
+</head>
+<body>
+
+<div class="listado-wrap">
+
+    <div class="acciones-superiores">
+        <a href="javascript:window.print()" class="btn-primary">Imprimir</a>
+        <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+    </div>
+
+    <div class="toolbar">
+        <form method="get" class="toolbar-form">
+            <input type="text" name="fecha" placeholder="Fecha exacta" value="{{ filtros.fecha }}">
+
+            <select name="estado">
+                <option value="">Todos los estados</option>
+                {% for estado in estados %}
+                    <option value="{{ estado }}" {% if filtros.estado == estado %}selected{% endif %}>{{ estado }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="ambito">
+                <option value="">Todos los ámbitos</option>
+                {% for ambito in ambitos %}
+                    <option value="{{ ambito }}" {% if filtros.ambito == ambito %}selected{% endif %}>{{ ambito }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="tecnico">
+                <option value="">Todos los técnicos</option>
+                {% for tecnico in tecnicos %}
+                    <option value="{{ tecnico }}" {% if filtros.tecnico == tecnico %}selected{% endif %}>{{ tecnico }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="q" class="texto-busqueda" placeholder="Buscar texto..." value="{{ filtros.q }}">
+
+            <input type="hidden" name="ordenar" value="{{ ordenar }}">
+            <input type="hidden" name="dir" value="{{ direccion }}">
+
+            <button type="submit" class="btn-primary">Filtrar</button>
+            <a href="{% url 'listado_tareas' %}" class="btn-secondary">Limpiar</a>
+        </form>
+    </div>
+
+    <section class="bloque-impresion">
+        <h1 class="titulo-listado">LISTADO DE TAREAS</h1>
+
+        <div class="cabecera-impresion">
+            <div><strong>Fecha impresión:</strong> {{ fecha_impresion }}</div>
+            <div><strong>Total tareas:</strong> {{ total_tareas }}</div>
+        </div>
+
+        <div class="filtros-aplicados">
+            <h3>Filtros aplicados</h3>
+            <div class="filtros-grid">
+                <div class="filtro-label">Fecha:</div>
+                <div>{{ filtros.fecha|default:"Todas" }}</div>
+
+                <div class="filtro-label">Estado:</div>
+                <div>{{ filtros.estado|default:"Todos" }}</div>
+
+                <div class="filtro-label">Ámbito:</div>
+                <div>{{ filtros.ambito|default:"Todos" }}</div>
+
+                <div class="filtro-label">Técnico:</div>
+                <div>{{ filtros.tecnico|default:"Todos" }}</div>
+
+                <div class="filtro-label">Texto:</div>
+                <div>{{ filtros.q|default:"Sin búsqueda" }}</div>
+            </div>
+        </div>
+
+        {% for tarea in tareas %}
+        <article class="tarea">
+            <div class="tarea-meta">
+                <div class="tarea-meta-item"><span class="tarea-label">ID:</span> {{ tarea.id }}</div>
+                <div class="tarea-meta-item"><span class="tarea-label">Fecha:</span> {{ tarea.fecha }}</div>
+                <div class="tarea-meta-item"><span class="tarea-label">Estado:</span> {{ tarea.estado }}</div>
+                <div class="tarea-meta-item"><span class="tarea-label">Ámbito:</span> {{ tarea.ambito }}</div>
+                <div class="tarea-meta-item"><span class="tarea-label">Técnico:</span> {{ tarea.tecnico }}</div>
+            </div>
+
+            <div class="tarea-titulo">
+                <div class="tarea-label">TÍTULO:</div>
+                <div class="tarea-titulo-contenido">{{ tarea.titulo }}</div>
+            </div>
+
+            <div class="tarea-descripcion">
+                <div class="tarea-label">DESCRIPCIÓN:</div>
+                <div class="tarea-descripcion-contenido">{{ tarea.descripcion }}</div>
+            </div>
+        </article>
+        {% empty %}
+        <div class="sin-tareas">No hay tareas con esos filtros.</div>
+        {% endfor %}
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de tareas</title>
+
+    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <!-- TITULO -->
+    <div class="title">
+        <h1>Gestor de tareas Olympus</h1>
+    </div>
+
+    <!-- MENSAJES -->
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+            <div class="toast
+                {% if 'success' in message.tags %}toast-success{% elif 'error' in message.tags %}toast-error{% elif 'warning' in message.tags %}toast-warning{% else %}toast-info{% endif %}">
+                <div class="toast-content">
+                    <span class="toast-title">
+                        {% if 'success' in message.tags %}
+                            Correcto
+                        {% elif 'error' in message.tags %}
+                            Error
+                        {% elif 'warning' in message.tags %}
+                            Atención
+                        {% else %}
+                            Información
+                        {% endif %}
+                    </span>
+                    <div class="toast-message">{{ message }}</div>
+                </div>
+                <button type="button" class="toast-close" aria-label="Cerrar">✕</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- CONTADOR -->
+    <div class="summary-bar">
+
+        <div class="summary-card">
+            <span>Total</span>
+            <strong>{{ total_tareas }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Pendiente</span>
+            <strong>{{ total_pendientes }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Pendiente de firma</span>
+            <strong>{{ total_pendientes_firma }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Pendiente de devolución</span>
+            <strong>{{ total_pendientes_devolucion }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Programada</span>
+            <strong>{{ total_programadas }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Urgente</span>
+            <strong>{{ total_urgentes }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Completada</span>
+            <strong>{{ total_completadas }}</strong>
+        </div>
+
+    </div>
+
+    <!-- SELECTOR DE GRUPO EN USUARIO MULTIGRUPO -->
+    <form method="post" action="{% url 'cambiar_grupo' %}" class="selector-grupo-form js-submit-once">
+        {% csrf_token %}
+        <select name="grupo" class="selector-grupo-select">
+            {% for g in grupos_usuario %}
+                <option value="{{ g.id_grupo }}" {% if g.id_grupo == grupo_activo %}selected{% endif %}>
+                    {{ g.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+       <button type="submit" class="btn-secondary" data-loading-text="Cambiando...">Cambiar</button>
+    </form>
+
+    <!-- SISTEMA DE ALERTAS -->
+    {% if alertas_pendientes %}
+    <section class="panel alertas-panel">
+        <h2>Alertas</h2>
+
+        <div class="alertas-lista">
+            {% for alerta in alertas_pendientes %}
+            <div class="alerta-item alerta-normal">
+                <div class="alerta-linea">
+                    <span class="alerta-tipo">{{ alerta.tipo_alerta }}</span>
+                    <span class="alerta-titulo">{{ alerta.titulo }}</span>
+                    <span class="alerta-fecha">Objetivo: {{ alerta.fecha_objetivo }}</span>
+                </div>
+                <a href="{% url 'detalle_tarea' alerta.id_tarea %}" class="btn-alerta">
+                    Ir
+                </a>
+                <form method="post" action="{% url 'descartar_alerta' alerta.id_alerta %}" class="js-submit-once">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-alerta" data-loading-text="Descartando...">Descartar</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- FILTROS ARRIBA -->
+    <section class="panel filtros-top">
+
+        <form method="get" class="filters-compact">
+            <div class="filtro-estados-box">
+                <label class="filtro-estados-titulo">Ocultar estados (seleccionar el estado que se desea ocultar)</label>
+                <div class="filtro-estados-checks">
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Pendiente"
+                        {% if "Pendiente" in filtros.ocultar_estados %}checked{% endif %}>
+                        Pendiente
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Pendiente de devolución"
+                        {% if "Pendiente de devolución" in filtros.ocultar_estados %}checked{% endif %}>
+                        Pendiente de devolución
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Pendiente de firma"
+                        {% if "Pendiente de firma" in filtros.ocultar_estados %}checked{% endif %}>
+                        Pendiente de firma
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Programada"
+                        {% if "Programada" in filtros.ocultar_estados %}checked{% endif %}>
+                        Programada
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Urgente"
+                        {% if "Urgente" in filtros.ocultar_estados %}checked{% endif %}>
+                        Urgente
+                    </label>
+                    <label>
+                        <input type="checkbox" name="ocultar_estados" value="Completada"
+                        {% if "Completada" in filtros.ocultar_estados %}checked{% endif %}>
+                        Completada <span class="filtro-ayuda">(Pulsar "Filtrar" para establecer el filtro)</span>
+                    </label>
+                </div>
+            </div>
+            <p></p>
+
+            <select name="estado">
+                <option value="">Estado</option>
+                {% for estado in estados %}
+                <option value="{{ estado }}" {% if filtros.estado == estado %}selected{% endif %}>
+                    {{ estado }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select name="ambito">
+                <option value="">Ámbito</option>
+                {% for ambito in ambitos %}
+                <option value="{{ ambito }}" {% if filtros.ambito == ambito %}selected{% endif %}>
+                    {{ ambito }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select name="tecnico">
+                <option value="">Técnico</option>
+                {% for tecnico in tecnicos %}
+                <option value="{{ tecnico }}" {% if filtros.tecnico == tecnico %}selected{% endif %}>
+                    {{ tecnico }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="q" placeholder="Buscar..." value="{{ filtros.q }}">
+
+            <button type="submit" class="btn-primary">
+                Filtrar
+            </button>
+
+            <a href="{% url 'gestor_tareas_home' %}?clear=1" class="btn-secondary">
+                Limpiar
+            </a>
+
+            <a href="{% url 'listado_tareas' %}?estado={{ filtros.estado }}&ambito={{ filtros.ambito }}&tecnico={{ filtros.tecnico }}&q={{ filtros.q }}"
+               target="_blank"
+               class="btn-secondary">
+                Ver listado
+            </a>
+
+            <a href="{% url 'nueva_tarea' %}" class="btn-primary">
+                + Nueva tarea
+            </a>
+            <a href="{% url 'gestor_tareas_home' %}" class="btn-primary">
+                Recargar
+            </a>
+        </form>
+
+    </section>
+
+    <!-- LISTADO DE TAREAS -->
+    <section class="panel table-panel">
+
+        <h2>Listado de tareas</h2>
+
+        <div class="table-wrap">
+
+            <table class="task-table">
+
+                <thead>
+                    <tr>
+                        <th class="col-numero">Nº</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Ámbito</th>
+                        <th>Técnico</th>
+                        <th class="col-titulo">Título</th>
+                        <th class="col-acciones">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for tarea in tareas %}
+
+                    <tr>
+                        <td class="col-numero">{{ tarea.fecha|slice:"6:10" }}-{{ tarea.numero_tarea|stringformat:"03d" }}</td>
+                        <td>{{ tarea.fecha }}</td>
+                        <td>
+                            <span class="estado
+                                {% if tarea.estado == 'Pendiente' %}estado-pendiente{% endif %}
+                                {% if tarea.estado == 'Pendiente de firma' %}estado-pendiente-de-firma{% endif %}
+                                {% if tarea.estado == 'Pendiente de devolución' %}estado-pendiente-devolucion{% endif %}
+                                {% if tarea.estado == 'Programada' %}estado-programada{% endif %}
+                                {% if tarea.estado == 'Urgente' %}estado-urgente{% endif %}
+                                {% if tarea.estado == 'Completada' %}estado-completada{% endif %}
+                            ">
+                                {{ tarea.estado }}
+                            </span>
+                        </td>
+                        <td>{{ tarea.ambito }}</td>
+                        <td>{{ tarea.tecnico }}</td>
+                        <td class="col-titulo" title="{{ tarea.titulo }}">{{ tarea.titulo }}</td>
+                        <td class="col-acciones">
+                            <div class="acciones-tabla acciones-inline">
+                                <a href="{% url 'detalle_tarea' tarea.id %}"
+                                   class="btn-icono btn-editar"
+                                   title="Ver detalle / editar"
+                                   aria-label="Ver detalle / editar">
+                                    ✏️
+                                </a>
+
+                                <form method="post"
+                                    action="{% url 'eliminar_tarea' tarea.id %}"
+                                    class="js-submit-once js-confirm-delete"
+                                    onsubmit="return confirm('¿Eliminar esta tarea?');">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                        class="btn-icono btn-borrar"
+                                        title="Eliminar"
+                                        aria-label="Eliminar"
+                                        data-loading-text="...">
+                                        🗑️
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+                        <td colspan="7">
+                            No hay tareas registradas
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- CATEGORIZACIONES -->
+    <section class="panel">
+
+        <h2>Categorizaciones</h2>
+
+        <div class="catalog-block">
+
+            <h3>Ámbitos</h3>
+
+            <form method="post" action="{% url 'nuevo_ambito' %}" class="inline-form">
+                {% csrf_token %}
+                <input type="text" name="nuevo_ambito" placeholder="Nuevo ámbito">
+                <button type="submit" class="btn-primary">Añadir</button>
+            </form>
+
+            <ul class="tag-list">
+                {% for ambito in ambitos %}
+                <li>{{ ambito }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <div class="catalog-block">
+
+            <h3>Técnicos</h3>
+
+            <form method="post" action="{% url 'nuevo_tecnico' %}" class="inline-form">
+                {% csrf_token %}
+                <input type="text" name="nuevo_tecnico" placeholder="Nuevo técnico">
+                <button type="submit" class="btn-primary">Añadir</button>
+            </form>
+
+            <ul class="tag-list">
+                {% for tecnico in tecnicos %}
+                <li>{{ tecnico }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+    </section>
+
+</div>
+<script src="{% static 'gestortareas/form_feedback.js' %}"></script>
+<script src="{% static 'gestortareas/toast_messages.js' %}"></script>
+</body>
+</html>

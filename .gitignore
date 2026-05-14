@@ -1,0 +1,33 @@
+# Python
+pycache/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Entorno virtual
+.venv/
+venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+media/
+staticfiles/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Temporales
+*.bak
+*.tmp

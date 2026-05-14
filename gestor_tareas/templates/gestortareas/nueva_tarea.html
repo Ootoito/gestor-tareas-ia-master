@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva tarea</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_detalle_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
+</head>
+<body>
+<div class="detalle-wrap">
+    <div class="title">
+        <h1>Nueva tarea</h1>
+    </div>
+
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+        <div class="toast
+            {% if 'success' in message.tags %}toast-success{% elif 'error' in message.tags %}toast-error{% elif 'warning' in message.tags %}toast-warning{% else %}toast-info{% endif %}">
+            <div class="toast-content">
+                <span class="toast-title">
+                    {% if 'success' in message.tags %}
+                        Correcto
+                    {% elif 'error' in message.tags %}
+                        Error
+                    {% elif 'warning' in message.tags %}
+                        Atención
+                    {% else %}
+                        Información
+                    {% endif %}
+                </span>
+                <div class="toast-message">{{ message }}</div>
+            </div>
+            <button type="button" class="toast-close" aria-label="Cerrar">✕</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <section class="panel">
+        <form method="post" class="js-submit-once">
+            {% csrf_token %}
+
+            <div class="detalle-grid-top">
+                <div class="field">
+                    <label>Fecha</label>
+                    <input type="text" name="fecha" value="{{ hoy }}">
+                </div>
+
+                <div class="field">
+                    <label>Estado</label>
+                    <select name="estado">
+                        {% for estado in estados %}
+                            <option value="{{ estado }}" {% if estado == "Pendiente" %}selected{% endif %}>{{ estado }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Prioridad</label>
+                    <select name="prioridad">
+                        {% for p in prioridades %}
+                            <option value="{{ p }}" {% if p == "Normal" %}selected{% endif %}>{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Ámbito</label>
+                    <select name="ambito">
+                        {% for ambito in ambitos %}
+                            <option value="{{ ambito }}" {% if ambito == "Otros" %}selected{% endif %}>{{ ambito }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Técnico</label>
+                    <select name="tecnico">
+                        <option value="">---</option>
+                        {% for tecnico in tecnicos %}
+                            <option value="{{ tecnico }}">{{ tecnico }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="detalle-grid-main">
+                <div class="field field-full">
+                    <label>Título</label>
+                    <input type="text" name="titulo">
+                </div>
+
+                <div class="field field-full">
+                    <label>Descripción</label>
+                    <textarea name="descripcion" rows="12"></textarea>
+                </div>
+            </div>
+
+            <div class="detalle-botones">
+                <button type="submit" class="btn-primary" data-loading-text="Guardando...">
+                    Guardar tarea
+                </button>
+                <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script src="{% static 'gestortareas/form_feedback.js' %}"></script>
+</body>
+</html>
