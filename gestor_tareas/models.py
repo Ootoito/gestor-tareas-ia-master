@@ -8,8 +8,6 @@ class GrupoTrabajo(models.Model):
 
     class Meta:
         db_table = "gestor_tareas_tbgrupos"
-        verbose_name = "Grupo de trabajo"
-        verbose_name_plural = "Grupos de trabajo"
         ordering = ["nombre"]
 
     def __str__(self):
@@ -28,8 +26,6 @@ class UsuarioGestor(models.Model):
 
     class Meta:
         db_table = "gestor_tareas_tbusuarios"
-        verbose_name = "Usuario del gestor"
-        verbose_name_plural = "Usuarios del gestor"
         ordering = ["user__username"]
 
     def __str__(self):
@@ -51,15 +47,12 @@ class UsuarioGrupo(models.Model):
 
     class Meta:
         db_table = "gestor_tareas_tbusuarios_grupos"
-        verbose_name = "Relación usuario-grupo"
-        verbose_name_plural = "Relaciones usuario-grupo"
         unique_together = ("usuario", "grupo")
         ordering = ["grupo__nombre", "usuario__username"]
 
     def __str__(self):
         return f"{self.usuario.username} -> {self.grupo.nombre}"
-
-
+    
 class RolGestor(models.Model):
     nombre = models.CharField(max_length=50, unique=True)
     descripcion = models.CharField(max_length=200, blank=True, null=True)
@@ -67,8 +60,6 @@ class RolGestor(models.Model):
 
     class Meta:
         db_table = "gestor_tareas_tbroles"
-        verbose_name = "Rol del gestor"
-        verbose_name_plural = "Roles del gestor"
         ordering = ["nombre"]
 
     def __str__(self):
@@ -90,8 +81,6 @@ class UsuarioRolGestor(models.Model):
 
     class Meta:
         db_table = "gestor_tareas_tbusuarios_roles"
-        verbose_name = "Relación usuario-rol"
-        verbose_name_plural = "Relaciones usuario-rol"
         unique_together = ("usuario", "rol")
         ordering = ["usuario__username", "rol__nombre"]
 
