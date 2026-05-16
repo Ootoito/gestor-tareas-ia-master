@@ -729,70 +729,55 @@ def detalle_tarea(request, tarea_id):
             }
             return render(request, "gestortareas/detalle_tarea.html", context)
 
-        with connection.cursor() as cursor:
-            # Resolver id_estado
-            cursor.execute("""
-                SELECT id_estado
-                FROM gestor_tareas_tbestados
-                WHERE nombre = %s
-                LIMIT 1
-            """, [estado_nuevo])
-            row = cursor.fetchone()
-            id_estado_nuevo = row[0] if row else None
+        tarea_model = Tarea.objects.select_related(
+            "estado",
+            "ambito",
+            "tecnico",
+            "grupo",
+        ).get(
+            id=tarea_id,
+            grupo_id=acceso["id_grupo"],
+            activa=True,
+        )
 
-            # Resolver id_ambito
-            cursor.execute("""
-                SELECT id_ambito
-                FROM gestor_tareas_tbambitos
-                WHERE nombre = %s
-                LIMIT 1
-            """, [ambito_nuevo])
-            row = cursor.fetchone()
-            id_ambito_nuevo = row[0] if row else None
+        estado_obj = EstadoTarea.objects.filter(
+            nombre=estado_nuevo,
+            activo=True,
+        ).first()
 
-            # Resolver id_tecnico
-            id_tecnico_nuevo = None
-            if tecnico_nuevo:
-                cursor.execute("""
-                    SELECT id_tecnico
-                    FROM gestor_tareas_tbtecnicos
-                    WHERE nombre = %s
-                    LIMIT 1
-                """, [tecnico_nuevo])
-                row = cursor.fetchone()
-                id_tecnico_nuevo = row[0] if row else None
+        ambito_obj = AmbitoTarea.objects.filter(
+            nombre=ambito_nuevo,
+            activo=True,
+        ).first()
 
-            sql_update = """
-                UPDATE gestor_tareas_tbtareas
-                SET
-                    fecha = STR_TO_DATE(%s, '%%d/%%m/%%Y'),
-                    id_estado = %s,
-                    prioridad = %s,
-                    id_ambito = %s,
-                    id_tecnico = %s,
-                    titulo = %s,
-                    descripcion = %s,
-                    fecha_objetivo = CASE
-                        WHEN %s = '' THEN NULL
-                        ELSE STR_TO_DATE(%s, '%%Y-%%m-%%dT%%H:%%i')
-                    END
-                WHERE id = %s
-                  AND id_grupo = %s
-            """
+        tecnico_obj = None
+        if tecnico_nuevo:
+            tecnico_obj = Tecnico.objects.filter(
+                nombre=tecnico_nuevo,
+                activo=True,
+            ).first()
 
-            cursor.execute(sql_update, [
-                fecha_nueva,
-                id_estado_nuevo,
-                prioridad_nueva,
-                id_ambito_nuevo,
-                id_tecnico_nuevo,
-                titulo_nuevo,
-                descripcion_nueva,
+        tarea_model.fecha = datetime.strptime(
+            fecha_nueva,
+            "%d/%m/%Y"
+        ).date()
+
+        tarea_model.estado = estado_obj
+        tarea_model.prioridad = prioridad_nueva
+        tarea_model.ambito = ambito_obj
+        tarea_model.tecnico = tecnico_obj
+        tarea_model.titulo = titulo_nuevo
+        tarea_model.descripcion = descripcion_nueva
+
+        if fecha_objetivo_nueva:
+            tarea_model.fecha_objetivo = datetime.strptime(
                 fecha_objetivo_nueva,
-                fecha_objetivo_nueva,
-                tarea_id,
-                acceso["id_grupo"],
-            ])
+                "%Y-%m-%dT%H:%M"
+            )
+        else:
+            tarea_model.fecha_objetivo = None
+
+        tarea_model.save()
 
         guardar_alertas_tarea(tarea_id, fecha_objetivo_nueva, tipos_alerta_ids)
 
