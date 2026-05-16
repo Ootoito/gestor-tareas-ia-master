@@ -86,3 +86,76 @@ class UsuarioRolGestor(models.Model):
 
     def __str__(self):
         return f"{self.usuario.username} -> {self.rol.nombre}"
+    
+class EstadoTarea(models.Model):
+    nombre = models.CharField(max_length=100)
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.CASCADE,
+        related_name="estados",
+        null=True,
+        blank=True,
+    )
+    color_clase = models.CharField(max_length=50, default="azul")
+    orden = models.PositiveIntegerField(default=0)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbestados"
+        ordering = ["orden", "nombre"]
+        unique_together = ("nombre", "grupo")
+
+    def __str__(self):
+        return self.nombre
+
+
+class AmbitoTarea(models.Model):
+    nombre = models.CharField(max_length=100)
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.CASCADE,
+        related_name="ambitos",
+    )
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbambitos"
+        ordering = ["nombre"]
+        unique_together = ("nombre", "grupo")
+
+    def __str__(self):
+        return self.nombre
+
+
+class Tecnico(models.Model):
+    nombre = models.CharField(max_length=100, unique=True)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbtecnicos"
+        ordering = ["nombre"]
+
+    def __str__(self):
+        return self.nombre
+
+
+class TecnicoGrupo(models.Model):
+    tecnico = models.ForeignKey(
+        Tecnico,
+        on_delete=models.CASCADE,
+        related_name="grupos",
+    )
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.CASCADE,
+        related_name="tecnicos",
+    )
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbtecnicos_grupos"
+        ordering = ["grupo__nombre", "tecnico__nombre"]
+        unique_together = ("tecnico", "grupo")
+
+    def __str__(self):
+        return f"{self.tecnico.nombre} -> {self.grupo.nombre}"

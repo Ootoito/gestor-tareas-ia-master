@@ -5,6 +5,10 @@ from .models import (
     UsuarioGrupo,
     RolGestor,
     UsuarioRolGestor,
+    EstadoTarea,
+    AmbitoTarea,
+    Tecnico,
+    TecnicoGrupo,
 )
 
 
@@ -41,3 +45,31 @@ class UsuarioRolGestorAdmin(admin.ModelAdmin):
     list_display = ("id", "usuario", "rol", "activo")
     list_filter = ("activo", "rol")
     search_fields = ("usuario__username", "rol__nombre")
+
+@admin.register(EstadoTarea)
+class EstadoTareaAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre", "grupo", "color_clase", "orden", "activo")
+    list_filter = ("activo", "grupo")
+    search_fields = ("nombre", "grupo__nombre")
+    ordering = ("grupo", "orden", "nombre")
+
+
+@admin.register(AmbitoTarea)
+class AmbitoTareaAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre", "grupo", "activo")
+    list_filter = ("activo", "grupo")
+    search_fields = ("nombre", "grupo__nombre")
+
+
+@admin.register(Tecnico)
+class TecnicoAdmin(admin.ModelAdmin):
+    list_display = ("id", "nombre", "activo")
+    list_filter = ("activo",)
+    search_fields = ("nombre",)
+
+
+@admin.register(TecnicoGrupo)
+class TecnicoGrupoAdmin(admin.ModelAdmin):
+    list_display = ("id", "tecnico", "grupo", "activo")
+    list_filter = ("activo", "grupo")
+    search_fields = ("tecnico__nombre", "grupo__nombre")
