@@ -9,6 +9,7 @@ from .models import (
     AmbitoTarea,
     Tecnico,
     TecnicoGrupo,
+    Tarea,
 )
 
 
@@ -48,22 +49,23 @@ class UsuarioRolGestorAdmin(admin.ModelAdmin):
 
 @admin.register(EstadoTarea)
 class EstadoTareaAdmin(admin.ModelAdmin):
-    list_display = ("id", "nombre", "grupo", "color_clase", "orden", "activo")
-    list_filter = ("activo", "grupo")
-    search_fields = ("nombre", "grupo__nombre")
-    ordering = ("grupo", "orden", "nombre")
+    list_display = ("id_estado", "nombre", "orden", "activo")
+    list_filter = ("activo",)
+    search_fields = ("nombre",)
+    ordering = ("orden", "nombre")
 
 
 @admin.register(AmbitoTarea)
 class AmbitoTareaAdmin(admin.ModelAdmin):
-    list_display = ("id", "nombre", "grupo", "activo")
-    list_filter = ("activo", "grupo")
-    search_fields = ("nombre", "grupo__nombre")
+    list_display = ("id_ambito", "nombre", "activo")
+    list_filter = ("activo",)
+    search_fields = ("nombre",)
+    ordering = ("nombre",)
 
 
 @admin.register(Tecnico)
 class TecnicoAdmin(admin.ModelAdmin):
-    list_display = ("id", "nombre", "activo")
+    list_display = ("id_tecnico", "nombre", "activo")
     list_filter = ("activo",)
     search_fields = ("nombre",)
 
@@ -73,3 +75,34 @@ class TecnicoGrupoAdmin(admin.ModelAdmin):
     list_display = ("id", "tecnico", "grupo", "activo")
     list_filter = ("activo", "grupo")
     search_fields = ("tecnico__nombre", "grupo__nombre")
+
+@admin.register(Tarea)
+class TareaAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "numero_tarea",
+        "titulo",
+        "grupo",
+        "estado",
+        "prioridad",
+        "ambito",
+        "tecnico",
+        "fecha_creacion",
+        "fecha_objetivo",
+        "fecha_completada",
+        "activa",
+    )
+    list_filter = (
+        "grupo",
+        "estado",
+        "prioridad",
+        "ambito",
+        "tecnico",
+        "activa",
+    )
+    search_fields = (
+        "titulo",
+        "descripcion",
+        "usuario_creador",
+    )
+    ordering = ("-fecha_creacion", "-id")
