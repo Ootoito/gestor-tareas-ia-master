@@ -7,9 +7,14 @@ from django.db import connection
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from datetime import datetime, timedelta
-from .models import UsuarioGestor, UsuarioGrupo
+from .models import (
+    UsuarioGestor,
+    UsuarioGrupo,
+    Tarea,
+)
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+
 
 # =========================================================
 # Constantes
@@ -140,58 +145,46 @@ def registrar_auditoria(id_tarea, accion, campo=None, valor_anterior=None, valor
 # =========================================================
 
 def read_tasks(id_grupo=None):
-    tareas = []
 
-    sql = """
-        SELECT
-            t.id,
-            t.numero_tarea,
-            DATE_FORMAT(t.fecha, '%%d/%%m/%%Y') AS fecha,
-            e.nombre AS estado,
-            COALESCE(t.prioridad, 'Normal') AS prioridad,
-            a.nombre AS ambito,
-            te.nombre AS tecnico,
-            t.titulo,
-            t.descripcion,
-            CASE
-                WHEN t.fecha_objetivo IS NULL THEN ''
-                ELSE DATE_FORMAT(t.fecha_objetivo, '%%Y-%%m-%%dT%%H:%%i')
-            END AS fecha_objetivo
-        FROM gestor_tareas_tbtareas t
-        LEFT JOIN gestor_tareas_tbestados e
-            ON t.id_estado = e.id_estado
-        LEFT JOIN gestor_tareas_tbambitos a
-            ON t.id_ambito = a.id_ambito
-        LEFT JOIN gestor_tareas_tbtecnicos te
-            ON t.id_tecnico = te.id_tecnico
-        WHERE t.activa = 1
-    """
-
-    params = []
+    queryset = (
+        Tarea.objects
+        .select_related(
+            "estado",
+            "ambito",
+            "tecnico",
+            "grupo",
+        )
+        .filter(activa=True)
+        .order_by("-id")
+    )
 
     if id_grupo is not None:
-        sql += " AND t.id_grupo = %s"
-        params.append(id_grupo)
+        queryset = queryset.filter(grupo_id=id_grupo)
 
-    sql += " ORDER BY t.id DESC"
+    tareas = []
 
-    with connection.cursor() as cursor:
-        cursor.execute(sql, params)
-        rows = cursor.fetchall()
+    for t in queryset:
 
-    for r in rows:
+        fecha_formateada = ""
+        if t.fecha:
+            fecha_formateada = t.fecha.strftime("%d/%m/%Y")
+
+        fecha_objetivo = ""
+        if t.fecha_objetivo:
+            fecha_objetivo = t.fecha_objetivo.strftime("%Y-%m-%dT%H:%M")
+
         tareas.append({
-            "id": r[0],
-            "numero_tarea": r[1],
-            "fecha_creacion": r[2],
-            "fecha": r[2],
-            "estado": r[3] or "",
-            "prioridad": r[4] or "Normal",
-            "ambito": r[5] or "Otros",
-            "tecnico": r[6] or "",
-            "titulo": r[7] or "",
-            "descripcion": r[8] or "",
-            "fecha_objetivo": r[9] or "",
+            "id": t.id,
+            "numero_tarea": t.numero_tarea,
+            "fecha_creacion": fecha_formateada,
+            "fecha": fecha_formateada,
+            "estado": t.estado.nombre if t.estado else "",
+            "prioridad": t.prioridad or "Normal",
+            "ambito": t.ambito.nombre if t.ambito else "",
+            "tecnico": t.tecnico.nombre if t.tecnico else "",
+            "titulo": t.titulo or "",
+            "descripcion": t.descripcion or "",
+            "fecha_objetivo": fecha_objetivo,
         })
 
     return tareas

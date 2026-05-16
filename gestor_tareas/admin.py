@@ -10,6 +10,8 @@ from .models import (
     Tecnico,
     TecnicoGrupo,
     Tarea,
+    Tarea,
+    NotaTarea,
 )
 
 
@@ -87,10 +89,9 @@ class TareaAdmin(admin.ModelAdmin):
         "prioridad",
         "ambito",
         "tecnico",
+        "activa",
         "fecha_creacion",
         "fecha_objetivo",
-        "fecha_completada",
-        "activa",
     )
     list_filter = (
         "grupo",
@@ -104,5 +105,27 @@ class TareaAdmin(admin.ModelAdmin):
         "titulo",
         "descripcion",
         "usuario_creador",
+        "usuario_asignado",
     )
     ordering = ("-fecha_creacion", "-id")
+
+
+@admin.register(NotaTarea)
+class NotaTareaAdmin(admin.ModelAdmin):
+    list_display = (
+        "id_nota",
+        "tarea",
+        "usuario",
+        "fecha",
+        "activa",
+    )
+    list_filter = (
+        "activa",
+        "usuario",
+    )
+    search_fields = (
+        "texto",
+        "usuario",
+        "tarea__titulo",
+    )
+    ordering = ("-fecha",)

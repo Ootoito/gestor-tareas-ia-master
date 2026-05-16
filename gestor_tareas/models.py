@@ -158,75 +158,92 @@ class TecnicoGrupo(models.Model):
 
     def __str__(self):
         return f"{self.tecnico.nombre} -> {self.grupo.nombre}"
+
     
 class Tarea(models.Model):
-    PRIORIDAD_BAJA = "Baja"
-    PRIORIDAD_NORMAL = "Normal"
-    PRIORIDAD_ALTA = "Alta"
-    PRIORIDAD_URGENTE = "Urgente"
+    id = models.BigAutoField(primary_key=True)
 
-    PRIORIDADES = [
-        (PRIORIDAD_BAJA, "Baja"),
-        (PRIORIDAD_NORMAL, "Normal"),
-        (PRIORIDAD_ALTA, "Alta"),
-        (PRIORIDAD_URGENTE, "Urgente"),
-    ]
+    numero_tarea = models.IntegerField()
 
-    numero_tarea = models.PositiveIntegerField(default=0)
-
-    grupo = models.ForeignKey(
-        GrupoTrabajo,
-        on_delete=models.CASCADE,
-        related_name="tareas",
-    )
-
-    fecha = models.DateField(null=True, blank=True)
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_actualizacion = models.DateTimeField(auto_now=True)
-    fecha_objetivo = models.DateTimeField(null=True, blank=True)
-    fecha_completada = models.DateTimeField(null=True, blank=True)
+    fecha = models.DateField()
 
     estado = models.ForeignKey(
         EstadoTarea,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
+        on_delete=models.PROTECT,
+        db_column="id_estado",
         related_name="tareas",
     )
 
-    prioridad = models.CharField(
-        max_length=20,
-        choices=PRIORIDADES,
-        default=PRIORIDAD_NORMAL,
-    )
+    prioridad = models.CharField(max_length=20, default="Normal")
 
     ambito = models.ForeignKey(
         AmbitoTarea,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
+        db_column="id_ambito",
+        related_name="tareas",
         null=True,
         blank=True,
-        related_name="tareas",
     )
 
     tecnico = models.ForeignKey(
         Tecnico,
         on_delete=models.SET_NULL,
+        db_column="id_tecnico",
+        related_name="tareas",
         null=True,
         blank=True,
+    )
+
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.PROTECT,
+        db_column="id_grupo",
         related_name="tareas",
     )
 
-    titulo = models.CharField(max_length=200)
-    descripcion = models.TextField(blank=True, null=True)
+    titulo = models.CharField(max_length=300)
 
-    usuario_creador = models.CharField(max_length=150, blank=True, null=True)
+    descripcion = models.TextField(null=True, blank=True)
+
+    usuario_creador = models.CharField(max_length=100, null=True, blank=True)
+
+    usuario_asignado = models.CharField(max_length=100, null=True, blank=True)
 
     activa = models.BooleanField(default=True)
+
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    fecha_objetivo = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = "gestor_tareas_tbtareas"
         ordering = ["-fecha_creacion", "-id"]
-        unique_together = ("grupo", "numero_tarea")
 
     def __str__(self):
         return f"{self.numero_tarea} - {self.titulo}"
+
+
+class NotaTarea(models.Model):
+    id_nota = models.BigAutoField(primary_key=True)
+
+    tarea = models.ForeignKey(
+        Tarea,
+        on_delete=models.CASCADE,
+        db_column="id_tarea",
+        related_name="notas",
+    )
+
+    fecha = models.DateTimeField(auto_now_add=True)
+
+    usuario = models.CharField(max_length=100, null=True, blank=True)
+
+    texto = models.TextField()
+
+    activa = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbnotas"
+        ordering = ["-fecha"]
+
+    def __str__(self):
+        return f"Nota {self.id_nota} - Tarea {self.tarea_id}"
