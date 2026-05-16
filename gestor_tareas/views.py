@@ -11,6 +11,10 @@ from .models import (
     UsuarioGestor,
     UsuarioGrupo,
     Tarea,
+    EstadoTarea,
+    AmbitoTarea,
+    Tecnico,
+    GrupoTrabajo,
 )
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -191,100 +195,57 @@ def read_tasks(id_grupo=None):
 
 
 def insertar_tarea(fecha, estado, prioridad, ambito, tecnico, titulo, descripcion, id_grupo, usuario_creador):
-    with connection.cursor() as cursor:
-        # 1. Calcular el siguiente numero_tarea para el grupo y año
-        sql_numero = """
-            SELECT COALESCE(MAX(numero_tarea), 0) + 1
-            FROM gestor_tareas_tbtareas
-            WHERE id_grupo = %s
-              AND YEAR(fecha) = YEAR(STR_TO_DATE(%s, '%%d/%%m/%%Y'))
-        """
-        cursor.execute(sql_numero, [id_grupo, fecha])
-        row = cursor.fetchone()
-        numero_tarea = row[0] if row and row[0] is not None else 1
+    fecha_obj = datetime.strptime(fecha, "%d/%m/%Y").date()
 
-        # 2. Resolver id_estado
-        cursor.execute("""
-            SELECT id_estado
-            FROM gestor_tareas_tbestados
-            WHERE nombre = %s
-            LIMIT 1
-        """, [estado])
-        row = cursor.fetchone()
-        id_estado = row[0] if row else None
+    grupo = GrupoTrabajo.objects.get(id=id_grupo)
 
-        # 3. Resolver id_ambito
-        cursor.execute("""
-            SELECT id_ambito
-            FROM gestor_tareas_tbambitos
-            WHERE nombre = %s
-            LIMIT 1
-        """, [ambito])
-        row = cursor.fetchone()
-        id_ambito = row[0] if row else None
+    estado_obj = EstadoTarea.objects.filter(
+        nombre=estado,
+        activo=True,
+    ).first()
 
-        # 4. Resolver id_tecnico
-        id_tecnico = None
-        if tecnico:
-            cursor.execute("""
-                SELECT id_tecnico
-                FROM gestor_tareas_tbtecnicos
-                WHERE nombre = %s
-                LIMIT 1
-            """, [tecnico])
-            row = cursor.fetchone()
-            id_tecnico = row[0] if row else None
+    ambito_obj = AmbitoTarea.objects.filter(
+        nombre=ambito,
+        activo=True,
+    ).first()
 
-        # 5. Insertar
-        sql_insert = """
-            INSERT INTO gestor_tareas_tbtareas
-            (
-                numero_tarea,
-                fecha,
-                id_estado,
-                prioridad,
-                id_ambito,
-                id_tecnico,
-                id_grupo,
-                titulo,
-                descripcion,
-                usuario_creador,
-                activa
-            )
-            VALUES
-            (
-                %s,
-                STR_TO_DATE(%s, '%%d/%%m/%%Y'),
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                1
-            )
-        """
+    tecnico_obj = None
+    if tecnico:
+        tecnico_obj = Tecnico.objects.filter(
+            nombre=tecnico,
+            activo=True,
+        ).first()
 
-        cursor.execute(sql_insert, [
-            numero_tarea,
-            fecha,
-            id_estado,
-            prioridad,
-            id_ambito,
-            id_tecnico,
-            id_grupo,
-            titulo,
-            descripcion,
-            usuario_creador,
-        ])
+    ultimo_numero = (
+        Tarea.objects
+        .filter(
+            grupo=grupo,
+            fecha__year=fecha_obj.year,
+        )
+        .order_by("-numero_tarea")
+        .values_list("numero_tarea", flat=True)
+        .first()
+    )
 
-        id_tarea = cursor.lastrowid
+    numero_tarea = (ultimo_numero or 0) + 1
+
+    tarea = Tarea.objects.create(
+        numero_tarea=numero_tarea,
+        fecha=fecha_obj,
+        estado=estado_obj,
+        prioridad=prioridad or "Normal",
+        ambito=ambito_obj,
+        tecnico=tecnico_obj,
+        grupo=grupo,
+        titulo=titulo,
+        descripcion=descripcion,
+        usuario_creador=usuario_creador,
+        activa=True,
+    )
 
     return {
-        "id": id_tarea,
-        "numero_tarea": numero_tarea,
+        "id": tarea.id,
+        "numero_tarea": tarea.numero_tarea,
     }
 
 # =========================================================
