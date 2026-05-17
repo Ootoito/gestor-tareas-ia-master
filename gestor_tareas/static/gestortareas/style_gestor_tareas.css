@@ -458,3 +458,64 @@ input:focus, select:focus, textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+
+.acciones-modulos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    width: 100%;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid #dbe7f5;
+}
+
+.modulo-nueva {
+    background: linear-gradient(135deg, #dbeafe, #ffffff);
+}
+
+.modulo-recargar {
+    background: linear-gradient(135deg, #dcfce7, #ffffff);
+}
+
+.modulo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 145px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #dbe7f5;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    transition: all 0.18s ease;
+}
+
+.modulo-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.14);
+}
+
+.modulo-dashboard {
+    background: linear-gradient(135deg, #e0f2fe, #ffffff);
+}
+
+.modulo-productividad {
+    background: linear-gradient(135deg, #dcfce7, #ffffff);
+}
+
+.modulo-mensajes {
+    background: linear-gradient(135deg, #fef9c3, #ffffff);
+}
+
+.modulo-perfil {
+    background: linear-gradient(135deg, #ede9fe, #ffffff);
+}
+
+.modulo-admin {
+    background: linear-gradient(135deg, #fee2e2, #ffffff);
+}
