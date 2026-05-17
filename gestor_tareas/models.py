@@ -247,3 +247,50 @@ class NotaTarea(models.Model):
 
     def __str__(self):
         return f"Nota {self.id_nota} - Tarea {self.tarea_id}"
+    
+class Subtarea(models.Model):
+
+    id_subtarea = models.BigAutoField(primary_key=True)
+
+    tarea = models.ForeignKey(
+        Tarea,
+        on_delete=models.CASCADE,
+        related_name="subtareas",
+        db_column="id_tarea",
+    )
+
+    texto = models.CharField(max_length=500)
+
+    completada = models.BooleanField(default=False)
+
+    creada_por_ia = models.BooleanField(default=True)
+
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbsubtareas"
+        ordering = ["completada", "id_subtarea"]
+
+    def __str__(self):
+        return self.texto
+    
+class PerfilUsuario(models.Model):
+    usuario = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="perfil_taskpilot",
+    )
+
+    nombre_visible = models.CharField(max_length=150, blank=True, null=True)
+    puesto = models.CharField(max_length=150, blank=True, null=True)
+    departamento = models.CharField(max_length=150, blank=True, null=True)
+    telefono = models.CharField(max_length=50, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    foto_url = models.CharField(max_length=500, blank=True, null=True)
+    descripcion = models.TextField(blank=True, null=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbperfiles_usuario"
+
+    def __str__(self):
+        return self.nombre_visible or self.usuario.username

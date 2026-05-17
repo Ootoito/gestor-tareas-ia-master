@@ -141,36 +141,57 @@
 
             <td>
 
-                <form method="post" style="display:inline;">
-                    {% csrf_token %}
+    <form method="post" style="display:inline;">
+        {% csrf_token %}
 
-                    <input type="hidden"
-                           name="accion"
-                           value="toggle_admin">
+        <input type="hidden"
+               name="accion"
+               value="toggle_admin">
 
-                    <input type="hidden"
-                           name="id_usuario"
-                           value="{{ perfil.id }}">
+        <input type="hidden"
+               name="id_usuario"
+               value="{{ perfil.id }}">
 
-                    {% if perfil.es_admin_gestor %}
+        {% if perfil.es_admin_gestor %}
+            <button type="submit"
+                    class="btn-secondary">
+                Quitar admin
+            </button>
+        {% else %}
+            <button type="submit"
+                    class="btn-primary">
+                Hacer admin
+            </button>
+        {% endif %}
 
-                        <button type="submit"
-                                class="btn-secondary">
-                            Quitar admin
-                        </button>
+    </form>
 
-                    {% else %}
+    <form method="post" style="display:inline;">
+        {% csrf_token %}
 
-                        <button type="submit"
-                                class="btn-primary">
-                            Hacer admin
-                        </button>
+        <input type="hidden"
+               name="accion"
+               value="toggle_usuario">
 
-                    {% endif %}
+        <input type="hidden"
+               name="id_usuario"
+               value="{{ perfil.id }}">
 
-                </form>
+        {% if perfil.activo %}
+            <button type="submit"
+                    class="btn-secondary">
+                Desactivar
+            </button>
+        {% else %}
+            <button type="submit"
+                    class="btn-primary">
+                Activar
+            </button>
+        {% endif %}
 
-            </td>
+    </form>
+
+</td>
 
         </tr>
 

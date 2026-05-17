@@ -733,3 +733,38 @@ input:focus, select:focus, textarea:focus {
     margin-top: 10px;
     color: #64748b;
 }
+
+.ia-checklist {
+    color: #047857;
+    background: linear-gradient(135deg, #dcfce7, #ffffff);
+}
+
+.preview-avatar-perfil{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #dbeafe;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    display: block;
+    margin: 0 auto 18px;
+}
+
+.perfil-foto-placeholder{
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    font-size: 4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.perfil-preview{
+    text-align: center;
+}

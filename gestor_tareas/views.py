@@ -20,7 +20,9 @@ from .models import (
     AmbitoTarea,
     Tecnico,
     GrupoTrabajo,
-    UsuarioRolGestor    
+    UsuarioRolGestor,
+    Subtarea,
+    PerfilUsuario,
 )
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -33,7 +35,8 @@ from .services.ia import (
     generar_subtareas_ia,
     analizar_prioridad_ia,
 )
-
+from pathlib import Path
+from django.conf import settings
 
 
 # =========================================================
@@ -887,12 +890,67 @@ def detalle_tarea(request, tarea_id):
 
     if request.GET.get("generar_subtareas_ia") == "1":
         subtareas_ia = generar_subtareas_ia(tarea_model)
+    
+    if request.GET.get("crear_checklist_ia") == "1":
 
+        texto_ia = generar_subtareas_ia(tarea_model)
+
+        lineas = texto_ia.splitlines()
+
+        creadas = 0
+
+        for linea in lineas:
+
+            linea = linea.strip()
+
+            if not linea:
+                continue
+
+            if linea[0].isdigit():
+                partes = linea.split(".", 1)
+
+            if len(partes) > 1:
+                linea = partes[1].strip()
+
+            if len(linea) < 3:
+                continue
+
+            existe = Subtarea.objects.filter(
+                tarea=tarea_model,
+                texto=linea,
+            ).exists()
+
+            if not existe:
+
+                Subtarea.objects.create(
+                    tarea=tarea_model,
+                    texto=linea,
+                    completada=False,
+                    creada_por_ia=True,
+                )
+
+                creadas += 1
+
+        messages.success(
+            request,
+            f"Checklist IA generado ({creadas} subtareas)."
+        )
+
+        return redirect("detalle_tarea", tarea_id=tarea_id)
+    
     prioridad_ia = None
 
     if request.GET.get("analizar_prioridad_ia") == "1":
         prioridad_ia = analizar_prioridad_ia(tarea_model)
 
+    subtareas = (
+        Subtarea.objects
+            .filter(tarea_id=tarea_id)
+            .order_by("completada", "id_subtarea")
+    )
+    print("DEBUG SUBTAREAS:", [
+        (s.pk, s.id_subtarea, s.texto) for s in subtareas
+    ])
     context = {
         "tarea": tarea,
         "estados": read_estados(),
@@ -904,6 +962,7 @@ def detalle_tarea(request, tarea_id):
         "notas": read_notas_tarea(tarea_id),
         "subtareas_ia": subtareas_ia,
         "prioridad_ia": prioridad_ia,
+        "subtareas": subtareas,
     }
 
     return render(request, "gestortareas/detalle_tarea.html", context)
@@ -1435,6 +1494,27 @@ def admin_gestor(request):
             except UsuarioGestor.DoesNotExist:
                 messages.error(request, "Usuario no encontrado.")
 
+        elif accion == "toggle_usuario":
+
+            id_usuario = request.POST.get("id_usuario")
+
+            try:
+                perfil = UsuarioGestor.objects.get(id=id_usuario)
+
+                perfil.activo = not perfil.activo
+                perfil.save()
+
+                perfil.user.is_active = perfil.activo
+                perfil.user.save()
+
+                if perfil.activo:
+                    messages.success(request, f"{perfil.user.username} ha sido activado.")
+                else:
+                    messages.success(request, f"{perfil.user.username} ha sido desactivado.")
+
+            except UsuarioGestor.DoesNotExist:
+                messages.error(request, "Usuario no encontrado.")
+
         return redirect("admin_gestor")
 
     grupos = GrupoTrabajo.objects.all().order_by("nombre")
@@ -1458,3 +1538,99 @@ def admin_gestor(request):
     }
 
     return render(request, "gestortareas/admin_gestor.html", context)
+
+@login_required
+@require_POST
+def toggle_subtarea(request, id_subtarea):
+    acceso = validar_acceso_gestor(request)
+    if not acceso:
+        messages.error(request, "No tienes permiso para acceder al Gestor de tareas.")
+        return redirect("login_gestor_tareas")
+
+    subtarea = get_object_or_404(
+        Subtarea.objects.select_related("tarea"),
+        id_subtarea=id_subtarea,
+        tarea__grupo_id=acceso["id_grupo"],
+    )
+
+    subtarea.completada = not subtarea.completada
+    subtarea.save()
+
+    return redirect("detalle_tarea", tarea_id=subtarea.tarea_id)
+
+@login_required
+@require_POST
+def eliminar_subtarea(request, id_subtarea):
+    acceso = validar_acceso_gestor(request)
+    if not acceso:
+        messages.error(request, "No tienes permiso para acceder al Gestor de tareas.")
+        return redirect("login_gestor_tareas")
+
+    subtarea = get_object_or_404(
+        Subtarea.objects.select_related("tarea"),
+        id_subtarea=id_subtarea,
+        tarea__grupo_id=acceso["id_grupo"],
+    )
+
+    tarea_id = subtarea.tarea_id
+    subtarea.delete()
+
+    messages.success(request, "Subtarea eliminada.")
+    return redirect("detalle_tarea", tarea_id=tarea_id)
+
+@login_required
+def mi_perfil(request):
+    acceso = validar_acceso_gestor(request)
+    if not acceso:
+        messages.error(request, "No tienes permiso o grupo asignado para Gestor de tareas.")
+        return redirect("login_gestor_tareas")
+
+    perfil, _ = PerfilUsuario.objects.get_or_create(
+        usuario=request.user,
+        defaults={
+            "nombre_visible": acceso["alias"],
+            "email": request.user.email,
+        }
+    )
+
+    if request.method == "POST":
+        perfil.nombre_visible = request.POST.get("nombre_visible", "").strip()
+        perfil.puesto = request.POST.get("puesto", "").strip()
+        perfil.departamento = request.POST.get("departamento", "").strip()
+        perfil.telefono = request.POST.get("telefono", "").strip()
+        perfil.email = request.POST.get("email", "").strip()
+        perfil.foto_url = request.POST.get("foto_url", "").strip()
+        perfil.descripcion = request.POST.get("descripcion", "").strip()
+
+        foto = request.FILES.get("foto")
+
+        if foto:
+            extension = Path(foto.name).suffix.lower()
+
+            if extension not in [".jpg", ".jpeg", ".png", ".webp"]:
+                messages.error(request, "Formato de imagen no válido. Usa JPG, PNG o WEBP.")
+                return redirect("mi_perfil")
+
+            carpeta_perfiles = settings.MEDIA_ROOT / "perfiles"
+            carpeta_perfiles.mkdir(parents=True, exist_ok=True)
+
+            nombre_fichero = f"perfil_{request.user.id}{extension}"
+            ruta_fichero = carpeta_perfiles / nombre_fichero
+
+            with open(ruta_fichero, "wb+") as destino:
+                for chunk in foto.chunks():
+                    destino.write(chunk)
+
+            perfil.foto_url = f"{settings.MEDIA_URL}perfiles/{nombre_fichero}"
+
+            perfil.save()
+
+            messages.success(request, "Perfil actualizado correctamente.")
+            return redirect("mi_perfil")
+
+    context = {
+        "perfil": perfil,
+        "grupo_activo_nombre": acceso["grupo"],
+    }
+
+    return render(request, "gestortareas/mi_perfil.html", context)

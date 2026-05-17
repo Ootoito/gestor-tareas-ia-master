@@ -148,6 +148,11 @@
            title="Analiza la tarea y recomienda la prioridad más adecuada.">
             🎯 Prioridad IA
         </a>
+        <a href="{% url 'detalle_tarea' tarea.id %}?crear_checklist_ia=1"
+            class="ia-action-btn ia-checklist"
+            title="Convierte las subtareas sugeridas por IA en un checklist real.">
+            ✅ Crear checklist IA
+        </a>
 
     </div>
 
@@ -172,6 +177,72 @@
             </div>
         {% endif %}
     </div>
+
+</section>
+<!-- SISTEMA DE CHECKLIST DE SUBTAREAS AÑADIDOS POR LA IA-->
+<section class="panel">
+
+    <h2>📋 Checklist de subtareas</h2>
+
+    {% if subtareas %}
+
+        <div class="subtareas-lista">
+
+            {% for subtarea in subtareas %}
+
+            <div class="subtarea-row">
+
+                <form method="post"
+                      action="{% url 'toggle_subtarea' subtarea.pk %}"
+                      class="subtarea-form">
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="subtarea-item {% if subtarea.completada %}subtarea-completada{% endif %}">
+
+                        <span class="subtarea-check">
+                            {% if subtarea.completada %}
+                                ✅
+                            {% else %}
+                                ⬜
+                            {% endif %}
+                        </span>
+
+                        <span class="subtarea-texto">
+                            {{ subtarea.texto }}
+                        </span>
+
+                    </button>
+
+                </form>
+
+                <form method="post"
+                      action="{% url 'eliminar_subtarea' subtarea.pk %}"
+                      class="subtarea-delete-form"
+                      onsubmit="return confirm('¿Eliminar esta subtarea sugerida?');">
+                    {% csrf_token %}
+
+                    <button type="submit"
+                            class="subtarea-delete-btn"
+                            title="Eliminar subtarea">
+                        🗑️
+                    </button>
+
+                </form>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="ia-card">
+            No hay subtareas todavía.
+        </div>
+
+    {% endif %}
 
 </section>
     <!-- SISTEMA DE NOTAS -->

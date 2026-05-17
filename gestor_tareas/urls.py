@@ -17,4 +17,7 @@ urlpatterns = [
     path("anadir-nota/<int:tarea_id>/", views.anadir_nota, name="anadir_nota"),
     path("dashboard/", views.dashboard_gestor, name="dashboard_gestor"),
     path("admin-gestor/", views.admin_gestor, name="admin_gestor"),
+    path("subtarea/<int:id_subtarea>/toggle/", views.toggle_subtarea, name="toggle_subtarea"),
+    path("subtarea/<int:id_subtarea>/eliminar/", views.eliminar_subtarea, name="eliminar_subtarea"),
+    path("mi-perfil/", views.mi_perfil, name="mi_perfil"),
 ]
