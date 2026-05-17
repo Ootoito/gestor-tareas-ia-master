@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración - TaskPilot AI</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
+</head>
+<body>
+
+<div class="wrap">
+
+    <div class="title">
+        <h1>Administración del gestor</h1>
+        <p>Gestión de grupos, usuarios y asignaciones</p>
+    </div>
+
+    {% if messages %}
+    <div class="toast-container">
+        {% for message in messages %}
+            <div class="toast
+                {% if 'success' in message.tags %}toast-success{% elif 'error' in message.tags %}toast-error{% else %}toast-info{% endif %}">
+                <div class="toast-content">
+                    <span class="toast-title">{{ message.tags|title }}</span>
+                    <div class="toast-message">{{ message }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <section class="panel">
+        <h2>Crear grupo</h2>
+
+        <form method="post" class="inline-form">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="crear_grupo">
+
+            <input type="text" name="nombre_grupo" placeholder="Nombre del grupo">
+
+            <button type="submit" class="btn-primary">
+                Crear grupo
+            </button>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Crear/asignar usuario</h2>
+
+        <form method="post" class="form-grid">
+            {% csrf_token %}
+            <input type="hidden" name="accion" value="crear_usuario">
+
+            <div class="field">
+                <label>Usuario</label>
+                <input type="text" name="username" placeholder="usuario">
+            </div>
+
+            <div class="field">
+                <label>Alias visible</label>
+                <input type="text" name="alias" placeholder="Nombre mostrado">
+            </div>
+
+            <div class="field">
+                <label>Contraseña inicial</label>
+                <input type="password" name="password" placeholder="Solo para usuarios nuevos">
+            </div>
+
+            <div class="field">
+                <label>Grupo</label>
+                <select name="id_grupo">
+                    <option value="">Selecciona grupo</option>
+                    {% for grupo in grupos %}
+                        <option value="{{ grupo.id }}">{{ grupo.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field field-full">
+                <button type="submit" class="btn-primary">
+                    Guardar usuario
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Grupos existentes</h2>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Grupo</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grupo in grupos %}
+                <tr>
+                    <td>{{ grupo.id }}</td>
+                    <td>{{ grupo.nombre }}</td>
+                    <td>{{ grupo.activo|yesno:"Sí,No" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No hay grupos.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="panel">
+        <h2>Usuarios del gestor</h2>
+
+        <table class="task-table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Alias</th>
+            <th>Activo</th>
+            <th>Admin gestor</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for perfil in usuarios_gestor %}
+        <tr>
+
+            <td>{{ perfil.user.username }}</td>
+
+            <td>{{ perfil.alias }}</td>
+
+            <td>{{ perfil.activo|yesno:"Sí,No" }}</td>
+
+            <td>{{ perfil.es_admin_gestor|yesno:"Sí,No" }}</td>
+
+            <td>
+
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+
+                    <input type="hidden"
+                           name="accion"
+                           value="toggle_admin">
+
+                    <input type="hidden"
+                           name="id_usuario"
+                           value="{{ perfil.id }}">
+
+                    {% if perfil.es_admin_gestor %}
+
+                        <button type="submit"
+                                class="btn-secondary">
+                            Quitar admin
+                        </button>
+
+                    {% else %}
+
+                        <button type="submit"
+                                class="btn-primary">
+                            Hacer admin
+                        </button>
+
+                    {% endif %}
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="5">
+                No hay usuarios.
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+</table>
+    </section>
+
+    <section class="panel">
+        <h2>Asignaciones usuario-grupo</h2>
+
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Grupo</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rel in relaciones %}
+                <tr>
+                    <td>{{ rel.usuario.username }}</td>
+                    <td>{{ rel.grupo.nombre }}</td>
+                    <td>{{ rel.activo|yesno:"Sí,No" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No hay asignaciones.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    <section class="panel">
+        <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">
+            Volver al gestor
+        </a>
+    </section>
+
+</div>
+
+<script src="{% static 'gestortareas/toast_messages.js' %}"></script>
+</body>
+</html>

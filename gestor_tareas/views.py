@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 
 from httpx import request
 from .models import (
+    TecnicoGrupo,
     UsuarioGestor,
     UsuarioGrupo,
     Tarea,
@@ -19,11 +20,14 @@ from .models import (
     AmbitoTarea,
     Tecnico,
     GrupoTrabajo,
+    UsuarioRolGestor    
 )
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.db.models import Count
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.db import transaction
 from .services.ia import (
     generar_resumen_ia_gestor,
     generar_subtareas_ia,
@@ -75,7 +79,21 @@ def login_gestor_tareas(request):
 
     return render(request, "gestortareas/login.html")
 
+# =========================================================
+# HELPERS / Servicios IA
+# =========================================================
+def usuario_es_admin_gestor(user):
+    if not user.is_authenticated:
+        return False
 
+    if user.is_superuser:
+        return True
+
+    return UsuarioGestor.objects.filter(
+        user=user,
+        activo=True,
+        es_admin_gestor=True,
+    ).exists()
 # =========================================================
 # Catálogos desde BD
 # =========================================================
@@ -1322,3 +1340,121 @@ def generar_analisis_inteligente_grupo(queryset):
             )
 
     return mensajes
+
+@login_required
+def admin_gestor(request):
+    if not usuario_es_admin_gestor(request.user):
+        messages.error(request, "No tienes permisos de administración del gestor.")
+        return redirect("gestor_tareas_home")
+
+    if request.method == "POST":
+        accion = request.POST.get("accion", "").strip()
+
+        if accion == "crear_grupo":
+            nombre = request.POST.get("nombre_grupo", "").strip()
+
+            if not nombre:
+                messages.error(request, "Debes indicar el nombre del grupo.")
+            else:
+                GrupoTrabajo.objects.get_or_create(
+                    nombre=nombre,
+                    defaults={"activo": True},
+                )
+                messages.success(request, "Grupo creado correctamente.")
+
+        elif accion == "crear_usuario":
+            username = request.POST.get("username", "").strip()
+            alias = request.POST.get("alias", "").strip()
+            password = request.POST.get("password", "").strip()
+            id_grupo = request.POST.get("id_grupo", "").strip()
+
+            if not username:
+                messages.error(request, "Debes indicar el usuario.")
+            elif not id_grupo:
+                messages.error(request, "Debes seleccionar un grupo.")
+            else:
+                with transaction.atomic():
+                    user, creado = User.objects.get_or_create(
+                        username=username,
+                        defaults={"is_active": True},
+                    )
+
+                    if creado and password:
+                        user.set_password(password)
+                        user.save()
+
+                    UsuarioGestor.objects.update_or_create(
+                        user=user,
+                        defaults={
+                            "alias": alias or username,
+                            "activo": True,
+                        },
+                    )
+
+                    grupo = GrupoTrabajo.objects.get(id=id_grupo)
+
+                    UsuarioGrupo.objects.update_or_create(
+                        usuario=user,
+                        grupo=grupo,
+                        defaults={"activo": True},
+                    )
+                    tecnico, _ = Tecnico.objects.update_or_create(
+                        nombre=alias or username,
+                        defaults={"activo": True},
+                    )
+
+                    TecnicoGrupo.objects.update_or_create(
+                        tecnico=tecnico,
+                        grupo=grupo,
+                        defaults={"activo": True},
+                    )
+
+                messages.success(request, "Usuario creado/asignado correctamente.")
+
+        elif accion == "toggle_admin":
+
+            id_usuario = request.POST.get("id_usuario")
+
+            try:
+                perfil = UsuarioGestor.objects.get(id=id_usuario)
+
+                perfil.es_admin_gestor = not perfil.es_admin_gestor
+                perfil.save()
+
+                if perfil.es_admin_gestor:
+                    messages.success(
+                        request,
+                        f"{perfil.user.username} ahora es administrador."
+                    )
+                else:
+                    messages.success(
+                        request,
+                        f"{perfil.user.username} ya no es administrador."
+                    )
+
+            except UsuarioGestor.DoesNotExist:
+                messages.error(request, "Usuario no encontrado.")
+
+        return redirect("admin_gestor")
+
+    grupos = GrupoTrabajo.objects.all().order_by("nombre")
+    usuarios_gestor = (
+        UsuarioGestor.objects
+        .select_related("user")
+        .all()
+        .order_by("user__username")
+    )
+    relaciones = (
+        UsuarioGrupo.objects
+        .select_related("usuario", "grupo")
+        .all()
+        .order_by("grupo__nombre", "usuario__username")
+    )
+
+    context = {
+        "grupos": grupos,
+        "usuarios_gestor": usuarios_gestor,
+        "relaciones": relaciones,
+    }
+
+    return render(request, "gestortareas/admin_gestor.html", context)
