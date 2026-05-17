@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Gestor de tareas</title>
+    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <div class="title">
+        <h1>Dashboard</h1>
+        <p>Grupo activo: <strong>{{ grupo_activo_nombre }}</strong></p>
+    </div>
+
+    <section class="panel">
+        <div class="summary-bar">
+            <div class="summary-card">
+                <span>Total tareas</span>
+                <strong>{{ total_tareas }}</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Pendientes</span>
+                <strong>{{ total_pendientes }}</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Completadas</span>
+                <strong>{{ total_completadas }}</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Urgentes</span>
+                <strong>{{ total_urgentes }}</strong>
+            </div>
+        </div>
+    </section>
+    
+    <section class="panel">
+    <h2>Productividad por técnico</h2>
+
+    <table class="task-table">
+        <thead>
+            <tr>
+                <th>Técnico</th>
+                <th>Total tareas</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in tareas_por_tecnico %}
+            <tr>
+                <td>{{ item.tecnico__nombre|default:"Sin asignar" }}</td>
+                <td>{{ item.total }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No hay datos</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+<section class="panel">
+    <h2>Estado global de tareas</h2>
+
+    <div style="max-width: 700px; margin: auto;">
+        <canvas id="graficoEstadosChart"
+            data-pendientes="{{ total_pendientes|default:0 }}"
+            data-pendientes-firma="{{ total_pendientes_firma|default:0 }}"
+            data-pendientes-devolucion="{{ total_pendientes_devolucion|default:0 }}"
+            data-programadas="{{ total_programadas|default:0 }}"
+            data-urgentes="{{ total_urgentes|default:0 }}"
+            data-completadas="{{ total_completadas|default:0 }}">
+        </canvas>
+    </div>
+</section>
+<section class="panel">
+    <h2>Tareas por técnico</h2>
+
+    <div style="max-width: 700px; margin: auto;">
+        <canvas id="graficoTecnicosChart"
+                data-tecnicos='[
+                    {% for item in tareas_por_tecnico %}
+                        "{{ item.tecnico__nombre|default:"Sin asignar" }}"{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]'
+                data-totales='[
+                    {% for item in tareas_por_tecnico %}
+                        {{ item.total }}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]'>
+        </canvas>
+    </div>
+</section>
+    <section class="panel">
+        <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+    </section>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'gestortareas/dashboard_gestor.js' %}"></script>
+</body>
+</html>
