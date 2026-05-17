@@ -15,4 +15,5 @@ urlpatterns = [
     path("cambiar-grupo/", views.cambiar_grupo, name="cambiar_grupo"),
     path("nueva/", views.nueva_tarea, name="nueva_tarea"),
     path("anadir-nota/<int:tarea_id>/", views.anadir_nota, name="anadir_nota"),
+    path("dashboard/", views.dashboard_gestor, name="dashboard_gestor"),
 ]

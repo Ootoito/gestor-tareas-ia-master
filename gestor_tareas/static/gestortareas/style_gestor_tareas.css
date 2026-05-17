@@ -519,3 +519,17 @@ input:focus, select:focus, textarea:focus {
 .modulo-admin {
     background: linear-gradient(135deg, #fee2e2, #ffffff);
 }
+
+.ia-panel {
+    display: grid;
+    gap: 12px;
+}
+
+.ia-card {
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f8fafc, #eef6ff);
+    border: 1px solid #dbe7f5;
+    font-weight: 600;
+    color: #1e293b;
+}

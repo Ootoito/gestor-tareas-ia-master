@@ -65,6 +65,40 @@
         </tbody>
     </table>
 </section>
+<!-- Análisis inteligente -->
+<section class="panel">
+    <h2>🤖 Análisis inteligente del grupo</h2>
+
+    <div class="ia-panel">
+        {% for mensaje in analisis_ia %}
+            <div class="ia-card">
+                {{ mensaje }}
+            </div>
+        {% empty %}
+            <div class="ia-card">
+                No hay datos suficientes para generar análisis.
+            </div>
+        {% endfor %}
+    </div>
+</section>
+<section class="panel">
+    <h2>🤖 Resumen IA del grupo</h2>
+
+    <a href="{% url 'dashboard_gestor' %}?generar_ia=1" class="btn-primary">
+        Generar resumen IA
+    </a>
+
+    {% if resumen_ia %}
+        <div class="ia-card" style="margin-top: 16px; white-space: pre-line;">
+            {{ resumen_ia }}
+        </div>
+    {% else %}
+        <div class="ia-card" style="margin-top: 16px;">
+            Pulsa el botón para generar un análisis inteligente con IA.
+        </div>
+    {% endif %}
+</section>
+<!-- GRAFICA ESTADO GLOBLA DE TAREAS -->
 <section class="panel">
     <h2>Estado global de tareas</h2>
 
@@ -79,6 +113,7 @@
         </canvas>
     </div>
 </section>
+<!-- GRAFICA TECNICOS   -->
 <section class="panel">
     <h2>Tareas por técnico</h2>
 
