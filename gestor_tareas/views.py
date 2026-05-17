@@ -24,7 +24,8 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.db.models import Count
 from django.utils import timezone
-from .services.ia import generar_resumen_ia_gestor
+from .services.ia import generar_resumen_ia_gestor, generar_subtareas_ia
+
 
 
 # =========================================================
@@ -844,6 +845,26 @@ def detalle_tarea(request, tarea_id):
 
         messages.success(request, "Tarea actualizada correctamente.")
         return redirect("detalle_tarea", tarea_id=tarea_id)
+    
+    if not tarea:
+        messages.error(request, "Tarea no encontrada.")
+        return redirect("gestor_tareas_home")
+
+    tarea_model = Tarea.objects.select_related(
+        "estado",
+        "ambito",
+        "tecnico",
+        "grupo",
+    ).get(
+        id=tarea_id,
+        grupo_id=acceso["id_grupo"],
+        activa=True,
+    )
+
+    subtareas_ia = None
+
+    if request.GET.get("generar_subtareas_ia") == "1":
+        subtareas_ia = generar_subtareas_ia(tarea_model)
 
     context = {
         "tarea": tarea,
@@ -854,6 +875,7 @@ def detalle_tarea(request, tarea_id):
         "tipos_alerta": read_tipos_alerta(),
         "alertas_activas": read_alertas_tarea(tarea_id),
         "notas": read_notas_tarea(tarea_id),
+        "subtareas_ia": subtareas_ia,
     }
 
     return render(request, "gestortareas/detalle_tarea.html", context)
@@ -1184,7 +1206,7 @@ def read_grupos_usuario(usuario):
 @login_required
 def dashboard_gestor(request):
     acceso = validar_acceso_gestor(request)
-    
+
     import os
     print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY"))
 

@@ -130,7 +130,24 @@
 
         </form>
     </section>
+    <section class="panel">
+    <h2>🤖 Subtareas sugeridas por IA</h2>
 
+    <a href="{% url 'detalle_tarea' tarea.id %}?generar_subtareas_ia=1"
+       class="btn-primary">
+        Generar subtareas IA
+    </a>
+
+    {% if subtareas_ia %}
+        <div class="ia-card" style="margin-top: 16px; white-space: pre-line;">
+            {{ subtareas_ia }}
+        </div>
+    {% else %}
+        <div class="ia-card" style="margin-top: 16px;">
+            Pulsa el botón para generar subtareas sugeridas automáticamente.
+        </div>
+    {% endif %}
+</section>
     <!-- SISTEMA DE NOTAS -->
     <section class="panel notas-panel">
         <h2>Notas</h2>
