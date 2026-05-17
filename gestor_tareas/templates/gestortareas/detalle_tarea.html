@@ -130,23 +130,49 @@
 
         </form>
     </section>
-    <section class="panel">
-    <h2>🤖 Subtareas sugeridas por IA</h2>
+    <!-- SISTEMA DE SUGERENCIAS IA -->
+<section class="panel ia-asistente-panel">
 
-    <a href="{% url 'detalle_tarea' tarea.id %}?generar_subtareas_ia=1"
-       class="btn-primary">
-        Generar subtareas IA
-    </a>
+    <h2>🤖 Asistencia IA</h2>
 
-    {% if subtareas_ia %}
-        <div class="ia-card" style="margin-top: 16px; white-space: pre-line;">
-            {{ subtareas_ia }}
-        </div>
-    {% else %}
-        <div class="ia-card" style="margin-top: 16px;">
-            Pulsa el botón para generar subtareas sugeridas automáticamente.
-        </div>
-    {% endif %}
+    <div class="ia-actions">
+
+        <a href="{% url 'detalle_tarea' tarea.id %}?generar_subtareas_ia=1"
+           class="ia-action-btn ia-subtareas"
+           title="Genera automáticamente una lista de subtareas accionables.">
+            🧩 Subtareas IA
+        </a>
+
+        <a href="{% url 'detalle_tarea' tarea.id %}?analizar_prioridad_ia=1"
+           class="ia-action-btn ia-prioridad"
+           title="Analiza la tarea y recomienda la prioridad más adecuada.">
+            🎯 Prioridad IA
+        </a>
+
+    </div>
+
+    <div class="ia-resultados">
+        {% if subtareas_ia %}
+            <div class="ia-card ia-resultado">
+                <h3>Subtareas sugeridas</h3>
+                <div>{{ subtareas_ia }}</div>
+            </div>
+        {% endif %}
+
+        {% if prioridad_ia %}
+            <div class="ia-card ia-resultado">
+                <h3>Prioridad recomendada</h3>
+                <div>{{ prioridad_ia }}</div>
+            </div>
+        {% endif %}
+
+        {% if not subtareas_ia and not prioridad_ia %}
+            <div class="ia-card ia-ayuda">
+                Selecciona una acción de IA para analizar esta tarea.
+            </div>
+        {% endif %}
+    </div>
+
 </section>
     <!-- SISTEMA DE NOTAS -->
     <section class="panel notas-panel">

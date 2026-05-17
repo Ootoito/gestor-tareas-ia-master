@@ -24,7 +24,11 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 from django.db.models import Count
 from django.utils import timezone
-from .services.ia import generar_resumen_ia_gestor, generar_subtareas_ia
+from .services.ia import (
+    generar_resumen_ia_gestor,
+    generar_subtareas_ia,
+    analizar_prioridad_ia,
+)
 
 
 
@@ -866,6 +870,11 @@ def detalle_tarea(request, tarea_id):
     if request.GET.get("generar_subtareas_ia") == "1":
         subtareas_ia = generar_subtareas_ia(tarea_model)
 
+    prioridad_ia = None
+
+    if request.GET.get("analizar_prioridad_ia") == "1":
+        prioridad_ia = analizar_prioridad_ia(tarea_model)
+
     context = {
         "tarea": tarea,
         "estados": read_estados(),
@@ -876,6 +885,7 @@ def detalle_tarea(request, tarea_id):
         "alertas_activas": read_alertas_tarea(tarea_id),
         "notas": read_notas_tarea(tarea_id),
         "subtareas_ia": subtareas_ia,
+        "prioridad_ia": prioridad_ia,
     }
 
     return render(request, "gestortareas/detalle_tarea.html", context)

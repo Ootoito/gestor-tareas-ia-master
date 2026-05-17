@@ -88,3 +88,54 @@ No añadas introducción ni conclusión.
             return "La IA está integrada, pero la cuenta API no tiene saldo disponible."
 
         return f"Error IA: {e}"
+    
+def analizar_prioridad_ia(tarea):
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    modelo = os.environ.get("OPENAI_MODEL", "gpt-5.2")
+
+    if not api_key:
+        return "No hay clave OPENAI_API_KEY configurada."
+
+    client = OpenAI(api_key=api_key)
+
+    prompt = f"""
+Analiza esta tarea y recomienda una prioridad.
+
+Título:
+{tarea.titulo}
+
+Descripción:
+{tarea.descripcion or ""}
+
+Fecha objetivo:
+{tarea.fecha_objetivo}
+
+Estado:
+{tarea.estado.nombre if tarea.estado else ""}
+
+Devuelve EXACTAMENTE:
+
+PRIORIDAD: <Baja|Normal|Alta|Urgente>
+
+MOTIVO:
+<explicación breve>
+"""
+
+    try:
+
+        response = client.responses.create(
+            model=modelo,
+            input=prompt,
+        )
+
+        return response.output_text
+
+    except Exception as e:
+
+        texto_error = str(e)
+
+        if "insufficient_quota" in texto_error:
+            return "La IA está integrada, pero la cuenta API no tiene saldo."
+
+        return f"Error IA: {e}"
