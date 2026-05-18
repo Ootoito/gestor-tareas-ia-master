@@ -209,7 +209,119 @@
     </tbody>
 </table>
     </section>
+<!-- ESTADOS -->
+<section class="panel">
 
+    <h2>Estados del gestor</h2>
+
+    <form method="post" class="inline-form">
+        {% csrf_token %}
+
+        <input type="hidden" name="accion" value="crear_estado">
+
+        <input type="text"
+               name="nombre_estado"
+               placeholder="Nombre del estado">
+
+        <input type="number"
+               name="orden_estado"
+               placeholder="Orden"
+               value="0"
+               style="width:100px;">
+
+        <input type="color"
+               name="color_estado"
+               value="#6c757d"
+               title="Color del estado">
+
+        <button type="submit" class="btn-primary">
+            Añadir estado
+        </button>
+    </form>
+
+    <table class="task-table">
+
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Color</th>
+                <th>Orden</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for estado in estados_gestor %}
+
+            <tr>
+
+                <td>{{ estado.nombre }}</td>
+
+                <td>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        
+                        <span style="
+                            display:inline-block;
+                            width:24px;
+                            height:24px;
+                            border-radius:50%;
+                            border:1px solid #ccc;
+                            background-color: {{ estado.color }};
+                        "></span>
+
+                        <span>{{ estado.color }}</span>
+
+                    </div>
+                </td>
+
+                <td>{{ estado.orden }}</td>
+
+                <td>
+                    {% if estado.activo %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+
+                <td>
+
+                    <form method="post" class="inline-form">
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="accion"
+                               value="toggle_estado">
+
+                        <input type="hidden"
+                               name="id_estado"
+                               value="{{ estado.id_estado }}">
+
+                        <button type="submit" class="btn-secondary">
+
+                            {% if estado.activo %}
+                                Desactivar
+                            {% else %}
+                                Activar
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
     <section class="panel">
         <h2>Asignaciones usuario-grupo</h2>
 

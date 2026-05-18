@@ -46,44 +46,23 @@
     {% endif %}
 
     <!-- CONTADOR -->
-    <div class="summary-bar">
+<div class="summary-bar">
 
-        <div class="summary-card">
-            <span>Total</span>
-            <strong>{{ total_tareas }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Pendiente</span>
-            <strong>{{ total_pendientes }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Pendiente de firma</span>
-            <strong>{{ total_pendientes_firma }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Pendiente de devolución</span>
-            <strong>{{ total_pendientes_devolucion }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Programada</span>
-            <strong>{{ total_programadas }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Urgente</span>
-            <strong>{{ total_urgentes }}</strong>
-        </div>
-
-        <div class="summary-card">
-            <span>Completada</span>
-            <strong>{{ total_completadas }}</strong>
-        </div>
-
+    <div class="summary-card">
+        <span>Total</span>
+        <strong>{{ total_tareas }}</strong>
     </div>
+
+    {% for contador in contadores_estados %}
+
+        <div class="summary-card">
+            <span>{{ contador.nombre }}</span>
+            <strong>{{ contador.total }}</strong>
+        </div>
+
+    {% endfor %}
+
+</div>
 
     <!-- SELECTOR DE GRUPO EN USUARIO MULTIGRUPO -->
     <form method="post" action="{% url 'cambiar_grupo' %}" class="selector-grupo-form js-submit-once">

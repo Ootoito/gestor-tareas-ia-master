@@ -93,7 +93,7 @@ class EstadoTarea(models.Model):
     nombre = models.CharField(max_length=100, unique=True)
 
     orden = models.PositiveIntegerField(default=0)
-
+    color = models.CharField(max_length=20, default="#6c757d")
     activo = models.BooleanField(default=True)
 
     class Meta:

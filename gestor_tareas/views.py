@@ -384,36 +384,29 @@ def gestor_tareas_home(request):
 
     total_tareas = queryset_dashboard.count()
 
-    total_pendientes = queryset_dashboard.filter(
-        estado__nombre="Pendiente"
-    ).count()
+    contadores_estados = []
 
-    total_pendientes_firma = queryset_dashboard.filter(
-        estado__nombre="Pte. de firma"
-    ).count()
+    estados_grupo = EstadoTarea.objects.filter(
+        activo=True
+    ).order_by("orden", "nombre")
 
-    total_programadas = queryset_dashboard.filter(
-        estado__nombre="Programada"
-    ).count()
+    for estado in estados_grupo:
 
-    total_urgentes = queryset_dashboard.filter(
-        estado__nombre="Urgente"
-    ).count()
+        total_estado = queryset_dashboard.filter(
+            estado=estado
+        ).count()
 
-    total_completadas = queryset_dashboard.filter(
-        estado__nombre="Completada"
-    ).count()
+        contadores_estados.append({
+            "nombre": estado.nombre,
+            "total": total_estado,
+        })
 
-    total_pendientes_devolucion = queryset_dashboard.filter(
-        estado__nombre="Pte. devolución"
-    ).count()
-
-    tareas_por_tecnico = (
-        queryset_dashboard
-        .values("tecnico__nombre")
-        .annotate(total=Count("id"))
-        .order_by("-total")
-    )
+        tareas_por_tecnico = (
+            queryset_dashboard
+            .values("tecnico__nombre")
+            .annotate(total=Count("id"))
+            .order_by("-total")
+        )
 
     alertas_pendientes = read_alertas_pendientes_para_grupo(id_grupo)
 
@@ -429,12 +422,7 @@ def gestor_tareas_home(request):
         "filtros": filtros,
         "usuario_alias": acceso["alias"],
         "total_tareas": total_tareas,
-        "total_pendientes": total_pendientes,
-        "total_pendientes_firma": total_pendientes_firma,
-        "total_programadas": total_programadas,
-        "total_urgentes": total_urgentes,
-        "total_completadas": total_completadas,
-        "total_pendientes_devolucion": total_pendientes_devolucion,
+        "contadores_estados": contadores_estados,
         "alertas_pendientes": alertas_pendientes,
         "grupos_usuario": grupos_usuario,
         "grupo_activo": acceso["id_grupo"],
@@ -1514,6 +1502,51 @@ def admin_gestor(request):
 
             except UsuarioGestor.DoesNotExist:
                 messages.error(request, "Usuario no encontrado.")
+        
+        elif accion == "crear_estado":
+
+            nombre_estado = request.POST.get("nombre_estado", "").strip()
+            orden_estado = request.POST.get("orden_estado", "0").strip()
+            color_estado = request.POST.get("color_estado", "#6c757d").strip() or "#6c757d"
+
+            if not nombre_estado:
+                messages.error(request, "Debes indicar el nombre del estado.")
+            else:
+
+                try:
+                    orden_estado = int(orden_estado)
+                except:
+                    orden_estado = 0
+
+                EstadoTarea.objects.get_or_create(
+                    nombre=nombre_estado,
+                    defaults={
+                        "orden": orden_estado,
+                        "activo": True,
+                        "color": color_estado,
+                    }
+                )
+
+                messages.success(request, "Estado creado correctamente.")
+
+        elif accion == "toggle_estado":
+
+            id_estado = request.POST.get("id_estado")
+
+            try:
+
+                estado = EstadoTarea.objects.get(id_estado=id_estado)
+
+                estado.activo = not estado.activo
+                estado.save()
+
+                if estado.activo:
+                    messages.success(request, f"Estado '{estado.nombre}' activado.")
+                else:
+                    messages.success(request, f"Estado '{estado.nombre}' desactivado.")
+
+            except EstadoTarea.DoesNotExist:
+                messages.error(request, "Estado no encontrado.")
 
         return redirect("admin_gestor")
 
@@ -1531,10 +1564,13 @@ def admin_gestor(request):
         .order_by("grupo__nombre", "usuario__username")
     )
 
+    estados_gestor = EstadoTarea.objects.all().order_by("orden", "nombre")
+
     context = {
         "grupos": grupos,
         "usuarios_gestor": usuarios_gestor,
         "relaciones": relaciones,
+        "estados_gestor": estados_gestor,
     }
 
     return render(request, "gestortareas/admin_gestor.html", context)
