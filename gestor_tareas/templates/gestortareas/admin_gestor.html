@@ -257,63 +257,71 @@
 
             <tr>
 
-                <td>{{ estado.nombre }}</td>
+    <td>
+        <span class="estado-preview"
+              style="background-color: {{ estado.color }}20; color: {{ estado.color }};">
+            {{ estado.nombre }}
+        </span>
+    </td>
 
-                <td>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                        
-                        <span style="
-                            display:inline-block;
-                            width:24px;
-                            height:24px;
-                            border-radius:50%;
-                            border:1px solid #ccc;
-                            background-color: {{ estado.color }};
-                        "></span>
+    <td>
+        <form method="post"
+              class="inline-form"
+              style="display:flex;align-items:center;gap:10px;">
 
-                        <span>{{ estado.color }}</span>
+            {% csrf_token %}
 
-                    </div>
-                </td>
+            <input type="hidden"
+                   name="accion"
+                   value="cambiar_color_estado">
 
-                <td>{{ estado.orden }}</td>
+            <input type="hidden"
+                   name="id_estado"
+                   value="{{ estado.id_estado }}">
 
-                <td>
-                    {% if estado.activo %}
-                        ✅
-                    {% else %}
-                        ❌
-                    {% endif %}
-                </td>
+            <input type="color"
+                   name="nuevo_color"
+                   value="{{ estado.color }}"
+                   onchange="this.form.submit()">
 
-                <td>
+            <span>{{ estado.color }}</span>
 
-                    <form method="post" class="inline-form">
-                        {% csrf_token %}
+        </form>
+    </td>
 
-                        <input type="hidden"
-                               name="accion"
-                               value="toggle_estado">
+    <td>{{ estado.orden }}</td>
 
-                        <input type="hidden"
-                               name="id_estado"
-                               value="{{ estado.id_estado }}">
+    <td>
+        {% if estado.activo %}
+            ✅
+        {% else %}
+            ❌
+        {% endif %}
+    </td>
 
-                        <button type="submit" class="btn-secondary">
+    <td>
+        <form method="post" class="inline-form">
+            {% csrf_token %}
 
-                            {% if estado.activo %}
-                                Desactivar
-                            {% else %}
-                                Activar
-                            {% endif %}
+            <input type="hidden"
+                   name="accion"
+                   value="toggle_estado">
 
-                        </button>
+            <input type="hidden"
+                   name="id_estado"
+                   value="{{ estado.id_estado }}">
 
-                    </form>
+            <button type="submit" class="btn-secondary">
+                {% if estado.activo %}
+                    Desactivar
+                {% else %}
+                    Activar
+                {% endif %}
+            </button>
+        </form>
+    </td>
 
-                </td>
-
-            </tr>
+</tr>
 
         {% endfor %}
 

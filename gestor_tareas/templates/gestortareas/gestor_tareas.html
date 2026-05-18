@@ -229,16 +229,13 @@
                         <td class="col-numero">{{ tarea.fecha|slice:"6:10" }}-{{ tarea.numero_tarea|stringformat:"03d" }}</td>
                         <td>{{ tarea.fecha }}</td>
                         <td>
-                            <span class="estado
-                                {% if tarea.estado == 'Pendiente' %}estado-pendiente{% endif %}
-                                {% if tarea.estado == 'Pendiente de firma' %}estado-pendiente-de-firma{% endif %}
-                                {% if tarea.estado == 'Pendiente de devolución' %}estado-pendiente-devolucion{% endif %}
-                                {% if tarea.estado == 'Programada' %}estado-programada{% endif %}
-                                {% if tarea.estado == 'Urgente' %}estado-urgente{% endif %}
-                                {% if tarea.estado == 'Completada' %}estado-completada{% endif %}
-                            ">
-                                {{ tarea.estado }}
-                            </span>
+                            <span class="estado-preview"
+                                style="
+        background-color: {{ tarea.estado_color }}20;
+        color: {{ tarea.estado_color }};
+      ">
+    {{ tarea.estado }}
+</span>
                         </td>
                         <td>{{ tarea.ambito }}</td>
                         <td>{{ tarea.tecnico }}</td>

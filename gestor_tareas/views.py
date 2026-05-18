@@ -216,6 +216,7 @@ def read_tasks(id_grupo=None):
             "fecha_creacion": fecha_formateada,
             "fecha": fecha_formateada,
             "estado": t.estado.nombre if t.estado else "",
+            "estado_color": t.estado.color if t.estado else "#6c757d",
             "prioridad": t.prioridad or "Normal",
             "ambito": t.ambito.nombre if t.ambito else "",
             "tecnico": t.tecnico.nombre if t.tecnico else "",
@@ -1546,6 +1547,27 @@ def admin_gestor(request):
                     messages.success(request, f"Estado '{estado.nombre}' desactivado.")
 
             except EstadoTarea.DoesNotExist:
+                messages.error(request, "Estado no encontrado.")
+
+        elif accion == "cambiar_color_estado":
+
+            id_estado = request.POST.get("id_estado")
+            nuevo_color = request.POST.get("nuevo_color", "#6c757d")
+
+            try:
+
+                estado = EstadoTarea.objects.get(id_estado=id_estado)
+
+                estado.color = nuevo_color
+                estado.save()
+
+                messages.success(
+                    request,
+                    f"Color actualizado para '{estado.nombre}'."
+                )
+
+            except EstadoTarea.DoesNotExist:
+
                 messages.error(request, "Estado no encontrado.")
 
         return redirect("admin_gestor")
