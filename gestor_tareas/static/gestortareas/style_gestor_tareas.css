@@ -768,3 +768,128 @@ input:focus, select:focus, textarea:focus {
 .perfil-preview{
     text-align: center;
 }
+
+/* =======================================================
+   RESPONSIVE MOVIL
+======================================================= */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .contenedor,
+    .dashboard,
+    .paneles,
+    .fila,
+    .row {
+        display: flex;
+        flex-direction: column !important;
+        gap: 10px;
+    }
+
+    .panel,
+    .card,
+    .bloque,
+    .widget {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    h3 {
+        font-size: 16px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .resumen-estados,
+    .stats-grid,
+    .contadores,
+    .tarjetas-resumen {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .resumen-estados .card,
+    .stats-grid .card,
+    .contadores .card,
+    .tarjetas-resumen .card {
+        min-height: 95px;
+        padding: 16px 10px;
+    }
+
+    .resumen-estados .card h3,
+    .stats-grid .card h3,
+    .contadores .card h3,
+    .tarjetas-resumen .card h3 {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .resumen-estados .card .numero,
+    .stats-grid .card .numero,
+    .contadores .card .numero,
+    .tarjetas-resumen .card .numero {
+        font-size: 26px;
+    }
+}
+
+/* ======================================================
+   CONTADORES RESPONSIVE MOVIL
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .summary-bar {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+    }
+
+    .summary-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 16px 10px;
+        box-sizing: border-box;
+    }
+
+    .summary-card span {
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    .summary-card strong {
+        font-size: 28px;
+    }
+
+}

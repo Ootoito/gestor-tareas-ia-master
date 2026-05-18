@@ -1,0 +1,24 @@
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\autocomplete.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\base.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\changelists.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\dark_mode.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\dashboard.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\forms.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\login.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\nav_sidebar.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\responsive.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\responsive_rtl.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\rtl.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\unusable_password_field.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\widgets.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\vendor\select2\select2.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\admin\static\admin\css\vendor\select2\select2.min.css
+C:\Python\gestortareas\.venv\Lib\site-packages\django\contrib\gis\static\gis\css\ol3.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\listado_tareas.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\style.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\style_detalle_tareas.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\style_gestor_tareas - copia.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\style_gestor_tareas.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\toast_messages.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\__style_detalle_tareas.css
+C:\Python\gestortareas\gestor_tareas\static\gestortareas\__toast_messages.css
