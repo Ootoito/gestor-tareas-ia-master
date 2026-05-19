@@ -55,9 +55,11 @@
 
     {% for contador in contadores_estados %}
 
-        <div class="summary-card">
+        <div class="summary-card" style="border-top: 4px solid {{ contador.color }};">
             <span>{{ contador.nombre }}</span>
-            <strong>{{ contador.total }}</strong>
+            <strong style="color: {{ contador.color }};">
+                {{ contador.total }}
+            </strong>
         </div>
 
     {% endfor %}
@@ -110,37 +112,22 @@
             <div class="filtro-estados-box">
                 <label class="filtro-estados-titulo">Ocultar estados (seleccionar el estado que se desea ocultar)</label>
                 <div class="filtro-estados-checks">
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Pendiente"
-                        {% if "Pendiente" in filtros.ocultar_estados %}checked{% endif %}>
-                        Pendiente
-                    </label>
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Pendiente de devolución"
-                        {% if "Pendiente de devolución" in filtros.ocultar_estados %}checked{% endif %}>
-                        Pendiente de devolución
-                    </label>
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Pendiente de firma"
-                        {% if "Pendiente de firma" in filtros.ocultar_estados %}checked{% endif %}>
-                        Pendiente de firma
-                    </label>
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Programada"
-                        {% if "Programada" in filtros.ocultar_estados %}checked{% endif %}>
-                        Programada
-                    </label>
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Urgente"
-                        {% if "Urgente" in filtros.ocultar_estados %}checked{% endif %}>
-                        Urgente
-                    </label>
-                    <label>
-                        <input type="checkbox" name="ocultar_estados" value="Completada"
-                        {% if "Completada" in filtros.ocultar_estados %}checked{% endif %}>
-                        Completada <span class="filtro-ayuda">(Pulsar "Filtrar" para establecer el filtro)</span>
-                    </label>
-                </div>
+
+    {% for estado in estados %}
+        <label>
+            <input type="checkbox"
+                   name="ocultar_estados"
+                   value="{{ estado }}"
+                   {% if estado in filtros.ocultar_estados %}checked{% endif %}>
+            {{ estado }}
+        </label>
+    {% endfor %}
+
+    <span class="filtro-ayuda">
+        (Pulsar "Filtrar" para establecer el filtro)
+    </span>
+
+</div>
             </div>
             <p></p>
 
@@ -229,13 +216,9 @@
                         <td class="col-numero">{{ tarea.fecha|slice:"6:10" }}-{{ tarea.numero_tarea|stringformat:"03d" }}</td>
                         <td>{{ tarea.fecha }}</td>
                         <td>
-                            <span class="estado-preview"
-                                style="
-        background-color: {{ tarea.estado_color }}20;
-        color: {{ tarea.estado_color }};
-      ">
-    {{ tarea.estado }}
-</span>
+                            <span class="estado-preview" style="background-color: {{ tarea.estado_color }}20; color: {{ tarea.estado_color }};">
+                                {{ tarea.estado }}
+                            </span>
                         </td>
                         <td>{{ tarea.ambito }}</td>
                         <td>{{ tarea.tecnico }}</td>

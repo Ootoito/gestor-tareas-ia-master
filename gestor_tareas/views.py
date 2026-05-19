@@ -400,6 +400,7 @@ def gestor_tareas_home(request):
         contadores_estados.append({
             "nombre": estado.nombre,
             "total": total_estado,
+            "color": estado.color,
         })
 
         tareas_por_tecnico = (
@@ -1570,6 +1571,38 @@ def admin_gestor(request):
 
                 messages.error(request, "Estado no encontrado.")
 
+        elif accion == "crear_ambito":
+
+            nombre_ambito = request.POST.get("nombre_ambito", "").strip()
+
+            if not nombre_ambito:
+                messages.error(request, "Debes indicar el nombre del ámbito.")
+            else:
+                AmbitoTarea.objects.get_or_create(
+                    nombre=nombre_ambito,
+                    defaults={"activo": True},
+                )
+
+                messages.success(request, "Ámbito creado correctamente.")
+
+        elif accion == "toggle_ambito":
+
+            id_ambito = request.POST.get("id_ambito")
+
+            try:
+                ambito = AmbitoTarea.objects.get(id_ambito=id_ambito)
+
+                ambito.activo = not ambito.activo
+                ambito.save()
+
+                if ambito.activo:
+                    messages.success(request, f"Ámbito '{ambito.nombre}' activado.")
+                else:
+                    messages.success(request, f"Ámbito '{ambito.nombre}' desactivado.")
+
+            except AmbitoTarea.DoesNotExist:
+                messages.error(request, "Ámbito no encontrado.")
+
         return redirect("admin_gestor")
 
     grupos = GrupoTrabajo.objects.all().order_by("nombre")
@@ -1587,12 +1620,14 @@ def admin_gestor(request):
     )
 
     estados_gestor = EstadoTarea.objects.all().order_by("orden", "nombre")
+    ambitos_gestor = AmbitoTarea.objects.all().order_by("nombre")
 
     context = {
         "grupos": grupos,
         "usuarios_gestor": usuarios_gestor,
         "relaciones": relaciones,
         "estados_gestor": estados_gestor,
+        "ambitos_gestor": ambitos_gestor,
     }
 
     return render(request, "gestortareas/admin_gestor.html", context)

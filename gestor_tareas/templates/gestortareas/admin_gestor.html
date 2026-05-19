@@ -330,6 +330,88 @@
     </table>
 
 </section>
+<!-- ÁMBITOS -->
+<section class="panel">
+
+    <h2>Ámbitos del gestor</h2>
+
+    <form method="post" class="inline-form">
+        {% csrf_token %}
+
+        <input type="hidden" name="accion" value="crear_ambito">
+
+        <input type="text"
+               name="nombre_ambito"
+               placeholder="Nombre del ámbito">
+
+        <button type="submit" class="btn-primary">
+            Añadir ámbito
+        </button>
+    </form>
+
+    <table class="task-table">
+
+        <thead>
+            <tr>
+                <th>Ámbito</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for ambito in ambitos_gestor %}
+
+            <tr>
+
+                <td>{{ ambito.nombre }}</td>
+
+                <td>
+                    {% if ambito.activo %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+
+                <td>
+                    <form method="post" class="inline-form">
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="accion"
+                               value="toggle_ambito">
+
+                        <input type="hidden"
+                               name="id_ambito"
+                               value="{{ ambito.id_ambito }}">
+
+                        <button type="submit" class="btn-secondary">
+                            {% if ambito.activo %}
+                                Desactivar
+                            {% else %}
+                                Activar
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+
+        {% empty %}
+
+            <tr>
+                <td colspan="3">No hay ámbitos configurados.</td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
     <section class="panel">
         <h2>Asignaciones usuario-grupo</h2>
 
