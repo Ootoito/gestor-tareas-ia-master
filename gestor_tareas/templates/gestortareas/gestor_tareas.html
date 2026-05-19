@@ -267,49 +267,6 @@
 
     </section>
 
-    <!-- CATEGORIZACIONES -->
-    <section class="panel">
-
-        <h2>Categorizaciones</h2>
-
-        <div class="catalog-block">
-
-            <h3>Ámbitos</h3>
-
-            <form method="post" action="{% url 'nuevo_ambito' %}" class="inline-form">
-                {% csrf_token %}
-                <input type="text" name="nuevo_ambito" placeholder="Nuevo ámbito">
-                <button type="submit" class="btn-primary">Añadir</button>
-            </form>
-
-            <ul class="tag-list">
-                {% for ambito in ambitos %}
-                <li>{{ ambito }}</li>
-                {% endfor %}
-            </ul>
-
-        </div>
-
-        <div class="catalog-block">
-
-            <h3>Técnicos</h3>
-
-            <form method="post" action="{% url 'nuevo_tecnico' %}" class="inline-form">
-                {% csrf_token %}
-                <input type="text" name="nuevo_tecnico" placeholder="Nuevo técnico">
-                <button type="submit" class="btn-primary">Añadir</button>
-            </form>
-
-            <ul class="tag-list">
-                {% for tecnico in tecnicos %}
-                <li>{{ tecnico }}</li>
-                {% endfor %}
-            </ul>
-
-        </div>
-
-    </section>
-
 </div>
 <script src="{% static 'gestortareas/form_feedback.js' %}"></script>
 <script src="{% static 'gestortareas/toast_messages.js' %}"></script>
