@@ -1603,6 +1603,50 @@ def admin_gestor(request):
             except AmbitoTarea.DoesNotExist:
                 messages.error(request, "Ámbito no encontrado.")
 
+        elif accion == "crear_tecnico":
+
+            nombre_tecnico = request.POST.get("nombre_tecnico", "").strip()
+            id_grupo = request.POST.get("id_grupo_tecnico", "").strip()
+
+            if not nombre_tecnico:
+                messages.error(request, "Debes indicar el nombre del técnico.")
+            elif not id_grupo:
+                messages.error(request, "Debes seleccionar un grupo.")
+            else:
+                grupo = GrupoTrabajo.objects.get(id=id_grupo)
+
+                tecnico, _ = Tecnico.objects.get_or_create(
+                    nombre=nombre_tecnico,
+                    defaults={"activo": True},
+                )
+
+                TecnicoGrupo.objects.update_or_create(
+                    tecnico=tecnico,
+                    grupo=grupo,
+                    defaults={"activo": True},
+                )
+
+                messages.success(request, "Técnico creado/asignado correctamente.")
+
+        elif accion == "toggle_tecnico_grupo":
+
+            id_tecnico = request.POST.get("id_tecnico")
+            id_grupo = request.POST.get("id_grupo")
+
+            try:
+                relacion = TecnicoGrupo.objects.get(
+                    tecnico_id=id_tecnico,
+                    grupo_id=id_grupo,
+                )
+
+                relacion.activo = not relacion.activo
+                relacion.save()
+
+                messages.success(request, "Asignación del técnico actualizada.")
+
+            except TecnicoGrupo.DoesNotExist:
+                messages.error(request, "Relación técnico/grupo no encontrada.")
+
         return redirect("admin_gestor")
 
     grupos = GrupoTrabajo.objects.all().order_by("nombre")
@@ -1621,13 +1665,20 @@ def admin_gestor(request):
 
     estados_gestor = EstadoTarea.objects.all().order_by("orden", "nombre")
     ambitos_gestor = AmbitoTarea.objects.all().order_by("nombre")
-
+    tecnicos_gestor = (
+        TecnicoGrupo.objects
+        .select_related("tecnico", "grupo")
+        .all()
+        .order_by("grupo__nombre", "tecnico__nombre")
+    )
+    
     context = {
         "grupos": grupos,
         "usuarios_gestor": usuarios_gestor,
         "relaciones": relaciones,
         "estados_gestor": estados_gestor,
         "ambitos_gestor": ambitos_gestor,
+        "tecnicos_gestor": tecnicos_gestor,
     }
 
     return render(request, "gestortareas/admin_gestor.html", context)

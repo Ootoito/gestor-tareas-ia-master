@@ -412,6 +412,81 @@
     </table>
 
 </section>
+<!-- TÉCNICOS -->
+<section class="panel">
+
+    <h2>Técnicos del gestor</h2>
+
+    <form method="post" class="inline-form">
+        {% csrf_token %}
+
+        <input type="hidden" name="accion" value="crear_tecnico">
+
+        <input type="text"
+               name="nombre_tecnico"
+               placeholder="Nombre del técnico">
+
+        <select name="id_grupo_tecnico">
+            <option value="">Grupo</option>
+            {% for grupo in grupos %}
+                <option value="{{ grupo.id }}">{{ grupo.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn-primary">
+            Añadir técnico
+        </button>
+    </form>
+
+    <table class="task-table">
+        <thead>
+            <tr>
+                <th>Técnico</th>
+                <th>Grupo</th>
+                <th>Activo en grupo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for rel in tecnicos_gestor %}
+            <tr>
+                <td>{{ rel.tecnico.nombre }}</td>
+                <td>{{ rel.grupo.nombre }}</td>
+                <td>
+                    {% if rel.activo %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" class="inline-form">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="accion" value="toggle_tecnico_grupo">
+                        <input type="hidden" name="id_tecnico" value="{{ rel.tecnico.id_tecnico }}">
+                        <input type="hidden" name="id_grupo" value="{{ rel.grupo.id }}">
+
+                        <button type="submit" class="btn-secondary">
+                            {% if rel.activo %}
+                                Desactivar
+                            {% else %}
+                                Activar
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No hay técnicos asignados a grupos.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
     <section class="panel">
         <h2>Asignaciones usuario-grupo</h2>
 
