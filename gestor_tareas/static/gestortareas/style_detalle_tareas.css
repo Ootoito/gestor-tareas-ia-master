@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
 
 :root{
-  --bg-gradient: linear-gradient(135deg, #f4f7fc 0%, #e9eef5 100%);
+  --bg-gradient: linear-gradient(135deg, #e2e8f0 0%, #d1d9e6 100%);
   --panel: rgba(255, 255, 255, 0.96);
-  --panel-soft: #fafcff;
-  --text: #1a2634;
-  --muted: #5b6e8c;
-  --line: #e2eaf5;
+  --panel-soft: #f1f5f9;
+  --text: #0f172a;
+  --muted: #4b5563;
+  --line: #cbd5e1;
 
   --primary: #3b82f6;
   --primary-hover: #2563eb;
@@ -27,9 +27,9 @@
   --warning-text: #d97706;
   --warning-border: #fde68a;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   --shadow-focus: 0 0 0 4px rgba(59,130,246,0.15);
   
   --radius-sm: 8px;

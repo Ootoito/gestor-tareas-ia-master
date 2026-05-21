@@ -16,10 +16,9 @@
   gap: 14px;
   padding: 16px 16px 16px 18px;
   border-radius: 16px;
-  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(8px);
-  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.98);
   color: #1e293b;
   animation: toastSlideIn 0.25s cubic-bezier(0.21, 1.11, 0.35, 1.02);
   transition: all 0.2s ease;
@@ -27,7 +26,7 @@
 
 .toast:hover {
   transform: translateX(-2px);
-  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.2);
 }
 
 .toast-content {
@@ -74,51 +73,46 @@
   transform: scale(1.02);
 }
 
-/* TOAST DE ÉXITO - Verde moderno */
+/* TOAST DE ÉXITO */
 .toast-success {
-  background: linear-gradient(135deg, rgba(236, 253, 245, 0.98), rgba(209, 250, 229, 0.98));
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
   border-left: 4px solid #10b981;
   color: #065f46;
 }
-
 .toast-success .toast-title {
   color: #059669;
 }
 
-/* TOAST DE ERROR - Rojo elegante */
+/* TOAST DE ERROR */
 .toast-error {
-  background: linear-gradient(135deg, rgba(254, 242, 242, 0.98), rgba(254, 226, 226, 0.98));
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
   border-left: 4px solid #ef4444;
   color: #991b1b;
 }
-
 .toast-error .toast-title {
   color: #dc2626;
 }
 
-/* TOAST DE ADVERTENCIA - Ámbar vibrante */
+/* TOAST DE ADVERTENCIA */
 .toast-warning {
-  background: linear-gradient(135deg, rgba(255, 251, 235, 0.98), rgba(254, 243, 199, 0.98));
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
   border-left: 4px solid #f59e0b;
   color: #92400e;
 }
-
 .toast-warning .toast-title {
   color: #d97706;
 }
 
-/* TOAST DE INFORMACIÓN - Azul primario */
+/* TOAST DE INFORMACIÓN */
 .toast-info {
-  background: linear-gradient(135deg, rgba(239, 246, 255, 0.98), rgba(219, 234, 254, 0.98));
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
   border-left: 4px solid #3b82f6;
   color: #1e40af;
 }
-
 .toast-info .toast-title {
   color: #2563eb;
 }
 
-/* ANIMACIONES MEJORADAS */
 .toast-hide {
   animation: toastFadeOut 0.2s cubic-bezier(0.4, 0, 1, 1) forwards;
 }
@@ -145,7 +139,6 @@
   }
 }
 
-/* RESPONSIVE: Mejor adaptación en móviles */
 @media (max-width: 640px) {
   .toast-container {
     left: 16px;
@@ -153,20 +146,20 @@
     top: 16px;
     width: auto;
   }
-  
+
   .toast {
     padding: 14px 14px 14px 16px;
     border-radius: 14px;
   }
-  
+
   .toast-title {
     font-size: 0.8rem;
   }
-  
+
   .toast-message {
     font-size: 0.88rem;
   }
-  
+
   @keyframes toastSlideIn {
     from {
       opacity: 0;
