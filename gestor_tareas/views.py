@@ -101,17 +101,17 @@ def usuario_es_admin_gestor(user):
 # Catálogos desde BD
 # =========================================================
 
-def read_estados():
-    sql = """
-        SELECT nombre
-        FROM gestor_tareas_tbestados
-        WHERE activo = 1
-        ORDER BY orden, nombre
-    """
-    with connection.cursor() as cursor:
-        cursor.execute(sql)
-        return [row[0] for row in cursor.fetchall()]
+def read_estados(id_grupo=None):
+    queryset = EstadoTarea.objects.filter(activo=True)
 
+    if id_grupo is not None:
+        queryset = queryset.filter(grupo_id=id_grupo)
+
+    return list(
+        queryset
+        .order_by("orden", "nombre")
+        .values_list("nombre", flat=True)
+    )
 
 def read_ambitos():
     sql = """
@@ -298,6 +298,12 @@ def gestor_tareas_home(request):
 
     id_grupo = acceso["id_grupo"]
     grupos_usuario = read_grupos_usuario(request.user.username)
+    ids_grupos_usuario = [g["id_grupo"] for g in grupos_usuario]
+
+    if id_grupo not in ids_grupos_usuario and ids_grupos_usuario:
+        id_grupo = ids_grupos_usuario[0]
+        request.session["gestor_tareas_id_grupo"] = id_grupo
+
     # DEBUB PARA ELIMINAR INICIO
     #print("DEBUG id_grupo cargado =", id_grupo)
     # DEBUB PARA ELIMINAR FIN
@@ -309,7 +315,7 @@ def gestor_tareas_home(request):
     #print("DEBUG primera tarea =", tareas[0])
     # DEBUB PARA ELIMINAR FIN
     alertas_pendientes = read_alertas_pendientes_para_grupo(id_grupo)
-    estados = read_estados()
+    estados = read_estados(id_grupo=id_grupo)
     ambitos = read_ambitos()
     tecnicos = read_tecnicos(id_grupo=acceso["id_grupo"])
 
@@ -388,6 +394,7 @@ def gestor_tareas_home(request):
     contadores_estados = []
 
     estados_grupo = EstadoTarea.objects.filter(
+        grupo_id=id_grupo,
         activo=True
     ).order_by("orden", "nombre")
 
@@ -559,7 +566,7 @@ def nueva_tarea(request):
             return redirect("detalle_tarea", tarea_id=id_tarea)
 
     context = {
-        "estados": read_estados(),
+        "estados": read_estados(id_grupo=acceso["id_grupo"]),
         "ambitos": read_ambitos(),
         "tecnicos": read_tecnicos(id_grupo=acceso["id_grupo"]),
         "prioridades": PRIORIDADES,
@@ -1405,10 +1412,39 @@ def admin_gestor(request):
             if not nombre:
                 messages.error(request, "Debes indicar el nombre del grupo.")
             else:
-                GrupoTrabajo.objects.get_or_create(
+                grupo, creado = GrupoTrabajo.objects.get_or_create(
                     nombre=nombre,
                     defaults={"activo": True},
                 )
+
+                if creado:
+                    EstadoTarea.objects.get_or_create(
+                        grupo=grupo,
+                        nombre="Pendiente",
+                        defaults={
+                            "orden": 1,
+                            "color": "#2563eb",
+                            "activo": True,
+                        }
+                    )
+
+                    EstadoTarea.objects.get_or_create(
+                        grupo=grupo,
+                        nombre="Completada",
+                        defaults={
+                        "orden": 2,
+                        "color": "#16a34a",
+                        "activo": True,
+                        }
+                    )
+
+                    AmbitoTarea.objects.get_or_create(
+                        nombre="General",
+                        defaults={
+                            "activo": True,
+                        }
+                    )
+
                 messages.success(request, "Grupo creado correctamente.")
 
         elif accion == "crear_usuario":
@@ -1447,6 +1483,25 @@ def admin_gestor(request):
                         grupo=grupo,
                         defaults={"activo": True},
                     )
+
+                    perfil_usuario = UsuarioGestor.objects.filter(user=usuario).first()
+                    alias_tecnico = perfil_usuario.alias if perfil_usuario and perfil_usuario.alias else usuario.username
+
+                    tecnico, _ = Tecnico.objects.update_or_create(
+                        nombre=alias_tecnico,
+                        defaults={"activo": True},
+                    )
+
+                    TecnicoGrupo.objects.update_or_create(
+                        tecnico=tecnico,
+                        grupo=grupo,
+                        defaults={"activo": True},
+                    )
+
+                    if user == request.user:
+                        request.session["gestor_tareas_id_grupo"] = grupo.id
+                        request.session["gestor_tareas_grupo"] = grupo.nombre
+
                     tecnico, _ = Tecnico.objects.update_or_create(
                         nombre=alias or username,
                         defaults={"activo": True},
@@ -1510,26 +1565,31 @@ def admin_gestor(request):
             nombre_estado = request.POST.get("nombre_estado", "").strip()
             orden_estado = request.POST.get("orden_estado", "0").strip()
             color_estado = request.POST.get("color_estado", "#6c757d").strip() or "#6c757d"
+            id_grupo_estado = request.POST.get("id_grupo_estado", "").strip()
 
             if not nombre_estado:
                 messages.error(request, "Debes indicar el nombre del estado.")
+            elif not id_grupo_estado:
+                messages.error(request, "Debes seleccionar un grupo.")
             else:
-
                 try:
                     orden_estado = int(orden_estado)
                 except:
                     orden_estado = 0
 
+                grupo = GrupoTrabajo.objects.get(id=id_grupo_estado)
+
                 EstadoTarea.objects.get_or_create(
+                    grupo=grupo,
                     nombre=nombre_estado,
                     defaults={
                         "orden": orden_estado,
-                        "activo": True,
                         "color": color_estado,
+                        "activo": True,
                     }
-                )
+            )
 
-                messages.success(request, "Estado creado correctamente.")
+            messages.success(request, "Estado creado correctamente.")
 
         elif accion == "toggle_estado":
 
@@ -1647,9 +1707,63 @@ def admin_gestor(request):
             except TecnicoGrupo.DoesNotExist:
                 messages.error(request, "Relación técnico/grupo no encontrada.")
 
+        elif accion == "asignar_usuario_grupo":
+
+            id_usuario = request.POST.get("id_usuario_grupo", "").strip()
+            id_grupo = request.POST.get("id_grupo_usuario", "").strip()
+
+            if not id_usuario:
+                messages.error(request, "Debes seleccionar un usuario.")
+            elif not id_grupo:
+                messages.error(request, "Debes seleccionar un grupo.")
+            else:
+                usuario = User.objects.get(id=id_usuario)
+                grupo = GrupoTrabajo.objects.get(id=id_grupo)
+
+                UsuarioGrupo.objects.update_or_create(
+                    usuario=usuario,
+                    grupo=grupo,
+                    defaults={"activo": True},
+                )
+
+                if usuario == request.user:
+                    request.session["gestor_tareas_id_grupo"] = grupo.id
+                    request.session["gestor_tareas_grupo"] = grupo.nombre
+
+                messages.success(request, "Usuario asignado al grupo correctamente.")
+
+        elif accion == "toggle_usuario_grupo":
+
+            id_relacion = request.POST.get("id_relacion_usuario_grupo", "").strip()
+
+            try:
+                relacion = UsuarioGrupo.objects.select_related("usuario", "grupo").get(id=id_relacion)
+
+                relacion.activo = not relacion.activo
+                relacion.save()
+
+                if relacion.usuario == request.user and not relacion.activo:
+                    request.session.pop("gestor_tareas_id_grupo", None)
+                    request.session.pop("gestor_tareas_grupo", None)
+
+                messages.success(request, "Relación usuario/grupo actualizada.")
+
+            except UsuarioGrupo.DoesNotExist:
+                messages.error(request, "Relación usuario/grupo no encontrada.")
+
         return redirect("admin_gestor")
 
     grupos = GrupoTrabajo.objects.all().order_by("nombre")
+    id_grupo_filtro_estados = request.GET.get("grupo_estados", "").strip()
+
+    if not id_grupo_filtro_estados:
+        id_grupo_sesion = request.session.get("gestor_tareas_id_grupo")
+
+        if id_grupo_sesion:
+            id_grupo_filtro_estados = str(id_grupo_sesion)
+        elif grupos.exists():
+            id_grupo_filtro_estados = str(grupos.first().id)
+            
     usuarios_gestor = (
         UsuarioGestor.objects
         .select_related("user")
@@ -1662,8 +1776,15 @@ def admin_gestor(request):
         .all()
         .order_by("grupo__nombre", "usuario__username")
     )
+    usuarios_auth = User.objects.all().order_by("username")
 
-    estados_gestor = EstadoTarea.objects.all().order_by("orden", "nombre")
+    estados_gestor = (
+        EstadoTarea.objects
+        .select_related("grupo")
+        .filter(grupo_id=id_grupo_filtro_estados)
+        .order_by("grupo__nombre", "orden", "nombre")
+    )
+
     ambitos_gestor = AmbitoTarea.objects.all().order_by("nombre")
     tecnicos_gestor = (
         TecnicoGrupo.objects
@@ -1671,7 +1792,7 @@ def admin_gestor(request):
         .all()
         .order_by("grupo__nombre", "tecnico__nombre")
     )
-    
+
     context = {
         "grupos": grupos,
         "usuarios_gestor": usuarios_gestor,
@@ -1679,6 +1800,8 @@ def admin_gestor(request):
         "estados_gestor": estados_gestor,
         "ambitos_gestor": ambitos_gestor,
         "tecnicos_gestor": tecnicos_gestor,
+        "id_grupo_filtro_estados": id_grupo_filtro_estados,
+        "usuarios_auth": usuarios_auth,
     }
 
     return render(request, "gestortareas/admin_gestor.html", context)

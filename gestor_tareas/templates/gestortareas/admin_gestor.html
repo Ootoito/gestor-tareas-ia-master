@@ -213,7 +213,7 @@
 <section class="panel">
 
     <h2>Estados del gestor</h2>
-
+    
     <form method="post" class="inline-form">
         {% csrf_token %}
 
@@ -234,6 +234,16 @@
                value="#6c757d"
                title="Color del estado">
 
+        <select name="id_grupo_estado"
+            onchange="window.location.href='?grupo_estados=' + this.value;">
+            {% for grupo in grupos %}
+                <option value="{{ grupo.id }}"
+                    {% if id_grupo_filtro_estados|stringformat:"s" == grupo.id|stringformat:"s" %}selected{% endif %}>
+                    {{ grupo.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
         <button type="submit" class="btn-primary">
             Añadir estado
         </button>
@@ -243,6 +253,7 @@
 
         <thead>
             <tr>
+                <th>Grupo</th>
                 <th>Estado</th>
                 <th>Color</th>
                 <th>Orden</th>
@@ -256,7 +267,7 @@
         {% for estado in estados_gestor %}
 
             <tr>
-
+                <td>{{ estado.grupo.nombre }}</td>
     <td>
         <span class="estado-preview"
               style="background-color: {{ estado.color }}20; color: {{ estado.color }};">
@@ -412,21 +423,24 @@
     </table>
 
 </section>
-<!-- TÉCNICOS -->
+<!-- USUARIOS / GRUPOS -->
 <section class="panel">
 
-    <h2>Técnicos del gestor</h2>
+    <h2>Permisos de usuario por grupo</h2>
 
     <form method="post" class="inline-form">
         {% csrf_token %}
 
-        <input type="hidden" name="accion" value="crear_tecnico">
+        <input type="hidden" name="accion" value="asignar_usuario_grupo">
 
-        <input type="text"
-               name="nombre_tecnico"
-               placeholder="Nombre del técnico">
+        <select name="id_usuario_grupo">
+            <option value="">Usuario</option>
+            {% for usuario in usuarios_auth %}
+                <option value="{{ usuario.id }}">{{ usuario.username }}</option>
+            {% endfor %}
+        </select>
 
-        <select name="id_grupo_tecnico">
+        <select name="id_grupo_usuario">
             <option value="">Grupo</option>
             {% for grupo in grupos %}
                 <option value="{{ grupo.id }}">{{ grupo.nombre }}</option>
@@ -434,9 +448,62 @@
         </select>
 
         <button type="submit" class="btn-primary">
-            Añadir técnico
+            Asignar usuario
         </button>
     </form>
+
+    <table class="task-table">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Grupo</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for rel in relaciones %}
+            <tr>
+                <td>{{ rel.usuario.username }}</td>
+                <td>{{ rel.grupo.nombre }}</td>
+                <td>
+                    {% if rel.activo %}
+                        ✅
+                    {% else %}
+                        ❌
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" class="inline-form">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="accion" value="toggle_usuario_grupo">
+                        <input type="hidden" name="id_relacion_usuario_grupo" value="{{ rel.id }}">
+
+                        <button type="submit" class="btn-secondary">
+                            {% if rel.activo %}
+                                Desactivar
+                            {% else %}
+                                Activar
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No hay relaciones usuario/grupo.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+<!-- TÉCNICOS -->
+<section class="panel">
+
+    <h2>Técnicos del gestor</h2>
 
     <table class="task-table">
         <thead>

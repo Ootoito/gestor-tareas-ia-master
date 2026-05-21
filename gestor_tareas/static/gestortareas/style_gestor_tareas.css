@@ -906,3 +906,14 @@ input:focus, select:focus, textarea:focus {
     min-width: 92px;
     text-align: center;
 }
+
+.acciones-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.acciones-inline form {
+    margin: 0;
+}

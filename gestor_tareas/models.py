@@ -90,18 +90,25 @@ class UsuarioRolGestor(models.Model):
 class EstadoTarea(models.Model):
     id_estado = models.AutoField(primary_key=True)
 
-    nombre = models.CharField(max_length=100, unique=True)
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.CASCADE,
+        db_column="id_grupo",
+        related_name="estados",
+    )
 
+    nombre = models.CharField(max_length=100)
     orden = models.PositiveIntegerField(default=0)
     color = models.CharField(max_length=20, default="#6c757d")
     activo = models.BooleanField(default=True)
 
     class Meta:
         db_table = "gestor_tareas_tbestados"
-        ordering = ["orden", "nombre"]
+        ordering = ["grupo__nombre", "orden", "nombre"]
+        unique_together = ("grupo", "nombre")
 
     def __str__(self):
-        return self.nombre
+        return f"{self.grupo.nombre} - {self.nombre}"
 
 
 class AmbitoTarea(models.Model):
