@@ -162,7 +162,9 @@ class TecnicoGrupo(models.Model):
     class Meta:
         db_table = "gestor_tareas_tbtecnicos_grupos"
         ordering = ["grupo__nombre", "tecnico__nombre"]
+        unique_together = ("tecnico", "grupo")
 
+    
     def __str__(self):
         return f"{self.tecnico.nombre} -> {self.grupo.nombre}"
 
