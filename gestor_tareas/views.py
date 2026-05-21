@@ -410,12 +410,12 @@ def gestor_tareas_home(request):
             "color": estado.color,
         })
 
-        tareas_por_tecnico = (
-            queryset_dashboard
-            .values("tecnico__nombre")
-            .annotate(total=Count("id"))
-            .order_by("-total")
-        )
+    tareas_por_tecnico = (
+        queryset_dashboard
+        .values("tecnico__nombre")
+        .annotate(total=Count("id"))
+        .order_by("-total")
+    )
 
     alertas_pendientes = read_alertas_pendientes_para_grupo(id_grupo)
 
@@ -1484,8 +1484,13 @@ def admin_gestor(request):
                         defaults={"activo": True},
                     )
 
-                    perfil_usuario = UsuarioGestor.objects.filter(user=usuario).first()
-                    alias_tecnico = perfil_usuario.alias if perfil_usuario and perfil_usuario.alias else usuario.username
+                    perfil_usuario = UsuarioGestor.objects.filter(user=user).first()
+
+                    alias_tecnico = (
+                        perfil_usuario.alias
+                        if perfil_usuario and perfil_usuario.alias
+                        else user.username
+                    )
 
                     tecnico, _ = Tecnico.objects.update_or_create(
                         nombre=alias_tecnico,
