@@ -303,3 +303,43 @@ class PerfilUsuario(models.Model):
 
     def __str__(self):
         return self.nombre_visible or self.usuario.username
+
+class MensajeGestor(models.Model):
+    id_mensaje = models.BigAutoField(primary_key=True)
+
+    remitente = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="mensajes_enviados",
+        db_column="id_remitente",
+    )
+
+    destinatario = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="mensajes_recibidos",
+        db_column="id_destinatario",
+    )
+
+    grupo = models.ForeignKey(
+        GrupoTrabajo,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column="id_grupo",
+    )
+
+    asunto = models.CharField(max_length=200)
+
+    cuerpo = models.TextField()
+
+    leido = models.BooleanField(default=False)
+
+    fecha_envio = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "gestor_tareas_tbmensajes"
+        ordering = ["-fecha_envio"]
+
+    def __str__(self):
+        return f"{self.asunto} -> {self.destinatario.username}"

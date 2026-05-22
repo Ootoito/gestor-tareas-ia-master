@@ -86,7 +86,43 @@
         Cerrar sesión
     </a>
 </form>
+{% if total_mensajes_no_leidos > 0 %}
+<section class="panel mensajes-home-panel">
 
+    <h2>Mensajes nuevos</h2>
+
+    <div class="mensajes-home-lista">
+
+        {% for mensaje in mensajes_no_leidos %}
+            <div class="mensaje-home-item">
+
+                <div class="mensaje-home-icono">
+                    📩
+                </div>
+
+                <div class="mensaje-home-contenido">
+                    <strong>{{ mensaje.remitente.username }}</strong>
+                    <span>{{ mensaje.asunto }}</span>
+                    <small>{{ mensaje.fecha_envio|date:"d/m/Y H:i" }}</small>
+                </div>
+
+                <a href="{% url 'mensajes_gestor' %}" class="btn-secondary">
+                    Leer
+                </a>
+
+            </div>
+        {% endfor %}
+
+    </div>
+
+    {% if total_mensajes_no_leidos > 3 %}
+        <p class="mensaje-home-mas">
+            Y {{ total_mensajes_no_leidos|add:"-3" }} mensaje(s) más.
+        </p>
+    {% endif %}
+
+</section>
+{% endif %}
     <!-- SISTEMA DE ALERTAS -->
     {% if alertas_pendientes %}
     <section class="panel alertas-panel">
@@ -185,7 +221,7 @@
             <div class="acciones-modulos">
                 <a href="{% url 'dashboard_gestor' %}" class="modulo-btn modulo-dashboard">📊 Dashboard</a>
                 <a href="#" class="modulo-btn modulo-productividad">📈 Productividad</a>
-                <a href="#" class="modulo-btn modulo-mensajes">✉️ Mensajes</a>
+                <a href="{% url 'mensajes_gestor' %}" class="modulo-btn modulo-mensajes">✉️ Mensajes</a>
                 <a href="{% url 'mi_perfil' %}" class="modulo-btn modulo-perfil">👤 Mi perfil</a>
                 <a href="{% url 'admin_gestor' %}" class="modulo-btn modulo-admin">⚙️ Admin</a>
                 <a href="{% url 'nueva_tarea' %}" class="modulo-btn modulo-nueva">➕ Nueva tarea</a>

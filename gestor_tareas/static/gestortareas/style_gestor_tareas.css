@@ -627,3 +627,148 @@ button:disabled {
     font-weight: 700;
     font-size: 0.92rem;
 }
+
+.mensaje-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    max-width: 720px;
+}
+
+.mensaje-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mensaje-form input[type="text"],
+.mensaje-form select,
+.mensaje-form textarea {
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid #cfd8e3;
+    padding: 14px 16px;
+    font-size: 1rem;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.mensaje-form textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+.mensaje-form label {
+    font-weight: 700;
+    color: #24324a;
+}
+
+.mensaje-form .field-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mensaje-form .acciones-form {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.mensajes-home-panel {
+    border-left: 5px solid #3b82f6;
+}
+
+.mensajes-home-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mensaje-home-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #dbe7f5;
+    border-radius: 16px;
+}
+
+.mensaje-home-icono {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1d4ed8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.mensaje-home-contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.mensaje-home-contenido strong {
+    color: #0f172a;
+}
+
+.mensaje-home-contenido span {
+    color: #334155;
+    font-weight: 600;
+}
+
+.mensaje-home-contenido small {
+    color: #64748b;
+}
+
+.mensaje-home-mas {
+    margin: 12px 0 0;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.mensaje-remitente {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mensaje-avatar,
+.mensaje-avatar-placeholder {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mensaje-avatar {
+    object-fit: cover;
+    border: 2px solid #dbeafe;
+}
+
+.mensaje-avatar-placeholder {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.mensaje-remitente strong {
+    display: block;
+    color: #0f172a;
+}
+
+.mensaje-remitente small {
+    display: block;
+    color: #64748b;
+    font-size: 0.8rem;
+}
