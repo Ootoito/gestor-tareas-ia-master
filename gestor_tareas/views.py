@@ -1714,6 +1714,21 @@ def admin_gestor(request):
             except AmbitoTarea.DoesNotExist:
                 messages.error(request, "Ámbito no encontrado.")
 
+        elif accion == "toggle_admin":
+
+            id_usuario = request.POST.get("id_usuario")
+
+            try:
+                perfil = UsuarioGestor.objects.get(pk=id_usuario)
+
+                perfil.es_admin_gestor = not perfil.es_admin_gestor
+                perfil.save()
+
+                messages.success(request, "Permiso de administrador actualizado.")
+
+            except UsuarioGestor.DoesNotExist:
+                messages.error(request, "Usuario no encontrado.")
+                
         elif accion == "crear_tecnico":
 
             nombre_tecnico = request.POST.get("nombre_tecnico", "").strip()
