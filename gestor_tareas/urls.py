@@ -20,4 +20,5 @@ urlpatterns = [
     path("subtarea/<int:id_subtarea>/toggle/", views.toggle_subtarea, name="toggle_subtarea"),
     path("subtarea/<int:id_subtarea>/eliminar/", views.eliminar_subtarea, name="eliminar_subtarea"),
     path("mi-perfil/", views.mi_perfil, name="mi_perfil"),
+    path("logout/", views.logout_gestor_tareas, name="logout_gestor_tareas"),
 ]

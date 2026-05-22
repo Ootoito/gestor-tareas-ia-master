@@ -4,7 +4,7 @@ from urllib import request
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db import connection
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -81,6 +81,11 @@ def login_gestor_tareas(request):
         return redirect("gestor_tareas_home")
 
     return render(request, "gestortareas/login.html")
+
+def logout_gestor_tareas(request):
+    logout(request)
+    request.session.flush()
+    return redirect("login_gestor_tareas")
 
 # =========================================================
 # HELPERS / Servicios IA
@@ -1520,29 +1525,70 @@ def admin_gestor(request):
 
                 messages.success(request, "Usuario creado/asignado correctamente.")
 
-        elif accion == "toggle_admin":
+        elif accion == "crear_usuario":
+            username = request.POST.get("username", "").strip()
+            alias = request.POST.get("alias", "").strip()
+            password = request.POST.get("password", "").strip()
+            id_grupo = request.POST.get("id_grupo", "").strip()
 
-            id_usuario = request.POST.get("id_usuario")
+            if not username:
+                messages.error(request, "Debes indicar el usuario.")
+            elif not id_grupo:
+                messages.error(request, "Debes seleccionar un grupo.")
+            elif not password:
+                messages.error(request, "Debes indicar una contraseña inicial.")
+            else:
+                with transaction.atomic():
+                    grupo = GrupoTrabajo.objects.get(id=id_grupo)
 
-            try:
-                perfil = UsuarioGestor.objects.get(id=id_usuario)
-
-                perfil.es_admin_gestor = not perfil.es_admin_gestor
-                perfil.save()
-
-                if perfil.es_admin_gestor:
-                    messages.success(
-                        request,
-                        f"{perfil.user.username} ahora es administrador."
+                    user, creado = User.objects.get_or_create(
+                        username=username,
+                        defaults={"is_active": True},
                     )
-                else:
-                    messages.success(
-                        request,
-                        f"{perfil.user.username} ya no es administrador."
+
+                    if creado:
+                        user.set_password(password)
+                        user.save()
+                    elif password:
+                        user.set_password(password)
+                        user.is_active = True
+                        user.save()
+
+                    perfil, _ = UsuarioGestor.objects.update_or_create(
+                        user=user,
+                        defaults={
+                            "alias": alias or username,
+                            "activo": True,
+                        },
                     )
 
-            except UsuarioGestor.DoesNotExist:
-                messages.error(request, "Usuario no encontrado.")
+                    UsuarioGrupo.objects.update_or_create(
+                        usuario=user,
+                        grupo=grupo,
+                        defaults={"activo": True},
+                    )
+
+                    alias_tecnico = perfil.alias or user.username
+
+                    tecnico, _ = Tecnico.objects.update_or_create(
+                        nombre=alias_tecnico,
+                        defaults={"activo": True},
+                    )
+
+                    TecnicoGrupo.objects.update_or_create(
+                        tecnico=tecnico,
+                        grupo=grupo,
+                        defaults={"activo": True},
+                    )
+
+                    if user == request.user:
+                        request.session["gestor_tareas_id_grupo"] = grupo.id
+                        request.session["gestor_tareas_grupo"] = grupo.nombre
+
+                messages.success(
+                    request,
+                    "Usuario creado/asignado correctamente y añadido como técnico del grupo."
+                )
 
         elif accion == "toggle_usuario":
 

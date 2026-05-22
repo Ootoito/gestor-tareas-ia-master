@@ -68,16 +68,24 @@
 
     <!-- SELECTOR DE GRUPO EN USUARIO MULTIGRUPO -->
     <form method="post" action="{% url 'cambiar_grupo' %}" class="selector-grupo-form js-submit-once">
-        {% csrf_token %}
-        <select name="grupo" class="selector-grupo-select">
-            {% for g in grupos_usuario %}
-                <option value="{{ g.id_grupo }}" {% if g.id_grupo == grupo_activo %}selected{% endif %}>
-                    {{ g.nombre }}
-                </option>
-            {% endfor %}
-        </select>
-       <button type="submit" class="btn-secondary" data-loading-text="Cambiando...">Cambiar</button>
-    </form>
+    {% csrf_token %}
+
+    <select name="grupo" class="selector-grupo-select">
+        {% for g in grupos_usuario %}
+            <option value="{{ g.id_grupo }}" {% if g.id_grupo == grupo_activo %}selected{% endif %}>
+                {{ g.nombre }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit" class="btn-secondary" data-loading-text="Cambiando...">
+        Cambiar
+    </button>
+
+    <a href="{% url 'logout_gestor_tareas' %}" class="btn-secondary">
+        Cerrar sesión
+    </a>
+</form>
 
     <!-- SISTEMA DE ALERTAS -->
     {% if alertas_pendientes %}
