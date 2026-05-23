@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Mensajes - TaskPilot AI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
+    <link rel="stylesheet" href="{% static 'gestortareas/mensajes_gestor.css' %}">
     <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
 </head>
 
@@ -90,7 +90,7 @@
 
     <section class="panel">
 
-        <h2>Bandeja de entrada</h2>
+        <h2>Histórico de mensajes</h2>
 
         <table class="task-table">
             <thead>
@@ -147,11 +147,10 @@
                     <td>{{ mensaje.cuerpo|truncatechars:120 }}</td>
                     <td>{{ mensaje.fecha_envio|date:"d/m/Y H:i" }}</td>
                     <td>
-                        {% if not mensaje.leido %}
-                        <a href="{% url 'marcar_mensaje_leido' mensaje.id_mensaje %}" class="btn-secondary">
-                            Marcar leído
+                        <a href="{% url 'detalle_mensaje' mensaje.id_mensaje %}"
+                            class="btn-primary">
+                            Ver mensaje
                         </a>
-                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}

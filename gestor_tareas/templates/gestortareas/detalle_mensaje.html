@@ -1,0 +1,148 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Mensaje recibido</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{% static 'gestortareas/mensajes_gestor.css' %}">
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <div class="title">
+        <h1>Mensaje recibido</h1>
+    </div>
+
+    <section class="panel mensaje-detalle-panel">
+
+        <div class="mensaje-cabecera">
+
+            <div class="mensaje-cabecera-foto">
+
+                {% if perfil_remitente.foto_url %}
+
+                    <img src="{{ perfil_remitente.foto_url }}"
+                         class="detalle-avatar">
+
+                {% else %}
+
+                    <div class="detalle-avatar-placeholder">
+                        {{ mensaje.remitente.username|first|upper }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="mensaje-cabecera-info">
+
+                <h2>
+                    {% if perfil_remitente.nombre_visible %}
+                        {{ perfil_remitente.nombre_visible }}
+                    {% else %}
+                        {{ mensaje.remitente.username }}
+                    {% endif %}
+                </h2>
+
+                {% if perfil_remitente.puesto %}
+                    <p>
+                        <strong>Puesto:</strong>
+                        {{ perfil_remitente.puesto }}
+                    </p>
+                {% endif %}
+
+                {% if perfil_remitente.departamento %}
+                    <p>
+                        <strong>Departamento:</strong>
+                        {{ perfil_remitente.departamento }}
+                    </p>
+                {% endif %}
+
+                {% if perfil_remitente.telefono %}
+                    <p>
+                        <strong>Teléfono:</strong>
+                        {{ perfil_remitente.telefono }}
+                    </p>
+                {% endif %}
+
+                {% if perfil_remitente.email %}
+                    <p>
+                        <strong>Email:</strong>
+                        {{ perfil_remitente.email }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <div class="mensaje-datos">
+
+            <div class="mensaje-campo">
+                <label>Remitente</label>
+                <div class="mensaje-valor">
+                    {{ mensaje.remitente.username }}
+                </div>
+            </div>
+
+            <div class="mensaje-campo">
+                <label>Fecha</label>
+                <div class="mensaje-valor">
+                    {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}
+                </div>
+            </div>
+
+            <div class="mensaje-campo">
+                <label>Asunto</label>
+                <div class="mensaje-valor">
+                    {{ mensaje.asunto }}
+                </div>
+            </div>
+
+            <div class="mensaje-campo">
+                <label>Mensaje</label>
+
+                <div class="mensaje-texto">
+                    {{ mensaje.cuerpo|linebreaks }}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mensaje-botones">
+
+            <a href="{% url 'mensajes_gestor' %}"
+               class="btn-primary">
+                Responder
+            </a>
+
+            <a href="{% url 'mensajes_gestor' %}"
+               class="btn-secondary">
+                Volver al histórico
+            </a>
+
+            <a href="{% url 'gestor_tareas_home' %}"
+               class="btn-secondary">
+                Volver al gestor
+            </a>
+
+        </div>
+
+    </section>
+
+</div>
+
+</body>
+</html>

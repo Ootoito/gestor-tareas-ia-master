@@ -2084,3 +2084,44 @@ def marcar_mensaje_leido(request, id_mensaje):
         mensaje.save()
 
     return redirect("mensajes_gestor")
+
+@login_required
+def detalle_mensaje(request, id_mensaje):
+
+    acceso = validar_acceso_gestor(request)
+
+    if not acceso:
+        messages.error(request, "No tienes acceso.")
+        return redirect("login_gestor_tareas")
+
+    mensaje = get_object_or_404(
+        MensajeGestor.objects.select_related(
+            "remitente",
+            "destinatario",
+            "grupo",
+        ),
+        id_mensaje=id_mensaje,
+    )
+
+    if mensaje.destinatario != request.user:
+        messages.error(request, "No puedes acceder a este mensaje.")
+        return redirect("mensajes_gestor")
+
+    if not mensaje.leido:
+        mensaje.leido = True
+        mensaje.save()
+
+    perfil = PerfilUsuario.objects.filter(
+        usuario=mensaje.remitente
+    ).first()
+
+    context = {
+        "mensaje": mensaje,
+        "perfil_remitente": perfil,
+    }
+
+    return render(
+        request,
+        "gestortareas/detalle_mensaje.html",
+        context
+    )

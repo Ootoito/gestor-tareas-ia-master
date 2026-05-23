@@ -106,7 +106,8 @@
                     <small>{{ mensaje.fecha_envio|date:"d/m/Y H:i" }}</small>
                 </div>
 
-                <a href="{% url 'mensajes_gestor' %}" class="btn-secondary">
+                <a href="{% url 'detalle_mensaje' mensaje.id_mensaje %}"
+                   class="btn-secondary">
                     Leer
                 </a>
 

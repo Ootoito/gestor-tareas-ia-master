@@ -22,5 +22,6 @@ urlpatterns = [
     path("mi-perfil/", views.mi_perfil, name="mi_perfil"),
     path("logout/", views.logout_gestor_tareas, name="logout_gestor_tareas"),
     path("mensajes/", views.mensajes_gestor, name="mensajes_gestor"),
+    path("mensajes/<int:id_mensaje>/", views.detalle_mensaje, name="detalle_mensaje"),
     path("mensajes/<int:id_mensaje>/leido/", views.marcar_mensaje_leido, name="marcar_mensaje_leido"),
 ]
