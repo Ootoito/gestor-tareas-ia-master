@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Mi perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="{% static 'gestortareas/style_gestor_tareas.css' %}">
     <link rel="stylesheet" href="{% static 'gestortareas/toast_messages.css' %}">
 </head>
@@ -24,17 +25,7 @@
         {% for message in messages %}
         <div class="toast {% if 'success' in message.tags %}toast-success{% elif 'error' in message.tags %}toast-error{% elif 'warning' in message.tags %}toast-warning{% else %}toast-info{% endif %}">
             <div class="toast-content">
-                <span class="toast-title">
-                    {% if 'success' in message.tags %}
-                        Correcto
-                    {% elif 'error' in message.tags %}
-                        Error
-                    {% elif 'warning' in message.tags %}
-                        Atención
-                    {% else %}
-                        Información
-                    {% endif %}
-                </span>
+                <span class="toast-title">Información</span>
                 <div class="toast-message">{{ message }}</div>
             </div>
             <button type="button" class="toast-close" aria-label="Cerrar">✕</button>
@@ -43,22 +34,22 @@
     </div>
     {% endif %}
 
-    <section class="panel">
+    <section class="panel perfil-panel">
 
-        <div class="perfil-layout">
+        <div class="perfil-cabecera">
 
-            <div class="perfil-preview">
-                <div class="perfil-foto-box">
-                    {% if perfil.foto_url %}
-                        <img src="{{ perfil.foto_url }}" alt="Foto de perfil" class="preview-avatar-perfil">
-                    {% else %}
-                        <div class="perfil-foto-placeholder">
-                            {{ perfil.usuario.username|slice:":1"|upper }}
-                        </div>
-                    {% endif %}
-                </div>
+            <div class="perfil-foto-box">
+                {% if perfil.foto_url %}
+                    <img src="{{ perfil.foto_url }}" alt="Foto de perfil" class="preview-avatar-perfil">
+                {% else %}
+                    <div class="perfil-foto-placeholder">
+                        {{ perfil.usuario.username|slice:":1"|upper }}
+                    </div>
+                {% endif %}
+            </div>
 
-                <h2>{{ perfil.nombre_visible|default:perfil.usuario }}</h2>
+            <div class="perfil-info">
+                <h2>{{ perfil.nombre_visible|default:perfil.usuario.username }}</h2>
 
                 {% if perfil.puesto %}
                     <p class="perfil-puesto">{{ perfil.puesto }}</p>
@@ -77,66 +68,75 @@
                 {% endif %}
             </div>
 
-            <div class="perfil-form-box">
-                <h2>Datos de presentación</h2>
+        </div>
 
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
+        <div class="perfil-form-box">
 
-                    <div class="form-grid">
+            <h2>Datos de presentación</h2>
 
-                        <div class="field">
-                            <label>Usuario</label>
-                            <input type="text" value="{{ perfil.usuario.username }}" readonly>
-                        </div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                        <div class="field">
-                            <label>Nombre visible</label>
-                            <input type="text" name="nombre_visible" value="{{ perfil.nombre_visible }}">
-                        </div>
+                <div class="form-grid">
 
-                        <div class="field">
-                            <label>Puesto</label>
-                            <input type="text" name="puesto" value="{{ perfil.puesto }}">
-                        </div>
-
-                        <div class="field">
-                            <label>Departamento</label>
-                            <input type="text" name="departamento" value="{{ perfil.departamento }}">
-                        </div>
-
-                        <div class="field">
-                            <label>Teléfono</label>
-                            <input type="text" name="telefono" value="{{ perfil.telefono }}">
-                        </div>
-
-                        <div class="field">
-                            <label>Email</label>
-                            <input type="email" name="email" value="{{ perfil.email }}">
-                        </div>
-
-                        <div class="field field-full">
-                            <label>URL de foto</label>
-                            <input type="text" name="foto_url" value="{{ perfil.foto_url }}" placeholder="https://... o /static/...">
-                        </div>
-                        <div class="field field-full">
-                            <label>Subir foto de perfil</label>
-                            <input type="file" name="foto" accept="image/*">
-                        </div>
-
-                        <div class="field field-full">
-                            <label>Descripción / presentación</label>
-                            <textarea name="descripcion" rows="5">{{ perfil.descripcion }}</textarea>
-                        </div>
-
+                    <div class="field">
+                        <label>Usuario</label>
+                        <input type="text" value="{{ perfil.usuario.username }}" readonly>
                     </div>
 
-                    <div class="detalle-botones">
-                        <button type="submit" class="btn-primary">Guardar perfil</button>
-                        <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">Volver al gestor</a>
+                    <div class="field">
+                        <label>Nombre visible</label>
+                        <input type="text" name="nombre_visible" value="{{ perfil.nombre_visible|default:'' }}">
                     </div>
-                </form>
-            </div>
+
+                    <div class="field">
+                        <label>Puesto</label>
+                        <input type="text" name="puesto" value="{{ perfil.puesto|default:'' }}">
+                    </div>
+
+                    <div class="field">
+                        <label>Departamento</label>
+                        <input type="text" name="departamento" value="{{ perfil.departamento|default:'' }}">
+                    </div>
+
+                    <div class="field">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono" value="{{ perfil.telefono|default:'' }}">
+                    </div>
+
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" name="email" value="{{ perfil.email|default:'' }}">
+                    </div>
+
+                    <div class="field field-full">
+                        <label>URL de foto</label>
+                        <input type="text" name="foto_url" value="{{ perfil.foto_url|default:'' }}" placeholder="https://... o /media/...">
+                    </div>
+
+                    <div class="field field-full">
+                        <label>Subir foto de perfil</label>
+                        <input type="file" name="foto" accept="image/*">
+                    </div>
+
+                    <div class="field field-full">
+                        <label>Descripción / presentación</label>
+                        <textarea name="descripcion" rows="5">{{ perfil.descripcion|default:'' }}</textarea>
+                    </div>
+
+                </div>
+
+                <div class="detalle-botones">
+                    <button type="submit" class="btn-primary">
+                        Guardar perfil
+                    </button>
+
+                    <a href="{% url 'gestor_tareas_home' %}" class="btn-secondary">
+                        Volver al gestor
+                    </a>
+                </div>
+
+            </form>
 
         </div>
 
