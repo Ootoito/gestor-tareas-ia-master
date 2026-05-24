@@ -817,3 +817,45 @@ button:disabled {
         align-items: flex-start;
     }
 }
+.fila-click {
+    cursor: pointer;
+}
+
+.fila-click:hover td {
+    background: #f8fbff;
+}
+
+.task-table td {
+    font-size: 0.95rem;
+    line-height: 1.35;
+}
+
+.task-table td:nth-child(1) {
+    font-weight: 700;
+    color: #1e293b;
+    white-space: nowrap;
+}
+
+.task-table td:nth-child(3) {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.col-acc {
+    width: 70px;
+    text-align: center;
+}
+
+.col-acciones {
+    text-align: center;
+}
+
+.col-acciones form {
+    display: flex;
+    justify-content: center;
+}
+
+.task-table td:nth-child(2) {
+    min-width: 140px;
+}
+

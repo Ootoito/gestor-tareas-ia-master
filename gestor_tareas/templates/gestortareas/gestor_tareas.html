@@ -242,13 +242,12 @@
 
                 <thead>
                     <tr>
-                        <th class="col-numero">Nº</th>
-                        <th>Fecha</th>
+                        <th>Nº</th>
                         <th>Estado</th>
+                        <th>Título</th>
+                        <th>Fecha</th>
                         <th>Ámbito</th>
-                        <th>Técnico</th>
-                        <th class="col-titulo">Título</th>
-                        <th class="col-acciones">Acciones</th>
+                        <th>Acc.</th>
                     </tr>
                 </thead>
 
@@ -256,42 +255,43 @@
 
                 {% for tarea in tareas %}
 
-                    <tr>
-                        <td class="col-numero">{{ tarea.fecha|slice:"6:10" }}-{{ tarea.numero_tarea|stringformat:"03d" }}</td>
-                        <td>{{ tarea.fecha }}</td>
-                        <td>
-                            <span class="estado-preview" style="background-color: {{ tarea.estado_color }}20; color: {{ tarea.estado_color }};">
-                                {{ tarea.estado }}
-                            </span>
-                        </td>
-                        <td>{{ tarea.ambito }}</td>
-                        <td>{{ tarea.tecnico }}</td>
-                        <td class="col-titulo" title="{{ tarea.titulo }}">{{ tarea.titulo }}</td>
-                        <td class="col-acciones">
-                            <div class="acciones-tabla acciones-inline">
-                                <a href="{% url 'detalle_tarea' tarea.id %}"
-                                   class="btn-icono btn-editar"
-                                   title="Ver detalle / editar"
-                                   aria-label="Ver detalle / editar">
-                                    ✏️
-                                </a>
+                    <tr class="fila-click"
+    data-url="{% url 'detalle_tarea' tarea.id %}">
 
-                                <form method="post"
-                                    action="{% url 'eliminar_tarea' tarea.id %}"
-                                    class="js-submit-once js-confirm-delete"
-                                    onsubmit="return confirm('¿Eliminar esta tarea?');">
-                                    {% csrf_token %}
-                                    <button type="submit"
-                                        class="btn-icono btn-borrar"
-                                        title="Eliminar"
-                                        aria-label="Eliminar"
-                                        data-loading-text="...">
-                                        🗑️
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+    <td>
+        {{ tarea.numero_tarea|stringformat:"03d" }}-{{ tarea.fecha|slice:"8:10" }}
+    </td>
+
+    <td>
+    <span class="estado-badge"
+          style="background-color: {{ tarea.estado_color }}22; color: {{ tarea.estado_color }};">
+        {{ tarea.estado }}
+    </span>
+</td>
+
+    <td>{{ tarea.titulo }}</td>
+
+    <td>{{ tarea.fecha }}</td>
+
+    <td>{{ tarea.ambito }}</td>
+
+    <td class="col-acciones col-acc" onclick="event.stopPropagation();">
+        <form method="post"
+              action="{% url 'eliminar_tarea' tarea.id %}"
+              class="js-submit-once js-confirm-delete"
+              onsubmit="return confirm('¿Eliminar esta tarea?');">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn-icono btn-borrar"
+                    title="Eliminar"
+                    aria-label="Eliminar"
+                    data-loading-text="...">
+                🗑️
+            </button>
+        </form>
+    </td>
+
+</tr>
 
                 {% empty %}
 
@@ -314,5 +314,14 @@
 </div>
 <script src="{% static 'gestortareas/form_feedback.js' %}"></script>
 <script src="{% static 'gestortareas/toast_messages.js' %}"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".fila-click").forEach(function (fila) {
+        fila.addEventListener("click", function () {
+            window.location.href = fila.dataset.url;
+        });
+    });
+});
+</script>
 </body>
 </html>

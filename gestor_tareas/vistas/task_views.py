@@ -89,3 +89,8 @@ def insertar_nota_tarea(id_tarea, usuario, texto):
 
     with connection.cursor() as cursor:
         cursor.execute(sql, [id_tarea, usuario, texto])
+
+def cambiar_grupo(request):
+    nuevo_grupo = request.POST.get("grupo")
+    request.session["gestor_tareas_id_grupo"] = int(nuevo_grupo)
+    return redirect("gestor_tareas_home")
