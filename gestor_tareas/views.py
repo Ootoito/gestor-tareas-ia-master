@@ -979,10 +979,12 @@ def nuevo_tecnico(request):
 
 
 
-def cambiar_grupo(request):
-    nuevo_grupo = request.POST.get("grupo")
+def insertar_nota_tarea(id_tarea, usuario, texto):
+    sql = """
+        INSERT INTO gestor_tareas_tbnotas
+        (id_tarea, fecha, usuario, texto, activa)
+        VALUES (%s, NOW(), %s, %s, 1)
+    """
 
-    request.session["gestor_tareas_id_grupo"] = int(nuevo_grupo)
-
-    return redirect("gestor_tareas_home")
-
+    with connection.cursor() as cursor:
+        cursor.execute(sql, [id_tarea, usuario, texto])
