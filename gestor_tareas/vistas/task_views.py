@@ -83,8 +83,8 @@ def anadir_nota(request, tarea_id):
 def insertar_nota_tarea(id_tarea, usuario, texto):
     sql = """
         INSERT INTO gestor_tareas_tbnotas
-        (id_tarea, usuario, texto)
-        VALUES (%s, %s, %s)
+        (id_tarea, fecha, usuario, texto)
+        VALUES (%s, NOW(), %s, %s)
     """
 
     with connection.cursor() as cursor:
