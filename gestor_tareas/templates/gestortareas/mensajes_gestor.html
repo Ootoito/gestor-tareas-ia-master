@@ -179,7 +179,7 @@
 
             <tbody>
                 {% for mensaje in mensajes_enviados %}
-                <tr>
+                <tr class="fila-click" data-url="{% url 'detalle_mensaje' mensaje.id_mensaje %}">
                     <td>{{ mensaje.destinatario.username }}</td>
                     <td>{{ mensaje.asunto }}</td>
                     <td>{{ mensaje.cuerpo|truncatechars:120 }}</td>
@@ -198,6 +198,14 @@
 </div>
 
 <script src="{% static 'gestortareas/toast_messages.js' %}"></script>
-
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".fila-click").forEach(function (fila) {
+        fila.addEventListener("click", function () {
+            window.location.href = fila.dataset.url;
+        });
+    });
+});
+</script>
 </body>
 </html>

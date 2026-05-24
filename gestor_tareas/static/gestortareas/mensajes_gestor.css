@@ -491,3 +491,11 @@ input:focus, select:focus, textarea:focus {
     gap: 14px;
     margin-top: 26px;
 }
+
+.fila-click {
+    cursor: pointer;
+}
+
+.fila-click:hover td {
+    background: #f8fbff;
+}

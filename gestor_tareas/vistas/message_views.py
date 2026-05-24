@@ -125,11 +125,11 @@ def detalle_mensaje(request, id_mensaje):
         id_mensaje=id_mensaje,
     )
 
-    if mensaje.destinatario != request.user:
+    if mensaje.destinatario != request.user and mensaje.remitente != request.user:
         messages.error(request, "No puedes acceder a este mensaje.")
         return redirect("mensajes_gestor")
 
-    if not mensaje.leido:
+    if mensaje.destinatario == request.user and not mensaje.leido:
         mensaje.leido = True
         mensaje.save()
 
