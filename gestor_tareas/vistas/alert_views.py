@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection
 from django.shortcuts import redirect
 from django.views.decorators.http import require_POST
-
+from django.utils import timezone
 from gestor_tareas.vistas.common import validar_acceso_gestor
 
 def read_tipos_alerta():
@@ -114,12 +114,13 @@ def read_alertas_pendientes_para_grupo(id_grupo):
           AND t.activa = 1
           AND a.activa = 1
           AND a.lanzada = 0
-          AND a.fecha_disparo <= NOW()
+          AND a.fecha_disparo <= %s
         ORDER BY a.fecha_disparo
     """
+    ahora = timezone.now()
 
     with connection.cursor() as cursor:
-        cursor.execute(sql, [id_grupo])
+        cursor.execute(sql, [id_grupo, ahora])
         rows = cursor.fetchall()
 
     return [
@@ -158,12 +159,14 @@ def descartar_alerta(request, id_alerta):
             messages.error(request, "No se pudo descartar la alerta.")
             return redirect("gestor_tareas_home")
 
+        ahora = timezone.now()
+
         cursor.execute("""
             UPDATE gestor_tareas_tbalertas
             SET lanzada = 1,
-                fecha_lanzada = NOW()
+            fecha_lanzada = %s
             WHERE id_alerta = %s
-        """, [id_alerta])
+        """, [ahora, id_alerta])
 
     messages.success(request, "Alerta descartada.")
     return redirect("gestor_tareas_home")
