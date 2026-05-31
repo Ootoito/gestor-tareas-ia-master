@@ -1,4 +1,4 @@
-# Gestor de tareas IA
+# Gestor de tareas TaskPilotIA
 
 Aplicación web de gestión de tareas desarrollada con Django y MariaDB como proyecto académico de máster.
 
