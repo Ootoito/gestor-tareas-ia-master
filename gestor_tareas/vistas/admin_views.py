@@ -69,7 +69,18 @@ def admin_gestor(request):
                         }
                     )
 
-                messages.success(request, "Grupo creado correctamente.")
+                sincronizar_usuario_como_tecnico_en_grupo(
+                    user=request.user,
+                    grupo=grupo,
+                )
+
+                request.session["gestor_tareas_id_grupo"] = grupo.id
+                request.session["gestor_tareas_grupo"] = grupo.nombre
+
+                if creado:
+                    messages.success(request, "Grupo creado correctamente y asignado a tu usuario.")
+                else:
+                    messages.success(request, "El grupo ya existía. Se ha asignado a tu usuario.")
 
         elif accion == "crear_usuario":
 
