@@ -18,6 +18,8 @@
 
         <div class="praktiko-user">
             Usuario: <strong>{{ request.user.username }}</strong>
+            ·
+            <a href="{% url 'praktiko:logout' %}">Salir</a>
         </div>
     </header>
 

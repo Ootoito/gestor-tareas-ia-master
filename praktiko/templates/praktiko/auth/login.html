@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Praktiko</title>
+    <link rel="stylesheet" href="{% static 'praktiko/css/praktiko.css' %}">
+</head>
+<body>
+
+<div class="praktiko-login-page">
+
+    <div class="praktiko-login-card">
+
+        <div class="praktiko-login-brand">
+            <div class="praktiko-login-logo">📚</div>
+            <h1>Praktiko</h1>
+            <p>Tu entrenador personal de idiomas.</p>
+        </div>
+
+        {% if messages %}
+            <section class="praktiko-messages">
+                {% for message in messages %}
+                    <div class="praktiko-message praktiko-message-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+
+        <form method="post" class="praktiko-login-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main praktiko-login-button">
+                Entrar
+            </button>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
