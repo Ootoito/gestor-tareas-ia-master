@@ -1,0 +1,79 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Práctica
+{% endblock %}
+
+{% block page_title %}
+Práctica
+{% endblock %}
+
+{% block page_subtitle %}
+Pregunta {{ indice_actual }} de {{ total }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card practica-card">
+
+        <div class="practica-progreso">
+            Pregunta {{ indice_actual }} / {{ total }}
+        </div>
+
+        <div class="practica-pregunta">
+            {{ entrada.texto_origen }}
+        </div>
+
+        {% if mostrar_respuesta %}
+
+            <div class="practica-respuesta">
+                {{ entrada.texto_destino }}
+            </div>
+
+            <form method="post" class="practica-botones">
+                {% csrf_token %}
+
+                <button name="accion" value="error" class="btn-error">
+                    ❌ Error
+                </button>
+
+                <button name="accion" value="dificil" class="btn-dificil">
+                    ⚠️ Difícil
+                </button>
+
+                <button name="accion" value="correcto" class="btn-correcto">
+                    ✅ Correcto
+                </button>
+
+                <button name="accion" value="facil" class="btn-facil">
+                    🚀 Fácil
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    name="accion"
+                    value="mostrar"
+                    class="praktiko-btn praktiko-btn-main"
+                >
+                    Mostrar respuesta
+                </button>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

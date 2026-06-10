@@ -1,0 +1,58 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Sum
+from django.shortcuts import render
+
+from praktiko.models import (
+    Diccionario,
+    Tema,
+    EntradaDiccionario,
+    SesionPractica,
+)
+
+
+@login_required
+def home(request):
+    usuario = request.user
+
+    total_diccionarios = Diccionario.objects.filter(usuario=usuario).count()
+    total_temas = Tema.objects.filter(usuario=usuario).count()
+    total_entradas = EntradaDiccionario.objects.filter(usuario=usuario).count()
+    total_sesiones = SesionPractica.objects.filter(usuario=usuario).count()
+
+    resumen_sesiones = SesionPractica.objects.filter(usuario=usuario).aggregate(
+        total_aciertos=Sum("aciertos"),
+        total_fallos=Sum("fallos"),
+        total_tarjetas=Sum("total_tarjetas"),
+    )
+
+    total_aciertos = resumen_sesiones["total_aciertos"] or 0
+    total_fallos = resumen_sesiones["total_fallos"] or 0
+    total_tarjetas = resumen_sesiones["total_tarjetas"] or 0
+
+    if total_tarjetas > 0:
+        porcentaje_acierto = round((total_aciertos / total_tarjetas) * 100, 2)
+    else:
+        porcentaje_acierto = 0
+
+    diccionarios = (
+        Diccionario.objects
+        .filter(usuario=usuario, activo=True)
+        .annotate(
+            total_temas=Count("temas", distinct=True),
+            total_entradas=Count("entradas", distinct=True),
+        )
+        .order_by("nombre")
+    )
+
+    contexto = {
+        "total_diccionarios": total_diccionarios,
+        "total_temas": total_temas,
+        "total_entradas": total_entradas,
+        "total_sesiones": total_sesiones,
+        "total_aciertos": total_aciertos,
+        "total_fallos": total_fallos,
+        "porcentaje_acierto": porcentaje_acierto,
+        "diccionarios": diccionarios,
+    }
+
+    return render(request, "praktiko/home.html", contexto)

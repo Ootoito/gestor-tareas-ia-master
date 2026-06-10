@@ -1,0 +1,75 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Resultado
+{% endblock %}
+
+{% block page_title %}
+Resultado de la práctica
+{% endblock %}
+
+{% block page_subtitle %}
+Resumen de tu sesión de estudio.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card practica-card">
+
+        <h2>Práctica finalizada</h2>
+
+        <div class="resultado-grid">
+            <div class="resultado-item">
+                <span>Total</span>
+                <strong>{{ sesion.total_tarjetas }}</strong>
+            </div>
+
+            <div class="resultado-item">
+                <span>Aciertos</span>
+                <strong>{{ sesion.aciertos }}</strong>
+            </div>
+
+            <div class="resultado-item">
+                <span>Fallos</span>
+                <strong>{{ sesion.fallos }}</strong>
+            </div>
+
+            <div class="resultado-item">
+                <span>% acierto</span>
+                <strong>{{ sesion.porcentaje_acierto }}%</strong>
+            </div>
+        </div>
+
+        {% if falladas %}
+            <div class="falladas-box">
+                <h3>Palabras a repasar</h3>
+
+                <ul>
+                    {% for entrada in falladas %}
+                        <li>
+                            <strong>{{ entrada.texto_origen }}</strong>
+                            →
+                            {{ entrada.texto_destino }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:configurar_practica' %}" class="praktiko-btn praktiko-btn-main">
+                Nueva práctica
+            </a>
+
+            <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+                Volver al panel
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

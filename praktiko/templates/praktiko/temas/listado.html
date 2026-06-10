@@ -1,0 +1,78 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Temas
+{% endblock %}
+
+{% block page_title %}
+Temas
+{% endblock %}
+
+{% block page_subtitle %}
+Organiza tus palabras y frases por áreas de aprendizaje.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:crear_tema' %}" class="praktiko-btn praktiko-btn-main">
+        Nuevo tema
+    </a>
+</section>
+
+<section class="praktiko-section">
+
+    {% if temas %}
+
+        <div class="praktiko-grid diccionarios-grid">
+
+            {% for tema in temas %}
+
+                <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ tema.color }};">
+
+                    <h3 class="diccionario-title">
+                        <span class="diccionario-icono">{{ tema.icono }}</span>
+                        <span>{{ tema.nombre }}</span>
+                    </h3>
+
+                    <p>
+                        {{ tema.diccionario.icono }}
+                        {{ tema.diccionario.nombre }}
+                    </p>
+
+                    {% if tema.descripcion %}
+                        <p>{{ tema.descripcion }}</p>
+                    {% endif %}
+
+                    <div class="diccionario-meta">
+                        <span>{{ tema.total_entradas }} entradas</span>
+                        <span>Orden {{ tema.orden }}</span>
+
+                        {% if tema.activo %}
+                            <span>Activo</span>
+                        {% else %}
+                            <span>Inactivo</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-actions">
+                        <a href="{% url 'praktiko:editar_tema' tema.id %}" class="praktiko-btn">
+                            Editar
+                        </a>
+                    </div>
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="praktiko-empty">
+            Todavía no tienes temas creados.
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Practicar
+{% endblock %}
+
+{% block page_title %}
+Practicar
+{% endblock %}
+
+{% block page_subtitle %}
+Configura una sesión de práctica con tus palabras y frases.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+            
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="{{ form.diccionario.id_for_label }}">Diccionario</label>
+                {{ form.diccionario }}
+                {{ form.diccionario.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.tema.id_for_label }}">Tema</label>
+                {{ form.tema }}
+                {{ form.tema.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.numero_preguntas.id_for_label }}">Número de preguntas</label>
+                {{ form.numero_preguntas }}
+                {{ form.numero_preguntas.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.modo.id_for_label }}">Modo de práctica</label>
+                {{ form.modo }}
+                {{ form.modo.errors }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:home' %}" class="praktiko-btn">Cancelar</a>
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                Comenzar práctica
+            </button>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

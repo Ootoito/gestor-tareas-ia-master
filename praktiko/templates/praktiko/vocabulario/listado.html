@@ -1,0 +1,76 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}Vocabulario{% endblock %}
+
+{% block page_title %}Vocabulario{% endblock %}
+
+{% block page_subtitle %}
+Gestiona tus palabras y frases de estudio.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:crear_entrada' %}" class="praktiko-btn praktiko-btn-main">
+        Nueva entrada
+    </a>
+</section>
+
+<section class="praktiko-section">
+
+    {% if entradas %}
+        <div class="praktiko-card table-card">
+            <table class="praktiko-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Origen</th>
+                        <th>Traducción</th>
+                        <th>Diccionario</th>
+                        <th>Tema</th>
+                        <th>Nivel</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entrada in entradas %}
+                        <tr>
+                            <td>{{ entrada.get_tipo_display }}</td>
+                            <td><strong>{{ entrada.texto_origen }}</strong></td>
+                            <td>{{ entrada.texto_destino }}</td>
+                            <td>{{ entrada.diccionario.icono }} {{ entrada.diccionario.nombre }}</td>
+                            <td>
+                                {% if entrada.tema %}
+                                    {{ entrada.tema.icono }} {{ entrada.tema.nombre }}
+                                {% else %}
+                                    Sin tema
+                                {% endif %}
+                            </td>
+                            <td>{{ entrada.get_nivel_display }}</td>
+                            <td>
+                                {% if entrada.activa %}
+                                    Activa
+                                {% else %}
+                                    Inactiva
+                                {% endif %}
+                            </td>
+                            <td class="table-actions">
+                                <a href="{% url 'praktiko:editar_entrada' entrada.id %}" class="praktiko-btn">
+                                    Editar
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="praktiko-empty">
+            Todavía no tienes palabras o frases creadas.
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}Praktiko{% endblock %}
+
+{% block page_title %}Praktiko{% endblock %}
+
+{% block page_subtitle %}
+Tu espacio personal de práctica de vocabulario y frases.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-grid resumen-grid">
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Diccionarios</span>
+        <strong>{{ total_diccionarios }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Temas</span>
+        <strong>{{ total_temas }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Palabras / frases</span>
+        <strong>{{ total_entradas }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Prácticas</span>
+        <strong>{{ total_sesiones }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Aciertos</span>
+        <strong>{{ total_aciertos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Fallos</span>
+        <strong>{{ total_fallos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">% acierto</span>
+        <strong>{{ porcentaje_acierto }}%</strong>
+    </article>
+</section>
+
+<section class="praktiko-section">
+    <h2>Mis diccionarios</h2>
+
+    {% if diccionarios %}
+        <div class="praktiko-grid diccionarios-grid">
+            {% for diccionario in diccionarios %}
+                <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ diccionario.color }};">
+                    <h3 class="diccionario-title">
+                        <span class="diccionario-icono">{{ diccionario.icono }}</span>
+                        <span>{{ diccionario.nombre }}</span>
+                    </h3>
+                    <p>
+                        {{ diccionario.idioma_origen }}
+                        →
+                        {{ diccionario.idioma_destino }}
+                    </p>
+                    <div class="diccionario-meta">
+                        <span>{{ diccionario.total_temas }} temas</span>
+                        <span>{{ diccionario.total_entradas }} entradas</span>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="praktiko-empty">
+            Todavía no tienes diccionarios creados.
+        </div>
+    {% endif %}
+</section>
+
+{% endblock %}

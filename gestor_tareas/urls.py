@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from gestor_tareas.vistas import auth_views
 from . import views
@@ -28,5 +28,6 @@ urlpatterns = [
     path("mi-perfil/", profile_views.mi_perfil, name="mi_perfil"),    
     path("mensajes/", message_views.mensajes_gestor, name="mensajes_gestor"),
     path("mensajes/<int:id_mensaje>/", message_views.detalle_mensaje, name="detalle_mensaje"),
-    path("mensajes/<int:id_mensaje>/leido/", message_views.marcar_mensaje_leido, name="marcar_mensaje_leido"),    
+    path("mensajes/<int:id_mensaje>/leido/", message_views.marcar_mensaje_leido, name="marcar_mensaje_leido"),
+    path("praktiko/", include("praktiko.urls")),    
 ]

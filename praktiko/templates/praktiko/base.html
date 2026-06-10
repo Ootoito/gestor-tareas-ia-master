@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Praktiko{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'praktiko/css/praktiko.css' %}">
+</head>
+<body>
+
+<div class="praktiko-page">
+
+    <header class="praktiko-header">
+        <div>
+            <h1>{% block page_title %}Praktiko{% endblock %}</h1>
+            <p>{% block page_subtitle %}Tu entrenador personal de idiomas.{% endblock %}</p>
+        </div>
+
+        <div class="praktiko-user">
+            Usuario: <strong>{{ request.user.username }}</strong>
+        </div>
+    </header>
+
+    <nav class="praktiko-actions">
+        {% if messages %}
+            <section class="praktiko-messages">
+                {% for message in messages %}
+                    <div class="praktiko-message praktiko-message-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+        <a href="{% url 'praktiko:home' %}" class="praktiko-btn">Panel</a>
+        <a href="{% url 'praktiko:listado_diccionarios' %}" class="praktiko-btn">Diccionarios</a>
+        <a href="{% url 'praktiko:listado_temas' %}" class="praktiko-btn">Temas</a>
+        <a href="{% url 'praktiko:listado_vocabulario' %}" class="praktiko-btn">Vocabulario</a>
+        <a href="{% url 'praktiko:configurar_practica' %}" class="praktiko-btn praktiko-btn-main">Practicar</a>
+        <a href="#" class="praktiko-btn">Estadísticas</a>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+</body>
+</html>
