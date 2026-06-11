@@ -1,0 +1,29 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Sin permiso
+{% endblock %}
+
+{% block page_title %}
+Acceso no permitido
+{% endblock %}
+
+{% block page_subtitle %}
+No tienes permisos para acceder a esta zona.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+        <p>No tienes permisos de administración sobre Praktiko.</p>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:home' %}" class="praktiko-btn praktiko-btn-main">
+                Volver al panel
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

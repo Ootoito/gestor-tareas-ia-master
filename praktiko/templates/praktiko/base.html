@@ -3,6 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Praktiko{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'praktiko/css/praktiko.css' %}">
 </head>
@@ -32,6 +33,11 @@
                     </div>
                 {% endfor %}
             </section>
+        {% endif %}
+        {% if request.user.is_superuser or request.user.groups.all %}
+            <a href="{% url 'praktiko:gestion_usuarios' %}" class="praktiko-btn">
+                Gestión
+            </a>
         {% endif %}
         <a href="{% url 'praktiko:home' %}" class="praktiko-btn">Panel</a>
         <a href="{% url 'praktiko:listado_diccionarios' %}" class="praktiko-btn">Diccionarios</a>

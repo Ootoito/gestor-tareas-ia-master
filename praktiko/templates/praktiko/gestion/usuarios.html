@@ -1,0 +1,89 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Gestión de usuarios
+{% endblock %}
+
+{% block page_title %}
+Gestión de usuarios
+{% endblock %}
+
+{% block page_subtitle %}
+Usuarios con acceso al sistema Praktiko.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card table-card">
+        <table class="praktiko-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Activo</th>
+                    <th>Alta</th>
+                    <th>Diccionarios</th>
+                    <th>Entradas</th>
+                    <th>Prácticas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td><strong>{{ usuario.username }}</strong></td>
+                        <td>{{ usuario.email|default:"-" }}</td>
+                        <td>
+                            {% if usuario.is_active %}
+                                Sí
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                        <td>{{ usuario.date_joined|date:"d/m/Y H:i" }}</td>
+                        <td>{{ usuario.total_diccionarios }}</td>
+                        <td>{{ usuario.total_entradas }}</td>
+                        <td>{{ usuario.total_sesiones }}</td>
+                        <td class="table-actions">
+                            <div class="table-actions-group">
+
+                            <form method="post" action="{% url 'praktiko:gestion_cambiar_estado_usuario' usuario.id %}">
+                                {% csrf_token %}
+
+                                {% if usuario.is_active %}
+                                    <button type="submit" class="praktiko-btn btn-small btn-danger">
+                                        Desactivar
+                                    </button>
+                                {% else %}
+                                    <button type="submit" class="praktiko-btn btn-small btn-success">
+                                        Activar
+                                    </button>
+                                {% endif %}
+                            </form>
+
+                            <form method="post" action="{% url 'praktiko:gestion_resetear_password_usuario' usuario.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="praktiko-btn btn-small">
+                                    Reset clave
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="8">
+                            No hay usuarios Praktiko registrados.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+{% endblock %}

@@ -6,12 +6,17 @@ from praktiko.vistas import diccionario_views
 from praktiko.vistas import tema_views
 from praktiko.vistas import vocabulario_views
 from praktiko.vistas import practica_views
+from praktiko.vistas import gestion_views
 
 app_name = "praktiko"
 
 urlpatterns = [
     path("login/", auth_views.login_praktiko, name="login"),
     path("logout/", auth_views.logout_praktiko, name="logout"),
+
+    path("gestion/usuarios/", gestion_views.listado_usuarios, name="gestion_usuarios"),
+    path("gestion/usuarios/<int:usuario_id>/estado/", gestion_views.cambiar_estado_usuario, name="gestion_cambiar_estado_usuario",),
+    path("gestion/usuarios/<int:usuario_id>/reset-password/", gestion_views.resetear_password_usuario, name="gestion_resetear_password_usuario",),
 
     path("", home_views.home, name="home"),
     

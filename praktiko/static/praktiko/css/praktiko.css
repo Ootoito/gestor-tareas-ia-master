@@ -387,41 +387,96 @@ body {
 .falladas-box ul {
     margin-bottom: 0;
 }
+/* =========================================================
+   Tablas
+   ========================================================= */
 
+.table-card {
+    overflow-x: auto;
+}
+
+.praktiko-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.praktiko-table th,
+.praktiko-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.praktiko-table th {
+    color: #475569;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+}
+
+.praktiko-table td {
+    color: #334155;
+}
+
+.praktiko-table tr:hover td {
+    background: #f8fafc;
+}
 /* =========================================================
    Responsive móvil - Praktiko 0.1
    ========================================================= */
 
 @media (max-width: 768px) {
 
+    body {
+        background: #eef4fb;
+    }
+
     .praktiko-page {
-        padding: 18px 12px;
+        width: 100%;
+        max-width: 100%;
+        padding: 14px 10px;
     }
 
     .praktiko-header {
         flex-direction: column;
-        align-items: flex-start;
-        padding: 18px;
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+        padding: 18px 14px;
+        margin-bottom: 18px;
         border-radius: 18px;
     }
 
     .praktiko-header h1 {
-        font-size: 1.8rem;
+        font-size: 1.75rem;
+        line-height: 1.15;
+    }
+
+    .praktiko-header p {
+        font-size: 0.95rem;
     }
 
     .praktiko-user {
         width: 100%;
         text-align: center;
+        font-size: 0.9rem;
+        border-radius: 14px;
     }
 
     .praktiko-actions {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 10px;
+        margin: 18px 0;
     }
 
     .praktiko-btn {
         width: 100%;
-        min-height: 48px;
+        min-height: 50px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        text-align: center;
     }
 
     .resumen-grid,
@@ -432,23 +487,77 @@ body {
 
     .praktiko-card {
         padding: 16px;
+        border-radius: 16px;
+    }
+
+    .stat-card {
+        min-height: 90px;
     }
 
     .stat-card strong {
         font-size: 1.7rem;
     }
 
+    .diccionario-title {
+        align-items: center;
+    }
+
+    .diccionario-icono {
+        width: 42px;
+        height: 42px;
+        font-size: 1.65rem;
+    }
+
+    .diccionario-meta span {
+        font-size: 0.8rem;
+    }
+
+    .praktiko-form {
+        max-width: 100%;
+    }
+
+    .form-control {
+        min-height: 48px;
+        font-size: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions .praktiko-btn,
+    .form-actions button {
+        width: 100%;
+        min-height: 52px;
+    }
+
+    .table-card {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .praktiko-table {
+        min-width: 760px;
+    }
+
     .practica-card {
         max-width: 100%;
     }
 
+    .practica-progreso {
+        margin-bottom: 18px;
+    }
+
     .practica-pregunta {
-        font-size: 2.2rem;
+        font-size: 2.6rem;
+        line-height: 1.15;
+        margin: 30px 0;
         word-break: break-word;
     }
 
     .practica-respuesta {
-        font-size: 1.7rem;
+        font-size: 2rem;
+        line-height: 1.2;
         word-break: break-word;
     }
 
@@ -459,61 +568,58 @@ body {
 
     .practica-botones button {
         width: 100%;
-        min-height: 58px;
-        font-size: 1.05rem;
+        min-height: 62px;
+        font-size: 1.08rem;
     }
 
     .resultado-grid {
         grid-template-columns: 1fr 1fr;
     }
 
-    .form-actions {
-        flex-direction: column-reverse;
+    .falladas-box {
+        font-size: 0.95rem;
     }
 
-    .form-actions .praktiko-btn,
-    .form-actions button {
-        width: 100%;
-    }
-
-    .praktiko-table {
-        min-width: 760px;
+    .praktiko-login-card {
+        padding: 24px 18px;
+        border-radius: 20px;
     }
 }
 
 @media (max-width: 480px) {
 
+    .praktiko-page {
+        padding: 10px 8px;
+    }
+
     .praktiko-header h1 {
         font-size: 1.55rem;
     }
 
+    .praktiko-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .praktiko-btn {
+        min-height: 52px;
+    }
+
     .practica-pregunta {
-        font-size: 1.9rem;
+        font-size: 2.25rem;
     }
 
     .practica-respuesta {
-        font-size: 1.45rem;
+        font-size: 1.75rem;
     }
 
     .resultado-grid {
         grid-template-columns: 1fr;
     }
 
-    .diccionario-title {
-        align-items: flex-start;
+    .praktiko-login-page {
+        padding: 14px;
     }
 }
-
-.form-errors {
-    margin-bottom: 18px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    background: #fee2e2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-    font-weight: 700;
-}
-
 /* =========================================================
    Login Praktiko
    ========================================================= */
@@ -571,4 +677,49 @@ body {
 
 .praktiko-login-button {
     margin-top: 8px;
+}
+
+/* # =========================================================
+   usuarios y acciones
+   ========================================================= */
+
+.btn-small {
+    min-height: 36px;
+    padding: 7px 12px;
+    font-size: 0.85rem;
+}
+
+.btn-danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.btn-danger:hover {
+    background: #fecaca;
+}
+
+.btn-success {
+    background: #dcfce7;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+
+.btn-success:hover {
+    background: #bbf7d0;
+}
+
+.table-actions form {
+    margin: 0;
+}
+
+.table-actions-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.table-actions-group form {
+    margin: 0;
 }
