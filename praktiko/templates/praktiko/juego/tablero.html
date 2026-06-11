@@ -1,0 +1,48 @@
+{% extends "praktiko/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
+{% endblock %}
+
+{% block title %}
+Partida
+{% endblock %}
+
+{% block page_title %}
+🎮 Partida
+{% endblock %}
+
+{% block page_subtitle %}
+Elimina todas las fichas.
+{% endblock %}
+
+{% block content %}
+
+<div class="juego-panel">
+
+    <div class="juego-marcador">
+        <span>🎯 Puntos: {{ puntos }}</span>
+        <span>✅ Aciertos: {{ aciertos }}</span>
+        <span>❌ Errores: {{ errores }}</span>
+        <span>🧩 Restantes: {{ restantes }}</span>
+    </div>
+
+    <div class="juego-tablero-mahjong">
+        {% for ficha in fichas %}
+    {% with ficha_str=ficha|stringformat:"s" %}
+        {% if ficha_str not in eliminadas %}
+            <a
+                href="{% url 'praktiko:juego_pregunta' %}?ficha={{ ficha }}"
+                class="juego-ficha-mahjong ficha-pos-{{ ficha }}"
+            >
+                <span>?</span>
+            </a>
+        {% endif %}
+    {% endwith %}
+{% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "praktiko/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
+{% endblock %}
+
+{% block title %}
+Resultado del juego
+{% endblock %}
+
+{% block page_title %}
+🏆 Resultado del juego
+{% endblock %}
+
+{% block page_subtitle %}
+Has completado el tablero de fichas.
+{% endblock %}
+
+{% block content %}
+
+<div class="juego-resultado-card">
+
+    <h2>Partida completada</h2>
+
+    <div class="resultado-grid">
+        <div class="resultado-item">
+            <span>Puntos</span>
+            <strong>{{ puntos }}</strong>
+        </div>
+
+        <div class="resultado-item">
+            <span>Fichas</span>
+            <strong>{{ numero_fichas }}</strong>
+        </div>
+
+        <div class="resultado-item">
+            <span>Aciertos</span>
+            <strong>{{ aciertos }}</strong>
+        </div>
+
+        <div class="resultado-item">
+            <span>Errores</span>
+            <strong>{{ errores }}</strong>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a href="{% url 'praktiko:juego_configurar' %}" class="praktiko-btn praktiko-btn-main">
+            Nueva partida
+        </a>
+
+        <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+            Volver al panel
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Praktiko{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'praktiko/css/praktiko.css' %}">
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
 
@@ -44,6 +45,9 @@
         <a href="{% url 'praktiko:listado_temas' %}" class="praktiko-btn">Temas</a>
         <a href="{% url 'praktiko:listado_vocabulario' %}" class="praktiko-btn">Vocabulario</a>
         <a href="{% url 'praktiko:configurar_practica' %}" class="praktiko-btn praktiko-btn-main">Practicar</a>
+        <a href="{% url 'praktiko:juego_configurar' %}" class="praktiko-btn">
+            🎮 Jugar
+        </a>
         <a href="#" class="praktiko-btn">Estadísticas</a>
     </nav>
 

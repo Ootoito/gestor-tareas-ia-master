@@ -1,0 +1,49 @@
+{% extends "praktiko/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
+{% endblock %}
+
+{% block title %}
+Pregunta
+{% endblock %}
+
+{% block page_title %}
+🎮 Pregunta
+{% endblock %}
+
+{% block page_subtitle %}
+Responde correctamente para eliminar la ficha.
+{% endblock %}
+
+{% block content %}
+
+<div class="juego-pregunta-card">
+
+    <div class="juego-palabra">
+        {{ entrada.texto_origen }}
+    </div>
+
+    <div class="juego-respuestas">
+
+    {% for opcion in opciones %}
+
+    <form method="post" action="{% url 'praktiko:juego_pregunta' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="entrada_correcta_id" value="{{ entrada.id }}">
+        <input type="hidden" name="respuesta_id" value="{{ opcion.id }}">
+        <input type="hidden" name="ficha" value="{{ ficha }}">
+        <button type="submit" class="juego-respuesta-btn">
+            {{ opcion.texto_destino }}
+        </button>
+    </form>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}
