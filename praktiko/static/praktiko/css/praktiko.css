@@ -717,9 +717,63 @@ body {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .table-actions-group form {
     margin: 0;
+}
+
+/* =========================================================
+   Mejora visual tablas gestión
+   ========================================================= */
+
+.praktiko-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.praktiko-table thead th {
+    background: #f8fafc;
+    padding: 14px 12px;
+    border-bottom: 2px solid #dbeafe;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.praktiko-table tbody tr {
+    background: #ffffff;
+}
+
+.praktiko-table tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.praktiko-table tbody td {
+    padding: 16px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.praktiko-table tbody tr:hover td {
+    background: #eff6ff;
+}
+
+.praktiko-table td:first-child,
+.praktiko-table th:first-child {
+    padding-left: 20px;
+}
+
+.praktiko-table td:last-child,
+.praktiko-table th:last-child {
+    padding-right: 20px;
+}
+
+.table-actions {
+    min-width: 130px;
+}
+
+.table-actions-group {
+    justify-content: flex-start;
 }
