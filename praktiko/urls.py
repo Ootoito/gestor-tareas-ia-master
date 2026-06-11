@@ -17,6 +17,8 @@ urlpatterns = [
     path("gestion/usuarios/", gestion_views.listado_usuarios, name="gestion_usuarios"),
     path("gestion/usuarios/<int:usuario_id>/estado/", gestion_views.cambiar_estado_usuario, name="gestion_cambiar_estado_usuario",),
     path("gestion/usuarios/<int:usuario_id>/reset-password/", gestion_views.resetear_password_usuario, name="gestion_resetear_password_usuario",),
+    path("gestion/usuarios/nuevo/", gestion_views.crear_usuario, name="gestion_crear_usuario",),
+    path("gestion/usuarios/<int:usuario_id>/editar/", gestion_views.editar_usuario, name="gestion_editar_usuario",),
 
     path("", home_views.home, name="home"),
     

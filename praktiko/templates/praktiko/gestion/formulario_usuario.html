@@ -1,0 +1,95 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+{{ titulo }}
+{% endblock %}
+
+{% block page_title %}
+{{ titulo }}
+{% endblock %}
+
+{% block page_subtitle %}
+Alta y mantenimiento de usuarios del sistema Praktiko.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Usuario</label>
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">Nombre</label>
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">Apellidos</label>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+
+            <div class="form-group form-group-full">
+                <label for="{{ form.password_inicial.id_for_label }}">
+                    Contraseña
+                </label>
+                {{ form.password_inicial }}
+                {{ form.password_inicial.errors }}
+                <small>
+                    En edición puedes dejarla vacía para conservar la contraseña actual.
+                </small>
+            </div>
+
+            <div class="form-group form-check">
+                {{ form.is_active }}
+                <label for="{{ form.is_active.id_for_label }}">Usuario activo</label>
+                {{ form.is_active.errors }}
+            </div>
+
+            <div class="form-group form-check">
+                {{ form.es_admin_praktiko }}
+                <label for="{{ form.es_admin_praktiko.id_for_label }}">
+                    Administrador Praktiko
+                </label>
+                {{ form.es_admin_praktiko.errors }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:gestion_usuarios' %}" class="praktiko-btn">
+                Cancelar
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                {{ boton }}
+            </button>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

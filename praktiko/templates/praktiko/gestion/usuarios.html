@@ -13,7 +13,11 @@ Usuarios con acceso al sistema Praktiko.
 {% endblock %}
 
 {% block content %}
-
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:gestion_crear_usuario' %}" class="praktiko-btn praktiko-btn-main">
+        Nuevo usuario
+    </a>
+</section>
 <section class="praktiko-section">
 
     <div class="praktiko-card table-card">
@@ -49,7 +53,9 @@ Usuarios con acceso al sistema Praktiko.
                         <td>{{ usuario.total_sesiones }}</td>
                         <td class="table-actions">
                             <div class="table-actions-group">
-
+                            <a href="{% url 'praktiko:gestion_editar_usuario' usuario.id %}" class="praktiko-btn btn-small">
+                                Editar
+                            </a>
                             <form method="post" action="{% url 'praktiko:gestion_cambiar_estado_usuario' usuario.id %}">
                                 {% csrf_token %}
 
