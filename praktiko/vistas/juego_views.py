@@ -40,11 +40,43 @@ def tablero_juego(request):
         request.session["juego_tema_id"] = request.GET.get("tema")
 
     if request.GET.get("fichas"):
-        request.session["juego_numero_fichas"] = int(request.GET.get("fichas"))
+        numero_fichas = int(request.GET.get("fichas"))
+
+        diccionario_id = request.session.get("juego_diccionario_id")
+        tema_id = request.session.get("juego_tema_id")
+
+        entradas_qs = EntradaDiccionario.objects.filter(
+            usuario=request.user,
+            diccionario_id=diccionario_id,
+            activa=True,
+        )
+
+        if tema_id:
+            entradas_qs = entradas_qs.filter(tema_id=tema_id)
+
+        entradas_ids = list(
+            entradas_qs.values_list("id", flat=True)
+        )
+
+        if len(entradas_ids) < numero_fichas:
+            messages.error(
+                request,
+                (
+                    f"No hay vocabulario suficiente para crear una partida "
+                    f"de {numero_fichas} fichas. "
+                    f"Solo hay {len(entradas_ids)} entradas activas disponibles."
+                ),
+            )
+            return redirect("praktiko:juego_configurar")
+
+        random.shuffle(entradas_ids)
+
+        request.session["juego_numero_fichas"] = numero_fichas
         request.session["juego_fichas_eliminadas"] = []
         request.session["juego_puntos"] = 0
         request.session["juego_aciertos"] = 0
         request.session["juego_errores"] = 0
+        request.session["juego_entradas_ids"] = entradas_ids[:numero_fichas]
 
     numero_fichas = request.session.get("juego_numero_fichas", 12)
     fichas = list(range(1, numero_fichas + 1))
@@ -122,7 +154,24 @@ def pregunta_juego(request):
         )
         return redirect("praktiko:juego_configurar")
 
-    entrada_correcta = random.choice(entradas)
+    entradas_partida_ids = request.session.get("juego_entradas_ids", [])
+
+    try:
+        indice_ficha = int(ficha) - 1
+    except (TypeError, ValueError):
+        messages.error(request, "Ficha no válida.")
+        return redirect("praktiko:juego_tablero")
+
+    if indice_ficha < 0 or indice_ficha >= len(entradas_partida_ids):
+        messages.error(request, "Ficha no válida.")
+        return redirect("praktiko:juego_tablero")
+
+    entrada_correcta_id = entradas_partida_ids[indice_ficha]
+
+    entrada_correcta = EntradaDiccionario.objects.get(
+        id=entrada_correcta_id,
+        usuario=request.user,
+    )
 
     incorrectas = [
         entrada for entrada in entradas
@@ -164,7 +213,8 @@ def resultado_juego(request):
     request.session.pop("juego_puntos", None)
     request.session.pop("juego_aciertos", None)
     request.session.pop("juego_errores", None)
-
+    request.session.pop("juego_entradas_ids", None)
+    
     return render(
         request,
         "praktiko/juego/resultado.html",

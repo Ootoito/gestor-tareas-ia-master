@@ -1,0 +1,103 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Importar vocabulario
+{% endblock %}
+
+{% block page_title %}
+📁 Importar vocabulario
+{% endblock %}
+
+{% block page_subtitle %}
+Carga masiva de palabras desde CSV.
+{% endblock %}
+
+{% block content %}
+
+<div class="praktiko-card praktiko-form">
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="{{ form.usuario.id_for_label }}">Usuario</label>
+                {{ form.usuario }}
+                {{ form.usuario.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.diccionario.id_for_label }}">Diccionario</label>
+                {{ form.diccionario }}
+                {{ form.diccionario.errors }}
+            </div>
+
+            <div class="form-group form-group-full">
+                <label for="{{ form.archivo_csv.id_for_label }}">Archivo CSV</label>
+                {{ form.archivo_csv }}
+                {{ form.archivo_csv.errors }}
+            </div>
+
+        </div>
+
+        <div class="praktiko-empty" style="margin-top: 20px;">
+            Formato esperado:
+            <br>
+            <strong>tema;origen;destino</strong>
+            <br>
+            Saludos;Привет;Hola
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                Importar vocabulario
+            </button>
+        </div>
+
+    </form>
+
+</div>
+{% if resultado %}
+    <section class="praktiko-section">
+        <div class="praktiko-card">
+
+            <h2>Resultado de importación</h2>
+
+            <div class="resultado-grid">
+                <div class="resultado-item">
+                    <span>Total filas</span>
+                    <strong>{{ resultado.total }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Creadas</span>
+                    <strong>{{ resultado.creadas }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Duplicadas</span>
+                    <strong>{{ resultado.duplicadas }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Errores</span>
+                    <strong>{{ resultado.errores|length }}</strong>
+                </div>
+            </div>
+
+            {% if resultado.errores %}
+                <div class="form-errors">
+                    <strong>Errores encontrados:</strong>
+                    <ul>
+                        {% for error in resultado.errores %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+    </section>
+{% endif %}
+{% endblock %}
