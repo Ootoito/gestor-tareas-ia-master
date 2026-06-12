@@ -101,6 +101,7 @@ def tablero_juego(request):
             "aciertos": aciertos,
             "errores": errores,
             "restantes": restantes,
+            "modo_juego": True,
         },
     )
 
@@ -189,6 +190,7 @@ def pregunta_juego(request):
             "entrada": entrada_correcta,
             "opciones": opciones,
             "ficha": ficha,
+            "modo_juego": True,
         },
     )
 
@@ -204,6 +206,7 @@ def resultado_juego(request):
         "aciertos": aciertos,
         "errores": errores,
         "numero_fichas": numero_fichas,
+        "modo_juego": True,
     }
 
     request.session.pop("juego_diccionario_id", None)
@@ -214,9 +217,10 @@ def resultado_juego(request):
     request.session.pop("juego_aciertos", None)
     request.session.pop("juego_errores", None)
     request.session.pop("juego_entradas_ids", None)
-    
+
     return render(
         request,
-        "praktiko/juego/resultado.html",
+        "praktiko/juego/resultado.html",        
         contexto,
+        
     )
