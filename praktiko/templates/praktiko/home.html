@@ -46,7 +46,32 @@ Tu espacio personal de práctica de vocabulario y frases.
         <strong>{{ porcentaje_acierto }}%</strong>
     </article>
 </section>
+{% if invitaciones_pendientes > 0 %}
 
+<section class="praktiko-section">
+    <div class="praktiko-card invitaciones-card">
+
+        <h2>📨 Invitaciones pendientes</h2>
+
+        <p>
+            Tienes
+            <strong>{{ invitaciones_pendientes }}</strong>
+            invitación{% if invitaciones_pendientes != 1 %}es{% endif %}
+            pendiente{% if invitaciones_pendientes != 1 %}s{% endif %}
+            a grupos de aprendizaje.
+        </p>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:mis_invitaciones' %}"
+               class="praktiko-btn praktiko-btn-main">
+                Ver invitaciones
+            </a>
+        </div>
+
+    </div>
+</section>
+
+{% endif %}
 <section class="praktiko-section">
     <h2>Mis diccionarios</h2>
 

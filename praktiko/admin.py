@@ -6,6 +6,9 @@ from .models import (
     EntradaDiccionario,
     SesionPractica,
     RespuestaPractica,
+    GrupoAprendizaje,
+    MiembroGrupoAprendizaje,
+    InvitacionGrupoAprendizaje,
 )
 
 
@@ -15,15 +18,26 @@ class DiccionarioAdmin(admin.ModelAdmin):
         "icono",
         "nombre",
         "usuario",
+        "grupo",
         "idioma_origen",
         "idioma_destino",
-        "color",
         "activo",
         "creado_en",
     )
-    list_filter = ("activo", "idioma_origen", "idioma_destino")
-    search_fields = ("nombre", "usuario__username", "idioma_origen")
 
+    list_filter = (
+        "activo",
+        "grupo",
+        "idioma_origen",
+        "idioma_destino",
+    )
+
+    search_fields = (
+        "nombre",
+        "usuario__username",
+        "grupo__nombre",
+        "idioma_origen",
+    )
 
 @admin.register(Tema)
 class TemaAdmin(admin.ModelAdmin):
@@ -109,3 +123,23 @@ class RespuestaPracticaAdmin(admin.ModelAdmin):
         "entrada__texto_destino",
         "respuesta_elegida",
     )
+
+@admin.register(GrupoAprendizaje)
+class GrupoAprendizajeAdmin(admin.ModelAdmin):
+    list_display = ("nombre", "creador", "activo", "creado_en")
+    list_filter = ("activo",)
+    search_fields = ("nombre", "creador__username")
+
+
+@admin.register(MiembroGrupoAprendizaje)
+class MiembroGrupoAprendizajeAdmin(admin.ModelAdmin):
+    list_display = ("grupo", "usuario", "rol", "activo", "unido_en")
+    list_filter = ("rol", "activo")
+    search_fields = ("grupo__nombre", "usuario__username")
+
+
+@admin.register(InvitacionGrupoAprendizaje)
+class InvitacionGrupoAprendizajeAdmin(admin.ModelAdmin):
+    list_display = ("grupo", "email", "invitado", "invitado_por", "estado", "creada_en")
+    list_filter = ("estado",)
+    search_fields = ("grupo__nombre", "email", "invitado__username")

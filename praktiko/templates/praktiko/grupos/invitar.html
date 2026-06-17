@@ -1,0 +1,47 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Invitar usuario
+{% endblock %}
+
+{% block page_title %}
+Invitar usuario
+{% endblock %}
+
+{% block page_subtitle %}
+Grupo: {{ grupo.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+            <div class="form-group form-group-full">
+                <label for="{{ form.email.id_for_label }}">Email del usuario</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+        </div>
+
+        <div class="praktiko-empty" style="margin-top: 20px;">
+            Solo puedes invitar a usuarios ya registrados en Praktiko.
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
+                Cancelar
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                Enviar invitación
+            </button>
+        </div>
+    </form>
+
+</section>
+
+{% endblock %}

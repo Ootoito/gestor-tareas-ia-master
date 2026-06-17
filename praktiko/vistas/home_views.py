@@ -7,6 +7,7 @@ from praktiko.models import (
     Tema,
     EntradaDiccionario,
     SesionPractica,
+    InvitacionGrupoAprendizaje,
 )
 
 
@@ -18,7 +19,10 @@ def home(request):
     total_temas = Tema.objects.filter(usuario=usuario).count()
     total_entradas = EntradaDiccionario.objects.filter(usuario=usuario).count()
     total_sesiones = SesionPractica.objects.filter(usuario=usuario).count()
-
+    invitaciones_pendientes = InvitacionGrupoAprendizaje.objects.filter(
+        invitado=usuario,
+        estado=InvitacionGrupoAprendizaje.ESTADO_PENDIENTE,
+    ).count()
     resumen_sesiones = SesionPractica.objects.filter(usuario=usuario).aggregate(
         total_aciertos=Sum("aciertos"),
         total_fallos=Sum("fallos"),
@@ -53,6 +57,7 @@ def home(request):
         "total_fallos": total_fallos,
         "porcentaje_acierto": porcentaje_acierto,
         "diccionarios": diccionarios,
+        "invitaciones_pendientes": invitaciones_pendientes,
     }
 
     return render(request, "praktiko/home.html", contexto)

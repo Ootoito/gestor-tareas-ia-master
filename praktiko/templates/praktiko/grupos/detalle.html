@@ -1,0 +1,68 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+{{ grupo.nombre }}
+{% endblock %}
+
+{% block page_title %}
+👥 {{ grupo.nombre }}
+{% endblock %}
+
+{% block page_subtitle %}
+{{ grupo.descripcion|default:"Grupo de aprendizaje compartido." }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:listado_grupos' %}" class="praktiko-btn">
+        ← Mis grupos
+    </a>
+    <a href="{% url 'praktiko:salir_grupo' grupo.id %}" class="praktiko-btn btn-danger">
+        Salir del grupo
+    </a>
+    {% if es_admin_grupo %}
+        <a href="{% url 'praktiko:invitar_usuario_grupo' grupo.id %}" class="praktiko-btn praktiko-btn-main">
+            Invitar usuario
+        </a>
+    {% endif %}
+
+</section>
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card table-card">
+
+        <h2>Miembros</h2>
+
+        <table class="praktiko-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Desde</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for miembro in miembros %}
+                    <tr>
+                        <td><strong>{{ miembro.usuario.username }}</strong></td>
+                        <td>{{ miembro.usuario.email|default:"-" }}</td>
+                        <td>{{ miembro.get_rol_display }}</td>
+                        <td>{{ miembro.unido_en|date:"d/m/Y H:i" }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No hay miembros en el grupo.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

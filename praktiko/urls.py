@@ -9,6 +9,7 @@ from praktiko.vistas import practica_views
 from praktiko.vistas import gestion_views
 from praktiko.vistas import juego_views
 from praktiko.vistas import importacion_views
+from praktiko.vistas import grupo_views
 
 app_name = "praktiko"
 
@@ -46,4 +47,13 @@ urlpatterns = [
     path("juego/resultado/", juego_views.resultado_juego, name="juego_resultado",),
 
     path("importacion/", importacion_views.importar_vocabulario, name="importar_vocabulario",),
+
+    path("grupos/", grupo_views.listado_grupos, name="listado_grupos"),
+    path("grupos/nuevo/", grupo_views.crear_grupo, name="crear_grupo"),
+    path("grupos/invitaciones/", grupo_views.mis_invitaciones, name="mis_invitaciones",),
+    path("grupos/invitaciones/<int:invitacion_id>/aceptar/", grupo_views.aceptar_invitacion, name="aceptar_invitacion",),
+    path("grupos/invitaciones/<int:invitacion_id>/rechazar/", grupo_views.rechazar_invitacion, name="rechazar_invitacion",),
+    path("grupos/<int:grupo_id>/salir/", grupo_views.salir_grupo, name="salir_grupo",),
+    path("grupos/<int:grupo_id>/", grupo_views.detalle_grupo, name="detalle_grupo",),
+    path("grupos/<int:grupo_id>/invitar/", grupo_views.invitar_usuario_grupo, name="invitar_usuario_grupo",),
 ]

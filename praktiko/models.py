@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 
 class Diccionario(models.Model):
     usuario = models.ForeignKey(
@@ -9,6 +9,7 @@ class Diccionario(models.Model):
         on_delete=models.CASCADE,
         related_name="praktiko_diccionarios",
     )
+
     nombre = models.CharField(max_length=100)
     idioma_origen = models.CharField(max_length=50)
     idioma_destino = models.CharField(max_length=50, default="Español")
@@ -32,6 +33,14 @@ class Diccionario(models.Model):
     creado_en = models.DateTimeField(auto_now_add=True)
     actualizado_en = models.DateTimeField(auto_now=True)
 
+    grupo = models.ForeignKey(
+        "GrupoAprendizaje",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="diccionarios",
+    )
+
     class Meta:
         verbose_name = "Diccionario"
         verbose_name_plural = "Diccionarios"
@@ -40,6 +49,10 @@ class Diccionario(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.usuario})"
+
+    @property
+    def es_compartido(self):
+        return self.grupo_id is not None
 
 
 class Tema(models.Model):
@@ -305,3 +318,111 @@ class RespuestaPractica(models.Model):
     def __str__(self):
         estado = "Correcta" if self.correcta else "Fallida"
         return f"{estado}: {self.texto_origen}"
+
+class GrupoAprendizaje(models.Model):
+    nombre = models.CharField(max_length=150)
+    descripcion = models.TextField(blank=True)
+
+    creador = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="praktiko_grupos_creados",
+    )
+
+    activo = models.BooleanField(default=True)
+    creado_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Grupo de aprendizaje"
+        verbose_name_plural = "Grupos de aprendizaje"
+        ordering = ["nombre"]
+
+    def __str__(self):
+        return self.nombre
+
+
+class MiembroGrupoAprendizaje(models.Model):
+    ROL_ADMIN = "admin"
+    ROL_MIEMBRO = "miembro"
+
+    ROL_CHOICES = [
+        (ROL_ADMIN, "Administrador"),
+        (ROL_MIEMBRO, "Miembro"),
+    ]
+
+    grupo = models.ForeignKey(
+        GrupoAprendizaje,
+        on_delete=models.CASCADE,
+        related_name="miembros",
+    )
+
+    usuario = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="praktiko_grupos_miembro",
+    )
+
+    rol = models.CharField(
+        max_length=20,
+        choices=ROL_CHOICES,
+        default=ROL_MIEMBRO,
+    )
+
+    activo = models.BooleanField(default=True)
+    unido_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Miembro de grupo"
+        verbose_name_plural = "Miembros de grupo"
+        unique_together = ("grupo", "usuario")
+
+    def __str__(self):
+        return f"{self.usuario.username} - {self.grupo.nombre}"
+
+
+class InvitacionGrupoAprendizaje(models.Model):
+    ESTADO_PENDIENTE = "pendiente"
+    ESTADO_ACEPTADA = "aceptada"
+    ESTADO_RECHAZADA = "rechazada"
+
+    ESTADO_CHOICES = [
+        (ESTADO_PENDIENTE, "Pendiente"),
+        (ESTADO_ACEPTADA, "Aceptada"),
+        (ESTADO_RECHAZADA, "Rechazada"),
+    ]
+
+    grupo = models.ForeignKey(
+        GrupoAprendizaje,
+        on_delete=models.CASCADE,
+        related_name="invitaciones",
+    )
+
+    invitado = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="praktiko_invitaciones_recibidas",
+    )
+
+    invitado_por = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="praktiko_invitaciones_enviadas",
+    )
+
+    email = models.EmailField()
+
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADO_CHOICES,
+        default=ESTADO_PENDIENTE,
+    )
+
+    creada_en = models.DateTimeField(auto_now_add=True)
+    respondida_en = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Invitación a grupo"
+        verbose_name_plural = "Invitaciones a grupos"
+
+    def __str__(self):
+        return f"{self.email} - {self.grupo.nombre} - {self.estado}"

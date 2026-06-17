@@ -1,0 +1,70 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Grupos
+{% endblock %}
+
+{% block page_title %}
+👥 Mis grupos
+{% endblock %}
+
+{% block page_subtitle %}
+Grupos de aprendizaje compartido.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:crear_grupo' %}" class="praktiko-btn praktiko-btn-main">
+        Crear grupo
+    </a>
+</section>
+
+<section class="praktiko-section">
+
+    {% if grupos %}
+
+        <div class="praktiko-grid diccionarios-grid">
+
+            {% for grupo in grupos %}
+
+                <article class="praktiko-card diccionario-card">
+
+                    <h3 class="diccionario-title">
+                        <span class="diccionario-icono">👥</span>
+                        <span>{{ grupo.nombre }}</span>
+                    </h3>
+
+                    {% if grupo.descripcion %}
+                        <p>{{ grupo.descripcion }}</p>
+                    {% endif %}
+
+                    <div class="diccionario-meta">
+                        <span>{{ grupo.total_miembros }} miembros</span>
+
+                        {% if grupo.creador_id == request.user.id %}
+                            <span>Creador</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-actions">
+                        <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
+                            Ver grupo
+                        </a>
+                    </div>
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="praktiko-empty">
+            Todavía no perteneces a ningún grupo.
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

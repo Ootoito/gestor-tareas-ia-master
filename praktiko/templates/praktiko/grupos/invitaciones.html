@@ -1,0 +1,69 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Invitaciones
+{% endblock %}
+
+{% block page_title %}
+📨 Mis invitaciones
+{% endblock %}
+
+{% block page_subtitle %}
+Invitaciones pendientes a grupos de aprendizaje.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    {% if invitaciones %}
+
+        <div class="praktiko-grid diccionarios-grid">
+
+            {% for invitacion in invitaciones %}
+
+                <article class="praktiko-card diccionario-card">
+
+                    <h3 class="diccionario-title">
+                        <span class="diccionario-icono">👥</span>
+                        <span>{{ invitacion.grupo.nombre }}</span>
+                    </h3>
+
+                    {% if invitacion.grupo.descripcion %}
+                        <p>{{ invitacion.grupo.descripcion }}</p>
+                    {% endif %}
+
+                    <div class="diccionario-meta">
+                        <span>Invitado por {{ invitacion.invitado_por.username }}</span>
+                        <span>{{ invitacion.creada_en|date:"d/m/Y H:i" }}</span>
+                    </div>
+
+                    <div class="card-actions">
+                        <a href="{% url 'praktiko:aceptar_invitacion' invitacion.id %}"
+                            class="praktiko-btn praktiko-btn-main">
+                            Aceptar
+                        </a>
+
+                        <a href="{% url 'praktiko:rechazar_invitacion' invitacion.id %}"
+                            class="praktiko-btn">
+                            Rechazar
+                        </a>
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="praktiko-empty">
+            No tienes invitaciones pendientes.
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

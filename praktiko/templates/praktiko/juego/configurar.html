@@ -40,9 +40,13 @@ Modo experimental de aprendizaje mediante fichas.
             <label>Tema</label>
 
             <select name="tema" class="form-control">
+                <option value="">
+                🎲 Todo el vocabulario del diccionario
+                </option>
+
                 {% for tema in temas %}
                     <option value="{{ tema.id }}">
-                        {{ tema.nombre }}
+                        {{ tema.diccionario.icono }} {{ tema.diccionario.nombre }} - {{ tema.icono }} {{ tema.nombre }}
                     </option>
                 {% endfor %}
             </select>
