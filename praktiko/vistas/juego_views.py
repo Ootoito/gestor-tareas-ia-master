@@ -12,14 +12,22 @@ def configurar_juego(request):
 
     diccionarios = (
         Diccionario.objects
-        .filter(usuario=request.user)
+        .filter(
+            usuario=request.user,
+            activo=True,
+        )
         .order_by("nombre")
     )
 
-    temas = (
+    temas = (        
         Tema.objects
-        .filter(diccionario__usuario=request.user)
-        .order_by("orden", "nombre")
+        .filter(
+            usuario=request.user,
+            activo=True,
+            diccionario__activo=True,
+        )
+        .select_related("diccionario")
+        .order_by("diccionario__nombre", "orden", "nombre")
     )
 
     return render(
@@ -36,8 +44,23 @@ def tablero_juego(request):
     if request.GET.get("diccionario"):
         request.session["juego_diccionario_id"] = request.GET.get("diccionario")
 
-    if request.GET.get("tema"):
-        request.session["juego_tema_id"] = request.GET.get("tema")
+    tema_get = request.GET.get("tema")
+
+    if tema_get:
+        tema_valido = Tema.objects.filter(
+            id=tema_get,
+            usuario=request.user,
+            diccionario_id=request.session.get("juego_diccionario_id"),
+            activo=True,
+        ).exists()
+
+        if not tema_valido:
+            messages.error(request, "El tema seleccionado no pertenece al diccionario elegido.")
+            return redirect("praktiko:juego_configurar")
+
+        request.session["juego_tema_id"] = tema_get
+    else:
+        request.session["juego_tema_id"] = None
 
     if request.GET.get("fichas"):
         numero_fichas = int(request.GET.get("fichas"))
