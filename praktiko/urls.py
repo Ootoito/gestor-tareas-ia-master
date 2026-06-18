@@ -56,4 +56,7 @@ urlpatterns = [
     path("grupos/<int:grupo_id>/salir/", grupo_views.salir_grupo, name="salir_grupo",),
     path("grupos/<int:grupo_id>/", grupo_views.detalle_grupo, name="detalle_grupo",),
     path("grupos/<int:grupo_id>/invitar/", grupo_views.invitar_usuario_grupo, name="invitar_usuario_grupo",),
+    path("grupos/<int:grupo_id>/diccionarios/nuevo/", grupo_views.crear_diccionario_grupo, name="crear_diccionario_grupo",),
+    path("grupos/<int:grupo_id>/diccionarios/<int:diccionario_id>/temas/nuevo/", grupo_views.crear_tema_diccionario_grupo, name="crear_tema_diccionario_grupo",),
+    path("grupos/<int:grupo_id>/diccionarios/<int:diccionario_id>/entradas/nuevo/", grupo_views.crear_entrada_diccionario_grupo, name="crear_entrada_diccionario_grupo",),
 ]

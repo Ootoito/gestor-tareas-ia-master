@@ -34,3 +34,14 @@ class TemaForm(forms.ModelForm):
                 usuario=usuario,
                 activo=True,
             )
+
+class TemaGrupoForm(TemaForm):
+    class Meta(TemaForm.Meta):
+        fields = [
+            "nombre",
+            "icono",
+            "color",
+            "orden",
+            "descripcion",
+            "activo",
+        ]

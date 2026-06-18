@@ -11,8 +11,16 @@ from praktiko.models import (
     GrupoAprendizaje,
     MiembroGrupoAprendizaje,
     InvitacionGrupoAprendizaje,
+    Tema,
 )
 from django.utils import timezone
+from praktiko.forms.diccionario_forms import DiccionarioForm
+from praktiko.models import Diccionario
+from praktiko.forms.tema_forms import TemaForm
+from praktiko.forms.tema_forms import TemaGrupoForm
+from praktiko.forms.vocabulario_forms import EntradaDiccionarioForm
+from praktiko.models import EntradaDiccionario
+
 
 @login_required
 def listado_grupos(request):
@@ -96,6 +104,18 @@ def detalle_grupo(request, grupo_id):
         activo=True,
     ).exists()
 
+    diccionarios_compartidos = (
+        Diccionario.objects
+        .filter(
+            grupo=grupo,
+            activo=True,
+        )
+        .annotate(
+            total_temas=Count("temas", distinct=True),
+            total_entradas=Count("entradas", distinct=True),
+        )
+        .order_by("nombre")
+    )
     return render(
         request,
         "praktiko/grupos/detalle.html",
@@ -103,6 +123,7 @@ def detalle_grupo(request, grupo_id):
             "grupo": grupo,
             "miembros": miembros,
             "es_admin_grupo": es_admin_grupo,
+            "diccionarios_compartidos": diccionarios_compartidos,
         },
     )
 
@@ -280,3 +301,155 @@ def salir_grupo(request, grupo_id):
     messages.success(request, f"Has salido del grupo '{grupo.nombre}'.")
 
     return redirect("praktiko:listado_grupos")
+
+@login_required
+def crear_diccionario_grupo(request, grupo_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__rol=MiembroGrupoAprendizaje.ROL_ADMIN,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    if request.method == "POST":
+        form = DiccionarioForm(request.POST)
+
+        if form.is_valid():
+            diccionario = form.save(commit=False)
+            diccionario.usuario = request.user
+            diccionario.grupo = grupo
+            diccionario.save()
+
+            messages.success(
+                request,
+                "Diccionario compartido creado correctamente.",
+            )
+            return redirect("praktiko:detalle_grupo", grupo_id=grupo.id)
+    else:
+        form = DiccionarioForm(
+            initial={
+                "idioma_destino": "Español",
+                "icono": "👥",
+                "color": "#0f766e",
+                "activo": True,
+            }
+        )
+
+    return render(
+        request,
+        "praktiko/grupos/formulario_diccionario_grupo.html",
+        {
+            "form": form,
+            "grupo": grupo,
+            "titulo": "Nuevo diccionario compartido",
+            "boton": "Crear diccionario",
+        },
+    )
+
+@login_required
+def crear_tema_diccionario_grupo(request, grupo_id, diccionario_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    diccionario = get_object_or_404(
+        Diccionario,
+        id=diccionario_id,
+        grupo=grupo,
+        activo=True,
+    )
+
+    if request.method == "POST":
+        form = TemaGrupoForm(request.POST)
+        print(form.errors)
+        if form.is_valid():
+            tema = form.save(commit=False)
+            tema.usuario = request.user
+            tema.diccionario = diccionario
+            tema.save()
+
+            messages.success(request, "Tema compartido creado correctamente.")
+            return redirect("praktiko:detalle_grupo", grupo_id=grupo.id)
+    else:
+        form = TemaGrupoForm(
+            initial={
+                "diccionario": diccionario,
+                "icono": "📁",
+                "color": "#64748b",
+                "activo": True,
+            }
+        )
+
+    return render(
+        request,
+        "praktiko/grupos/formulario_tema_grupo.html",
+        {
+            "form": form,
+            "grupo": grupo,
+            "diccionario": diccionario,
+            "titulo": "Nuevo tema compartido",
+            "boton": "Crear tema",
+        },
+    )
+
+@login_required
+def crear_entrada_diccionario_grupo(request, grupo_id, diccionario_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    diccionario = get_object_or_404(
+        Diccionario,
+        id=diccionario_id,
+        grupo=grupo,
+        activo=True,
+    )
+
+    if request.method == "POST":
+        form = EntradaDiccionarioForm(request.POST)
+
+        if form.is_valid():
+            entrada = form.save(commit=False)
+            entrada.usuario = request.user
+            entrada.diccionario = diccionario
+            entrada.save()
+
+            messages.success(request, "Entrada compartida creada correctamente.")
+            return redirect("praktiko:detalle_grupo", grupo_id=grupo.id)
+    else:
+        form = EntradaDiccionarioForm(
+            initial={
+                "diccionario": diccionario,
+                "tipo": EntradaDiccionario.TIPO_PALABRA,
+                "nivel": EntradaDiccionario.NIVEL_INICIAL,
+                "activa": True,
+            }
+        )
+
+    form.fields["diccionario"].queryset = Diccionario.objects.filter(id=diccionario.id)
+    form.fields["tema"].queryset = Tema.objects.filter(
+        diccionario=diccionario,
+        activo=True,
+    ).order_by("orden", "nombre")
+
+    return render(
+        request,
+        "praktiko/grupos/formulario_entrada_grupo.html",
+        {
+            "form": form,
+            "grupo": grupo,
+            "diccionario": diccionario,
+            "titulo": "Nueva palabra o frase compartida",
+            "boton": "Crear entrada",
+        },
+    )

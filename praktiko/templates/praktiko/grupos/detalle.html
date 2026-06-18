@@ -64,5 +64,71 @@
     </div>
 
 </section>
+<section class="praktiko-section">
+
+    <div class="praktiko-card">
+
+        <h2>📚 Diccionarios compartidos</h2>
+
+        {% if es_admin_grupo %}
+            <div class="form-actions">
+                <a href="{% url 'praktiko:crear_diccionario_grupo' grupo.id %}"
+                   class="praktiko-btn praktiko-btn-main">
+                    Crear diccionario compartido
+                </a>
+            </div>
+        {% endif %}
+
+        {% if diccionarios_compartidos %}
+
+            <div class="praktiko-grid diccionarios-grid">
+
+                {% for diccionario in diccionarios_compartidos %}
+
+                    <article class="praktiko-card diccionario-card">
+
+                        <h3 class="diccionario-title">
+                            <span class="diccionario-icono">
+                                {{ diccionario.icono }}
+                            </span>
+                            <span>{{ diccionario.nombre }}</span>
+                        </h3>
+
+                        {% if diccionario.descripcion %}
+                            <p>{{ diccionario.descripcion }}</p>
+                        {% endif %}
+
+                        <div class="diccionario-meta">
+                            <span>{{ diccionario.total_temas }} temas</span>
+                            <span>{{ diccionario.total_entradas }} entradas</span>
+                            <span>Compartido</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="{% url 'praktiko:crear_tema_diccionario_grupo' grupo.id diccionario.id %}"
+                                class="praktiko-btn">
+                                    Crear tema
+                            </a>
+                            <a href="{% url 'praktiko:crear_entrada_diccionario_grupo' grupo.id diccionario.id %}"
+                                class="praktiko-btn">
+                                    Añadir palabra/frase
+                            </a>
+                        </div>
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                Este grupo todavía no tiene diccionarios compartidos.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
 
 {% endblock %}

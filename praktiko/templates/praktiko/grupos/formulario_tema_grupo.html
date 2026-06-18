@@ -1,0 +1,70 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+{{ titulo }}
+{% endblock %}
+
+{% block page_title %}
+{{ titulo }}
+{% endblock %}
+
+{% block page_subtitle %}
+Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group form-group-full">
+                <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                {{ form.nombre }}
+                {{ form.nombre.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.icono.id_for_label }}">Icono</label>
+                {{ form.icono }}
+                {{ form.icono.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.color.id_for_label }}">Color</label>
+                {{ form.color }}
+                {{ form.color.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.orden.id_for_label }}">Orden</label>
+                {{ form.orden }}
+                {{ form.orden.errors }}
+            </div>
+
+            <div class="form-group form-check">
+                {{ form.activo }}
+                <label for="{{ form.activo.id_for_label }}">Activo</label>
+                {{ form.activo.errors }}
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
+                Cancelar
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                {{ boton }}
+            </button>
+        </div>
+
+    </form>
+
+</section>
+
+{% endblock %}

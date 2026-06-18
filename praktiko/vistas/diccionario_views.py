@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from praktiko.forms.diccionario_forms import DiccionarioForm
@@ -11,13 +11,22 @@ from praktiko.models import Diccionario
 def listado_diccionarios(request):
     diccionarios = (
         Diccionario.objects
-        .filter(usuario=request.user)
-        .annotate(
-            total_temas=Count("temas", distinct=True),
-            total_entradas=Count("entradas", distinct=True),
+        .filter(
+            Q(usuario=request.user)
+            |
+            Q(
+                grupo__miembros__usuario=request.user,
+            grupo__miembros__activo=True,
+            grupo__activo=True,
         )
-        .order_by("nombre")
     )
+    .distinct()
+    .annotate(
+        total_temas=Count("temas", distinct=True),
+        total_entradas=Count("entradas", distinct=True),
+    )
+    .order_by("nombre")
+)
 
     return render(
         request,
