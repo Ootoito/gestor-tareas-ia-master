@@ -10,6 +10,7 @@ from praktiko.vistas import gestion_views
 from praktiko.vistas import juego_views
 from praktiko.vistas import importacion_views
 from praktiko.vistas import grupo_views
+from praktiko.vistas import estadistica_views
 
 app_name = "praktiko"
 
@@ -63,5 +64,9 @@ urlpatterns = [
 
     path("grupos/<int:grupo_id>/diccionarios/<int:diccionario_id>/importar/", grupo_views.importar_vocabulario_diccionario_grupo, name="importar_vocabulario_diccionario_grupo",),
     path("grupos/<int:grupo_id>/diccionarios/<int:diccionario_id>/jugar/", grupo_views.jugar_diccionario_grupo, name="jugar_diccionario_grupo",),
-        
+
+    path("estadisticas/", estadistica_views.mis_estadisticas, name="mis_estadisticas",),
+    path("estadisticas/dificiles/", estadistica_views.palabras_dificiles, name="palabras_dificiles",),
+    path("estadisticas/repasar/", estadistica_views.repasar_dificiles, name="repasar_dificiles",),
+    path("estadisticas/dificiles/jugar/", estadistica_views.jugar_dificiles, name="jugar_dificiles",),
 ]

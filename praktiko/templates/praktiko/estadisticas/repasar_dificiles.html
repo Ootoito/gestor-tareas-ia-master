@@ -1,0 +1,85 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Repasar palabras difíciles
+{% endblock %}
+
+{% block page_title %}
+📚 Repasar palabras difíciles
+{% endblock %}
+
+{% block page_subtitle %}
+Vocabulario que merece atención especial.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:palabras_dificiles' %}"
+       class="praktiko-btn">
+        ← Volver
+    </a>
+</section>
+
+<section class="praktiko-section">
+
+    {% if estadisticas %}
+
+        {% for estadistica in estadisticas %}
+
+            <div class="praktiko-card">
+
+                <h3>
+                    {{ estadistica.entrada.texto_origen }}
+                </h3>
+
+                <p>
+                    <strong>
+                        {{ estadistica.entrada.texto_destino }}
+                    </strong>
+                </p>
+
+                <div class="diccionario-meta">
+
+                    <span>
+                        📚 {{ estadistica.entrada.diccionario.nombre }}
+                    </span>
+
+                    {% if estadistica.entrada.tema %}
+                        <span>
+                            {{ estadistica.entrada.tema.icono }}
+                            {{ estadistica.entrada.tema.nombre }}
+                        </span>
+                    {% endif %}
+
+                    <span>
+                        🔥 {{ estadistica.fallos }} fallos
+                    </span>
+
+                    <span>
+                        🎯 {{ estadistica.porcentaje_acierto }}%
+                    </span>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="praktiko-card">
+
+            <h3>🎉 ¡Buen trabajo!</h3>
+
+            <p>
+                No hay palabras difíciles pendientes de repaso.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

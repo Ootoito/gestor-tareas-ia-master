@@ -1,0 +1,83 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Palabras difíciles
+{% endblock %}
+
+{% block page_title %}
+🔥 Palabras difíciles
+{% endblock %}
+
+{% block page_subtitle %}
+Palabras con más errores y menos de un 60% de éxito.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:mis_estadisticas' %}" class="praktiko-btn">
+        ← Volver a estadísticas
+    </a>
+</section>
+
+<section class="praktiko-section">
+    <div class="form-actions">
+        <a href="{% url 'praktiko:repasar_dificiles' %}"
+            class="praktiko-btn praktiko-btn-main">
+                📚 Repasar palabras difíciles
+        </a>
+        <a href="{% url 'praktiko:jugar_dificiles' %}"
+            class="praktiko-btn praktiko-btn-main">
+                🎮 Jugar difíciles
+        </a>
+    </div>
+    
+    <div class="praktiko-card table-card">
+
+        {% if estadisticas %}
+
+            <table class="praktiko-table">
+                <thead>
+                    <tr>
+                        <th>Diccionario</th>
+                        <th>Tema</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Preguntada</th>
+                        <th>Aciertos</th>
+                        <th>Fallos</th>
+                        <th>% Éxito</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for estadistica in estadisticas %}
+                        <tr>
+                            <td>{{ estadistica.entrada.diccionario.nombre }}</td>
+                            <td>{{ estadistica.entrada.tema.nombre|default:"-" }}</td>
+                            <td><strong>{{ estadistica.entrada.texto_origen }}</strong></td>
+                            <td>{{ estadistica.entrada.texto_destino }}</td>
+                            <td>{{ estadistica.veces_preguntada }}</td>
+                            <td>{{ estadistica.aciertos }}</td>
+                            <td>{{ estadistica.fallos }}</td>
+                            <td>{{ estadistica.porcentaje_acierto }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                Todavía no hay palabras difíciles suficientes.
+                <br>
+                Se mostrarán aquí las palabras preguntadas al menos 3 veces
+                y con menos de un 60% de acierto.
+            </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}

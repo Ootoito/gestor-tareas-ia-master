@@ -206,8 +206,15 @@ def pregunta_juego(request):
         return redirect("praktiko:juego_tablero")
 
     grupo_id = request.session.get("juego_grupo_id")
+    modo_juego = request.session.get("juego_modo")
+    entradas_partida_ids = request.session.get("juego_entradas_ids", [])
 
-    if grupo_id:
+    if modo_juego == "dificiles":
+        entradas = EntradaDiccionario.objects.filter(
+            id__in=entradas_partida_ids,
+            activa=True,
+        )
+    elif grupo_id:
         entradas = EntradaDiccionario.objects.filter(
             diccionario_id=diccionario_id,
             activa=True,
@@ -245,7 +252,7 @@ def pregunta_juego(request):
 
     entrada_correcta_id = entradas_partida_ids[indice_ficha]
 
-    if grupo_id:
+    if modo_juego == "dificiles" or grupo_id:
         entrada_correcta = EntradaDiccionario.objects.get(
             id=entrada_correcta_id,
         )
@@ -299,6 +306,7 @@ def resultado_juego(request):
     request.session.pop("juego_errores", None)
     request.session.pop("juego_entradas_ids", None)
     request.session.pop("juego_grupo_id", None)
+    request.session.pop("juego_modo", None)
 
     return render(
         request,

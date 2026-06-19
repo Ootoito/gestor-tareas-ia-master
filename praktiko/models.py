@@ -459,3 +459,13 @@ class EstadisticaEntradaUsuario(models.Model):
 
     def __str__(self):
         return f"{self.usuario} - {self.entrada}"
+    
+    @property
+    def porcentaje_acierto(self):
+        if self.veces_preguntada == 0:
+            return 0
+
+        return round(
+            (self.aciertos / self.veces_preguntada) * 100,
+            2,
+        )

@@ -1,0 +1,69 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Mis estadísticas
+{% endblock %}
+
+{% block page_title %}
+📊 Mis estadísticas
+{% endblock %}
+
+{% block page_subtitle %}
+Palabras y frases practicadas.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+    <div class="form-actions">
+    <a href="{% url 'praktiko:palabras_dificiles' %}"
+       class="praktiko-btn praktiko-btn-main">
+        🔥 Ver palabras difíciles
+    </a>
+    </div>
+    <div class="praktiko-card table-card">
+
+        {% if estadisticas %}
+
+            <table class="praktiko-table">
+                <thead>
+                    <tr>
+                        <th>Diccionario</th>
+                        <th>Tema</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Preguntada</th>
+                        <th>Aciertos</th>
+                        <th>Fallos</th>
+                        <th>% Éxito</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for estadistica in estadisticas %}
+                        <tr>
+                            <td>{{ estadistica.entrada.diccionario.nombre }}</td>
+                            <td>{{ estadistica.entrada.tema.nombre|default:"-" }}</td>
+                            <td><strong>{{ estadistica.entrada.texto_origen }}</strong></td>
+                            <td>{{ estadistica.entrada.texto_destino }}</td>
+                            <td>{{ estadistica.veces_preguntada }}</td>
+                            <td>{{ estadistica.aciertos }}</td>
+                            <td>{{ estadistica.fallos }}</td>
+                            <td>{{ estadistica.porcentaje_acierto }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                Todavía no hay estadísticas. Juega una partida para empezar a generar datos.
+            </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}
