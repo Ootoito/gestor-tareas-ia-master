@@ -2,9 +2,14 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from praktiko.models import Diccionario, Tema, EntradaDiccionario
+from praktiko.models import (
+    Diccionario,
+    Tema,
+    EntradaDiccionario,
+    EstadisticaEntradaUsuario,
+)
 from django.contrib import messages
-
+from django.utils import timezone
 
 
 @login_required
@@ -43,6 +48,12 @@ def configurar_juego(request):
 def tablero_juego(request):
     if request.GET.get("diccionario"):
         request.session["juego_diccionario_id"] = request.GET.get("diccionario")
+    grupo_id = request.GET.get("grupo")
+
+    if grupo_id:
+        request.session["juego_grupo_id"] = grupo_id
+    else:
+        request.session["juego_grupo_id"] = None
 
     tema_get = request.GET.get("tema")
 
@@ -68,11 +79,19 @@ def tablero_juego(request):
         diccionario_id = request.session.get("juego_diccionario_id")
         tema_id = request.session.get("juego_tema_id")
 
-        entradas_qs = EntradaDiccionario.objects.filter(
-            usuario=request.user,
-            diccionario_id=diccionario_id,
-            activa=True,
-        )
+        grupo_id = request.session.get("juego_grupo_id")
+
+        if grupo_id:
+            entradas_qs = EntradaDiccionario.objects.filter(
+                diccionario_id=diccionario_id,
+                activa=True,
+            )
+        else:
+            entradas_qs = EntradaDiccionario.objects.filter(
+                usuario=request.user,
+                diccionario_id=diccionario_id,
+                activa=True,
+            )
 
         if tema_id:
             entradas_qs = entradas_qs.filter(tema_id=tema_id)
@@ -137,8 +156,24 @@ def pregunta_juego(request):
     if request.method == "POST":
         entrada_correcta_id = request.POST.get("entrada_correcta_id")
         respuesta_id = request.POST.get("respuesta_id")
+        estadistica, _ = EstadisticaEntradaUsuario.objects.get_or_create(
+            usuario=request.user,
+            entrada_id=entrada_correcta_id,
+        )
+
+        estadistica.veces_preguntada += 1
 
         if entrada_correcta_id == respuesta_id:
+            estadistica.aciertos += 1
+            estadistica.ultimo_acierto = timezone.now()
+            estadistica.save(
+                update_fields=[
+                    "veces_preguntada",
+                    "aciertos",
+                    "ultimo_acierto",
+                    "actualizado_en",
+                ]
+            )
             eliminadas = request.session.get("juego_fichas_eliminadas", [])
 
             if ficha and ficha not in eliminadas:
@@ -153,6 +188,16 @@ def pregunta_juego(request):
 
             messages.success(request, "¡Correcto! Ficha eliminada. +100 puntos.")
         else:
+            estadistica.fallos += 1
+            estadistica.ultimo_fallo = timezone.now()
+            estadistica.save(
+                update_fields=[
+                    "veces_preguntada",
+                    "fallos",
+                    "ultimo_fallo",
+                    "actualizado_en",
+                ]
+            )
             errores = request.session.get("juego_errores", 0)
             request.session["juego_errores"] = errores + 1
 
@@ -160,11 +205,19 @@ def pregunta_juego(request):
 
         return redirect("praktiko:juego_tablero")
 
-    entradas = EntradaDiccionario.objects.filter(
-        usuario=request.user,
-        diccionario_id=diccionario_id,
-        activa=True,
-    )
+    grupo_id = request.session.get("juego_grupo_id")
+
+    if grupo_id:
+        entradas = EntradaDiccionario.objects.filter(
+            diccionario_id=diccionario_id,
+            activa=True,
+        )
+    else:
+        entradas = EntradaDiccionario.objects.filter(
+            usuario=request.user,
+            diccionario_id=diccionario_id,
+            activa=True,
+        )
 
     if tema_id:
         entradas = entradas.filter(tema_id=tema_id)
@@ -192,10 +245,15 @@ def pregunta_juego(request):
 
     entrada_correcta_id = entradas_partida_ids[indice_ficha]
 
-    entrada_correcta = EntradaDiccionario.objects.get(
-        id=entrada_correcta_id,
-        usuario=request.user,
-    )
+    if grupo_id:
+        entrada_correcta = EntradaDiccionario.objects.get(
+            id=entrada_correcta_id,
+        )
+    else:
+        entrada_correcta = EntradaDiccionario.objects.get(
+            id=entrada_correcta_id,
+            usuario=request.user,
+        )
 
     incorrectas = [
         entrada for entrada in entradas
@@ -223,7 +281,7 @@ def resultado_juego(request):
     aciertos = request.session.get("juego_aciertos", 0)
     errores = request.session.get("juego_errores", 0)
     numero_fichas = request.session.get("juego_numero_fichas", 0)
-
+    
     contexto = {
         "puntos": puntos,
         "aciertos": aciertos,
@@ -240,6 +298,7 @@ def resultado_juego(request):
     request.session.pop("juego_aciertos", None)
     request.session.pop("juego_errores", None)
     request.session.pop("juego_entradas_ids", None)
+    request.session.pop("juego_grupo_id", None)
 
     return render(
         request,

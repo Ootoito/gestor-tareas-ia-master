@@ -1,0 +1,110 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Importar CSV
+{% endblock %}
+
+{% block page_title %}
+📥 Importar vocabulario
+{% endblock %}
+
+{% block page_subtitle %}
+Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <form method="post"
+          enctype="multipart/form-data"
+          class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+
+            <div class="form-group form-group-full">
+                <label for="archivo_csv">Archivo CSV</label>
+                <input type="file"
+                       name="archivo_csv"
+                       id="archivo_csv"
+                       class="form-control"
+                       accept=".csv">
+            </div>
+
+        </div>
+
+        <div class="praktiko-empty" style="margin-top: 20px;">
+            Formato esperado:
+            <br>
+            <strong>tema;origen;destino</strong>
+            <br>
+            Saludos;Привет;Hola
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
+               class="praktiko-btn">
+                Cancelar
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                Importar vocabulario
+            </button>
+        </div>
+
+    </form>
+
+</section>
+
+{% if resultado %}
+    <section class="praktiko-section">
+        <div class="praktiko-card">
+
+            <h2>Resultado de importación</h2>
+
+            <div class="resultado-grid">
+                <div class="resultado-item">
+                    <span>Total filas</span>
+                    <strong>{{ resultado.total }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Creadas</span>
+                    <strong>{{ resultado.creadas }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Duplicadas</span>
+                    <strong>{{ resultado.duplicadas }}</strong>
+                </div>
+
+                <div class="resultado-item">
+                    <span>Errores</span>
+                    <strong>{{ resultado.errores|length }}</strong>
+                </div>
+            </div>
+
+            {% if resultado.errores %}
+                <div class="form-errors">
+                    <strong>Errores encontrados:</strong>
+                    <ul>
+                        {% for error in resultado.errores %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="form-actions">
+                <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
+                   class="praktiko-btn praktiko-btn-main">
+                    Ver diccionario
+                </a>
+            </div>
+
+        </div>
+    </section>
+{% endif %}
+
+{% endblock %}

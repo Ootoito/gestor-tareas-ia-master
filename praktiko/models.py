@@ -426,3 +426,36 @@ class InvitacionGrupoAprendizaje(models.Model):
 
     def __str__(self):
         return f"{self.email} - {self.grupo.nombre} - {self.estado}"
+
+
+class EstadisticaEntradaUsuario(models.Model):
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="praktiko_estadisticas_entradas",
+    )
+
+    entrada = models.ForeignKey(
+        EntradaDiccionario,
+        on_delete=models.CASCADE,
+        related_name="estadisticas_usuario",
+    )
+
+    veces_preguntada = models.PositiveIntegerField(default=0)
+    aciertos = models.PositiveIntegerField(default=0)
+    fallos = models.PositiveIntegerField(default=0)
+
+    ultimo_acierto = models.DateTimeField(null=True, blank=True)
+    ultimo_fallo = models.DateTimeField(null=True, blank=True)
+
+    creado_en = models.DateTimeField(auto_now_add=True)
+    actualizado_en = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Estadística de entrada por usuario"
+        verbose_name_plural = "Estadísticas de entradas por usuario"
+        unique_together = ("usuario", "entrada")
+        ordering = ["-fallos", "-veces_preguntada"]
+
+    def __str__(self):
+        return f"{self.usuario} - {self.entrada}"

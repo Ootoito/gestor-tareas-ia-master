@@ -20,7 +20,8 @@ from praktiko.forms.tema_forms import TemaForm
 from praktiko.forms.tema_forms import TemaGrupoForm
 from praktiko.forms.vocabulario_forms import EntradaDiccionarioForm
 from praktiko.models import EntradaDiccionario
-
+from praktiko.forms.importacion_forms import ImportarVocabularioForm
+from praktiko.vistas.importacion_views import procesar_csv_vocabulario
 
 @login_required
 def listado_grupos(request):
@@ -453,3 +454,141 @@ def crear_entrada_diccionario_grupo(request, grupo_id, diccionario_id):
             "boton": "Crear entrada",
         },
     )
+
+@login_required
+def detalle_diccionario_grupo(request, grupo_id, diccionario_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    diccionario = get_object_or_404(
+        Diccionario,
+        id=diccionario_id,
+        grupo=grupo,
+        activo=True,
+    )
+
+    temas = (
+        Tema.objects
+        .filter(
+            diccionario=diccionario,
+            activo=True,
+        )
+        .annotate(
+            total_entradas=Count("entradas", distinct=True),
+        )
+        .order_by("orden", "nombre")
+    )
+
+    entradas = (
+        EntradaDiccionario.objects
+        .filter(
+            diccionario=diccionario,
+            activa=True,
+        )
+        .select_related("tema", "usuario")
+        .order_by("tema__orden", "tema__nombre", "texto_origen")
+    )
+
+    es_admin_grupo = MiembroGrupoAprendizaje.objects.filter(
+        grupo=grupo,
+        usuario=request.user,
+        rol=MiembroGrupoAprendizaje.ROL_ADMIN,
+        activo=True,
+    ).exists()
+
+    return render(
+        request,
+        "praktiko/grupos/detalle_diccionario.html",
+        {
+            "grupo": grupo,
+            "diccionario": diccionario,
+            "temas": temas,
+            "entradas": entradas,
+            "es_admin_grupo": es_admin_grupo,
+        },
+    )
+
+@login_required
+def importar_vocabulario_diccionario_grupo(request, grupo_id, diccionario_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    diccionario = get_object_or_404(
+        Diccionario,
+        id=diccionario_id,
+        grupo=grupo,
+        activo=True,
+    )
+
+    resultado = None
+
+    if request.method == "POST":
+        archivo = request.FILES.get("archivo_csv")
+
+        if not archivo:
+            messages.error(request, "Debes seleccionar un archivo CSV.")
+        else:
+            resultado = procesar_csv_vocabulario(
+                usuario=request.user,
+                diccionario=diccionario,
+                archivo=archivo,
+            )
+
+            messages.success(request, "Importación procesada correctamente.")
+
+    return render(
+        request,
+        "praktiko/grupos/importar_diccionario_grupo.html",
+        {
+            "grupo": grupo,
+            "diccionario": diccionario,
+            "resultado": resultado,
+        },
+    )
+
+@login_required
+def jugar_diccionario_grupo(request, grupo_id, diccionario_id):
+    grupo = get_object_or_404(
+        GrupoAprendizaje,
+        id=grupo_id,
+        miembros__usuario=request.user,
+        miembros__activo=True,
+        activo=True,
+    )
+
+    diccionario = get_object_or_404(
+        Diccionario,
+        id=diccionario_id,
+        grupo=grupo,
+        activo=True,
+    )
+
+    temas = (
+        Tema.objects
+        .filter(
+            diccionario=diccionario,
+            activo=True,
+        )
+        .order_by("orden", "nombre")
+    )
+
+    return render(
+        request,
+        "praktiko/grupos/jugar_diccionario_grupo.html",
+        {
+            "grupo": grupo,
+            "diccionario": diccionario,
+            "temas": temas,
+        },
+    )
+

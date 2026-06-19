@@ -9,6 +9,7 @@ from .models import (
     GrupoAprendizaje,
     MiembroGrupoAprendizaje,
     InvitacionGrupoAprendizaje,
+    EstadisticaEntradaUsuario,
 )
 
 
@@ -143,3 +144,26 @@ class InvitacionGrupoAprendizajeAdmin(admin.ModelAdmin):
     list_display = ("grupo", "email", "invitado", "invitado_por", "estado", "creada_en")
     list_filter = ("estado",)
     search_fields = ("grupo__nombre", "email", "invitado__username")
+
+@admin.register(EstadisticaEntradaUsuario)
+class EstadisticaEntradaUsuarioAdmin(admin.ModelAdmin):
+    list_display = (
+        "usuario",
+        "entrada",
+        "veces_preguntada",
+        "aciertos",
+        "fallos",
+        "ultimo_acierto",
+        "ultimo_fallo",
+    )
+
+    list_filter = (
+        "usuario",
+        "entrada__diccionario",
+    )
+
+    search_fields = (
+        "usuario__username",
+        "entrada__texto_origen",
+        "entrada__texto_destino",
+    )

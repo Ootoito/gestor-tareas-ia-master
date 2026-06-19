@@ -1,0 +1,89 @@
+{% extends "praktiko/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
+{% endblock %}
+
+{% block title %}
+Jugar con diccionario compartido
+{% endblock %}
+
+{% block page_title %}
+🎮 Jugar con {{ diccionario.nombre }}
+{% endblock %}
+
+{% block page_subtitle %}
+Grupo: {{ grupo.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card juego-intro">
+
+        <form method="get" action="{% url 'praktiko:juego_tablero' %}">
+
+            <input type="hidden" name="diccionario" value="{{ diccionario.id }}">
+            <input type="hidden" name="grupo" value="{{ grupo.id }}">
+
+            <div class="form-group">
+                <label>Tema</label>
+
+                <select name="tema" class="form-control">
+                    <option value="">
+                        🎲 Todo el vocabulario del diccionario
+                    </option>
+
+                    {% for tema in temas %}
+                        <option value="{{ tema.id }}">
+                            {{ tema.icono }} {{ tema.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+
+                <label>Número de fichas</label>
+
+                <div class="juego-opciones">
+
+                    <label>
+                        <input type="radio" name="fichas" value="12" checked>
+                        12
+                    </label>
+
+                    <label>
+                        <input type="radio" name="fichas" value="25">
+                        25
+                    </label>
+
+                    <label>
+                        <input type="radio" name="fichas" value="36">
+                        36
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
+                   class="praktiko-btn">
+                    Cancelar
+                </a>
+
+                <button type="submit" class="praktiko-btn praktiko-btn-main">
+                    Comenzar partida
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

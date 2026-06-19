@@ -1,0 +1,122 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+{{ diccionario.nombre }}
+{% endblock %}
+
+{% block page_title %}
+📚 {{ diccionario.nombre }}
+{% endblock %}
+
+{% block page_subtitle %}
+Grupo: {{ grupo.nombre }}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
+        ← Volver al grupo
+    </a>
+
+    <a href="{% url 'praktiko:crear_tema_diccionario_grupo' grupo.id diccionario.id %}"
+       class="praktiko-btn">
+        Crear tema
+    </a>
+
+    <a href="{% url 'praktiko:crear_entrada_diccionario_grupo' grupo.id diccionario.id %}"
+       class="praktiko-btn praktiko-btn-main">
+        Añadir palabra/frase
+    </a>
+
+    <a href="{% url 'praktiko:importar_vocabulario_diccionario_grupo' grupo.id diccionario.id %}"
+        class="praktiko-btn">
+            📥 Importar CSV
+    </a>
+    <a href="{% url 'praktiko:jugar_diccionario_grupo' grupo.id diccionario.id %}"
+        class="praktiko-btn praktiko-btn-main">
+        🎮 Jugar con este diccionario
+    </a>
+    
+</section>
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card">
+
+        <h2>Temas</h2>
+
+        {% if temas %}
+
+            <div class="diccionario-meta">
+                {% for tema in temas %}
+                    <span>
+                        {{ tema.icono }} {{ tema.nombre }}
+                        · {{ tema.total_entradas }} entradas
+                    </span>
+                {% endfor %}
+            </div>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                Este diccionario compartido todavía no tiene temas.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card table-card">
+
+        <h2>Palabras y frases</h2>
+
+        {% if entradas %}
+
+            <table class="praktiko-table">
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Tipo</th>
+                        <th>Añadido por</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for entrada in entradas %}
+                        <tr>
+                            <td>
+                                {% if entrada.tema %}
+                                    {{ entrada.tema.icono }} {{ entrada.tema.nombre }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td><strong>{{ entrada.texto_origen }}</strong></td>
+                            <td>{{ entrada.texto_destino }}</td>
+                            <td>{{ entrada.get_tipo_display }}</td>
+                            <td>{{ entrada.usuario.username }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                Este diccionario compartido todavía no tiene palabras ni frases.
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}
