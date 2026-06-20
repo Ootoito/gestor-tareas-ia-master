@@ -8,6 +8,7 @@ from praktiko.models import (
     EntradaDiccionario,
     SesionPractica,
     InvitacionGrupoAprendizaje,
+    EstadisticaEntradaUsuario,
 )
 
 
@@ -38,6 +39,21 @@ def home(request):
     else:
         porcentaje_acierto = 0
 
+    estadisticas_dificiles_qs = (
+        EstadisticaEntradaUsuario.objects
+        .filter(
+            usuario=usuario,
+            veces_preguntada__gte=3,
+        )
+        .select_related("entrada")
+    )
+
+    total_palabras_dificiles = sum(
+        1
+        for estadistica in estadisticas_dificiles_qs
+        if estadistica.porcentaje_acierto < 60
+    )
+
     diccionarios = (
         Diccionario.objects
         .filter(usuario=usuario, activo=True)
@@ -58,6 +74,7 @@ def home(request):
         "porcentaje_acierto": porcentaje_acierto,
         "diccionarios": diccionarios,
         "invitaciones_pendientes": invitaciones_pendientes,
+        "total_palabras_dificiles": total_palabras_dificiles,
     }
 
     return render(request, "praktiko/home.html", contexto)

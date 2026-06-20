@@ -15,8 +15,8 @@ Palabras con más errores y menos de un 60% de éxito.
 {% block content %}
 
 <section class="praktiko-actions">
-    <a href="{% url 'praktiko:mis_estadisticas' %}" class="praktiko-btn">
-        ← Volver a estadísticas
+    <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+        ← Volver al panel principal
     </a>
 </section>
 
@@ -25,11 +25,7 @@ Palabras con más errores y menos de un 60% de éxito.
         <a href="{% url 'praktiko:repasar_dificiles' %}"
             class="praktiko-btn praktiko-btn-main">
                 📚 Repasar palabras difíciles
-        </a>
-        <a href="{% url 'praktiko:jugar_dificiles' %}"
-            class="praktiko-btn praktiko-btn-main">
-                🎮 Jugar difíciles
-        </a>
+        </a>       
     </div>
     
     <div class="praktiko-card table-card">
