@@ -18,6 +18,10 @@
     <a href="{% url 'praktiko:listado_grupos' %}" class="praktiko-btn">
         ← Mis grupos
     </a>
+    <a href="{% url 'praktiko:estadisticas_grupo' grupo.id %}"
+        class="praktiko-btn">
+            📊 Estadísticas grupo
+    </a>
     <a href="{% url 'praktiko:salir_grupo' grupo.id %}" class="praktiko-btn btn-danger">
         Salir del grupo
     </a>

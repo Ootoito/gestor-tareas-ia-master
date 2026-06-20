@@ -1,0 +1,74 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Asistente IA
+{% endblock %}
+
+{% block page_title %}
+🤖 Asistente IA
+{% endblock %}
+
+{% block page_subtitle %}
+Herramientas inteligentes para mejorar tu aprendizaje.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-grid diccionarios-grid">
+
+        <article class="praktiko-card diccionario-card">
+            <h3>🎯 Recomendación de estudio</h3>
+            <p>
+                Analiza tus estadísticas y propone qué deberías repasar.
+            </p>
+            <div class="form-actions">
+               <a href="{% url 'praktiko:ia_recomendacion_estudio' %}"
+                    class="praktiko-btn praktiko-btn-main">
+                        Abrir
+                </a>
+            </div>
+        </article>
+
+        <article class="praktiko-card diccionario-card">
+            <h3>🔥 Explicar palabra difícil</h3>
+            <p>
+                Explicaciones personalizadas para palabras que fallas a menudo.
+            </p>
+            <div class="form-actions">
+                <a href="#" class="praktiko-btn">
+                    Próximamente
+                </a>
+            </div>
+        </article>
+
+        <article class="praktiko-card diccionario-card">
+            <h3>📝 Generar ejercicios</h3>
+            <p>
+                Crea ejercicios con tus propias palabras y frases.
+            </p>
+            <div class="form-actions">
+                <a href="#" class="praktiko-btn">
+                    Próximamente
+                </a>
+            </div>
+        </article>
+
+        <article class="praktiko-card diccionario-card">
+            <h3>📥 Crear vocabulario por tema</h3>
+            <p>
+                Genera listas de vocabulario para importar a tus diccionarios.
+            </p>
+            <div class="form-actions">
+                <a href="#" class="praktiko-btn">
+                    Próximamente
+                </a>
+            </div>
+        </article>
+
+    </div>
+
+</section>
+
+{% endblock %}

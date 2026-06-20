@@ -11,6 +11,8 @@ from praktiko.vistas import juego_views
 from praktiko.vistas import importacion_views
 from praktiko.vistas import grupo_views
 from praktiko.vistas import estadistica_views
+from praktiko.vistas import estadistica_grupo_views
+from praktiko.vistas import ia_views
 
 app_name = "praktiko"
 
@@ -69,4 +71,8 @@ urlpatterns = [
     path("estadisticas/dificiles/", estadistica_views.palabras_dificiles, name="palabras_dificiles",),
     path("estadisticas/repasar/", estadistica_views.repasar_dificiles, name="repasar_dificiles",),
     path("estadisticas/dificiles/jugar/", estadistica_views.jugar_dificiles, name="jugar_dificiles",),
+    path("grupos/<int:grupo_id>/estadisticas/", estadistica_grupo_views.estadisticas_grupo, name="estadisticas_grupo",),
+
+    path("ia/", ia_views.asistente_ia, name="asistente_ia",),
+    path("ia/recomendacion/", ia_views.recomendacion_estudio, name="ia_recomendacion_estudio",),
 ]

@@ -1,0 +1,68 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Estadísticas grupo
+{% endblock %}
+
+{% block page_title %}
+📊 {{ grupo.nombre }}
+{% endblock %}
+
+{% block page_subtitle %}
+Estadísticas generales del grupo.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+
+    <a href="{% url 'praktiko:detalle_grupo' grupo.id %}"
+       class="praktiko-btn">
+        ← Volver al grupo
+    </a>
+
+</section>
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card table-card">
+
+        <table class="praktiko-table">
+
+            <thead>
+
+                <tr>
+                    <th>Usuario</th>
+                    <th>Preguntas</th>
+                    <th>Aciertos</th>
+                    <th>Fallos</th>
+                    <th>% Éxito</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for fila in resumen_miembros %}
+
+                    <tr>
+
+                        <td>{{ fila.usuario.username }}</td>
+                        <td>{{ fila.preguntas }}</td>
+                        <td>{{ fila.aciertos }}</td>
+                        <td>{{ fila.fallos }}</td>
+                        <td>{{ fila.porcentaje }}%</td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+{% endblock %}

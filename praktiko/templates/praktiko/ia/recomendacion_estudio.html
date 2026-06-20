@@ -1,0 +1,154 @@
+{% extends "praktiko/base.html" %}
+
+{% block title %}
+Recomendación de estudio
+{% endblock %}
+
+{% block page_title %}
+🎯 Recomendación de estudio
+{% endblock %}
+
+{% block page_subtitle %}
+Análisis automático basado en tus estadísticas.
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions">
+    <a href="{% url 'praktiko:asistente_ia' %}" class="praktiko-btn">
+        ← Volver al asistente IA
+    </a>
+</section>
+
+<section class="praktiko-grid resumen-grid">
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Preguntas</span>
+        <strong>{{ total_preguntas }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Aciertos</span>
+        <strong>{{ total_aciertos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">Fallos</span>
+        <strong>{{ total_fallos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">% global</span>
+        <strong>{{ porcentaje_global }}%</strong>
+    </article>
+
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+
+        <h2>🧠 Informe IA</h2>
+
+        <div style="white-space: pre-line;">
+            {{ informe_ia }}
+        </div>
+
+        <details style="margin-top: 1.5rem;">
+            <summary>
+                ⚙️ Ver prompt enviado a la IA
+            </summary>
+
+            <pre style="
+                white-space: pre-wrap;
+                margin-top: 1rem;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 8px;
+                overflow-x: auto;
+            ">
+{{ prompt_ia }}
+            </pre>
+        </details>
+
+    </div>
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+
+        <h2>🤖 Recomendaciones automáticas</h2>
+
+        <ul>
+            {% for recomendacion in recomendaciones %}
+                <li>{{ recomendacion }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card table-card">
+
+        <h2>🔥 Palabras difíciles detectadas</h2>
+
+        {% if palabras_dificiles %}
+
+            <table class="praktiko-table">
+                <thead>
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Diccionario</th>
+                        <th>Tema</th>
+                        <th>Preguntada</th>
+                        <th>Fallos</th>
+                        <th>% éxito</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for estadistica in palabras_dificiles %}
+                        <tr>
+                            <td><strong>{{ estadistica.entrada.texto_origen }}</strong></td>
+                            <td>{{ estadistica.entrada.texto_destino }}</td>
+                            <td>{{ estadistica.entrada.diccionario.nombre }}</td>
+                            <td>{{ estadistica.entrada.tema.nombre|default:"-" }}</td>
+                            <td>{{ estadistica.veces_preguntada }}</td>
+                            <td>{{ estadistica.fallos }}</td>
+                            <td>{{ estadistica.porcentaje_acierto }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+
+            <div class="praktiko-empty">
+                No se han detectado palabras difíciles suficientes.
+            </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+
+        <h2>📁 Temas con más fallos</h2>
+
+        {% if temas_problematicos %}
+            <ul>
+                {% for tema, fallos in temas_problematicos %}
+                    <li>{{ tema }}: {{ fallos }} fallos</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay temas problemáticos detectados.</p>
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock %}
