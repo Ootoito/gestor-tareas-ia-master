@@ -25,9 +25,7 @@
         </div>
     </header>
 
-    <nav class="praktiko-actions">
-
-    {% if messages %}
+        {% if messages %}
         <section class="praktiko-messages">
             {% for message in messages %}
                 <div class="praktiko-message praktiko-message-{{ message.tags }}">
@@ -97,7 +95,9 @@
     {% endif %}
 
 </nav>
+
     {% endif %}
+    
     {% block content %}
     {% endblock %}
 
