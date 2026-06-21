@@ -156,7 +156,7 @@ def pregunta_practica(request):
         "praktiko_mostrar_respuesta",
         False,
     )
-
+    
     return render(
         request,
         "praktiko/practica/pregunta.html",
@@ -165,6 +165,7 @@ def pregunta_practica(request):
             "indice_actual": indice_actual + 1,
             "total": len(entradas_ids),
             "mostrar_respuesta": mostrar_respuesta,
+            "modo_practica": True,
         },
     )
 
