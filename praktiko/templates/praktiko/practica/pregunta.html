@@ -7,7 +7,23 @@ Práctica
 {% block page_title %}
 Práctica
 {% endblock %}
+{% block extra_css %}
+<style>
+    @media (max-width: 768px) {
+        .praktiko-actions {
+            display: none !important;
+        }
 
+        .praktiko-header {
+            margin-bottom: 0.5rem;
+        }
+
+        .praktiko-section {
+            margin-top: 0.5rem;
+        }
+    }
+</style>
+{% endblock %}
 {% block page_subtitle %}
 Pregunta {{ indice_actual }} de {{ total }}
 {% endblock %}

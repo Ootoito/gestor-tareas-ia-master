@@ -37,6 +37,10 @@
         </section>
     {% endif %}
 
+    {% if not modo_practica %}
+
+    <nav class="praktiko-actions">
+
     {% if modo_juego %}
 
         <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
@@ -93,7 +97,7 @@
     {% endif %}
 
 </nav>
-
+    {% endif %}
     {% block content %}
     {% endblock %}
 
