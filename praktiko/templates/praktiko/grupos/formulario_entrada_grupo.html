@@ -1,4 +1,5 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
 {{ titulo }}
@@ -9,63 +10,62 @@
 {% endblock %}
 
 {% block page_subtitle %}
-Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
+{% trans "Grupo" %}: {{ grupo.nombre }} · {% trans "Diccionario" %}: {{ diccionario.nombre }}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-section">
-
     <form method="post" class="praktiko-card praktiko-form">
         {% csrf_token %}
 
         <div class="form-grid">
 
             <div class="form-group">
-                <label for="{{ form.diccionario.id_for_label }}">Diccionario</label>
+                <label for="{{ form.diccionario.id_for_label }}">{% trans "Diccionario" %}</label>
                 {{ form.diccionario }}
                 {{ form.diccionario.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.tema.id_for_label }}">Tema</label>
+                <label for="{{ form.tema.id_for_label }}">{% trans "Tema" %}</label>
                 {{ form.tema }}
                 {{ form.tema.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.tipo.id_for_label }}">Tipo</label>
+                <label for="{{ form.tipo.id_for_label }}">{% trans "Tipo" %}</label>
                 {{ form.tipo }}
                 {{ form.tipo.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.nivel.id_for_label }}">Nivel</label>
+                <label for="{{ form.nivel.id_for_label }}">{% trans "Nivel" %}</label>
                 {{ form.nivel }}
                 {{ form.nivel.errors }}
             </div>
 
             <div class="form-group form-group-full">
-                <label for="{{ form.texto_origen.id_for_label }}">Texto origen</label>
+                <label for="{{ form.texto_origen.id_for_label }}">{% trans "Texto origen" %}</label>
                 {{ form.texto_origen }}
                 {{ form.texto_origen.errors }}
             </div>
 
             <div class="form-group form-group-full">
-                <label for="{{ form.texto_destino.id_for_label }}">Texto destino</label>
+                <label for="{{ form.texto_destino.id_for_label }}">{% trans "Texto destino" %}</label>
                 {{ form.texto_destino }}
                 {{ form.texto_destino.errors }}
             </div>
 
             <div class="form-group form-group-full">
-                <label for="{{ form.notas.id_for_label }}">Notas</label>
+                <label for="{{ form.notas.id_for_label }}">{% trans "Notas" %}</label>
                 {{ form.notas }}
                 {{ form.notas.errors }}
             </div>
 
             <div class="form-group form-check">
                 {{ form.activa }}
-                <label for="{{ form.activa.id_for_label }}">Activa</label>
+                <label for="{{ form.activa.id_for_label }}">{% trans "Activa" %}</label>
                 {{ form.activa.errors }}
             </div>
 
@@ -73,7 +73,7 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
 
         <div class="form-actions">
             <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
-                Cancelar
+                {% trans "Cancelar" %}
             </a>
 
             <button type="submit" class="praktiko-btn praktiko-btn-main">
@@ -82,7 +82,6 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
         </div>
 
     </form>
-
 </section>
 
 {% endblock %}

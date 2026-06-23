@@ -1,4 +1,5 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
 {{ titulo }}
@@ -9,7 +10,7 @@
 {% endblock %}
 
 {% block page_subtitle %}
-Añade palabras o frases a tus diccionarios de estudio.
+{% trans "Añade palabras o frases a tus diccionarios de estudio." %}
 {% endblock %}
 
 {% block content %}
@@ -18,71 +19,94 @@ Añade palabras o frases a tus diccionarios de estudio.
     <form method="post" class="praktiko-card praktiko-form">
         {% csrf_token %}
 
-        <div class="form-grid">
+```
+    <div class="form-grid">
 
-            <div class="form-group">
-                <label for="{{ form.diccionario.id_for_label }}">Diccionario</label>
-                {{ form.diccionario }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.tema.id_for_label }}">Tema</label>
-                {{ form.tema }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.tipo.id_for_label }}">Tipo</label>
-                {{ form.tipo }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.nivel.id_for_label }}">Nivel</label>
-                {{ form.nivel }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.texto_origen.id_for_label }}">Texto origen</label>
-                {{ form.texto_origen }}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.texto_destino.id_for_label }}">Traducción</label>
-                {{ form.texto_destino }}
-            </div>
-
-            <div class="form-group form-group-full">
-                <label for="{{ form.ejemplo_origen.id_for_label }}">Ejemplo origen</label>
-                {{ form.ejemplo_origen }}
-            </div>
-
-            <div class="form-group form-group-full">
-                <label for="{{ form.ejemplo_destino.id_for_label }}">Ejemplo traducido</label>
-                {{ form.ejemplo_destino }}
-            </div>
-
-            <div class="form-group form-group-full">
-                <label for="{{ form.notas.id_for_label }}">Notas</label>
-                {{ form.notas }}
-            </div>
-
-            <div class="form-group form-check">
-                {{ form.activa }}
-                <label for="{{ form.activa.id_for_label }}">Activa</label>
-            </div>
-
+        <div class="form-group">
+            <label for="{{ form.diccionario.id_for_label }}">
+                {% trans "Diccionario" %}
+            </label>
+            {{ form.diccionario }}
         </div>
 
-        <div class="form-actions">
-            <a href="{% url 'praktiko:listado_vocabulario' %}" class="praktiko-btn">
-                Cancelar
-            </a>
-
-            <button type="submit" class="praktiko-btn praktiko-btn-main">
-                {{ boton }}
-            </button>
+        <div class="form-group">
+            <label for="{{ form.tema.id_for_label }}">
+                {% trans "Tema" %}
+            </label>
+            {{ form.tema }}
         </div>
 
-    </form>
+        <div class="form-group">
+            <label for="{{ form.tipo.id_for_label }}">
+                {% trans "Tipo" %}
+            </label>
+            {{ form.tipo }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.nivel.id_for_label }}">
+                {% trans "Nivel" %}
+            </label>
+            {{ form.nivel }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.texto_origen.id_for_label }}">
+                {% trans "Texto origen" %}
+            </label>
+            {{ form.texto_origen }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.texto_destino.id_for_label }}">
+                {% trans "Traducción" %}
+            </label>
+            {{ form.texto_destino }}
+        </div>
+
+        <div class="form-group form-group-full">
+            <label for="{{ form.ejemplo_origen.id_for_label }}">
+                {% trans "Ejemplo origen" %}
+            </label>
+            {{ form.ejemplo_origen }}
+        </div>
+
+        <div class="form-group form-group-full">
+            <label for="{{ form.ejemplo_destino.id_for_label }}">
+                {% trans "Ejemplo traducido" %}
+            </label>
+            {{ form.ejemplo_destino }}
+        </div>
+
+        <div class="form-group form-group-full">
+            <label for="{{ form.notas.id_for_label }}">
+                {% trans "Notas" %}
+            </label>
+            {{ form.notas }}
+        </div>
+
+        <div class="form-group form-check">
+            {{ form.activa }}
+            <label for="{{ form.activa.id_for_label }}">
+                {% trans "Activa" %}
+            </label>
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+        <a href="{% url 'praktiko:listado_vocabulario' %}" class="praktiko-btn">
+            {% trans "Cancelar" %}
+        </a>
+
+        <button type="submit" class="praktiko-btn praktiko-btn-main">
+            {{ boton }}
+        </button>
+    </div>
+
+</form>
+```
+
 </section>
 
 {% endblock %}

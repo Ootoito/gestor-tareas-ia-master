@@ -1,5 +1,8 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,94 +15,148 @@
 
 <div class="praktiko-page">
 
-    <header class="praktiko-header">
-        <div>
-            <h1>{% block page_title %}Praktiko{% endblock %}</h1>
-            <p>{% block page_subtitle %}Tu entrenador personal de idiomas.{% endblock %}</p>
-        </div>
+<header class="praktiko-header">
+    <div>
+        <h1>{% block page_title %}Praktiko{% endblock %}</h1>
+        <p>{% block page_subtitle %}{% trans "Tu entrenador personal de idiomas." %}{% endblock %}</p>
+    </div>
 
-        <div class="praktiko-user">
-            Usuario: <strong>{{ request.user.username }}</strong>
-            ·
-            <a href="{% url 'praktiko:logout' %}">Salir</a>
-        </div>
-    </header>
+    <div class="praktiko-user">
 
-        {% if messages %}
-        <section class="praktiko-messages">
-            {% for message in messages %}
-                <div class="praktiko-message praktiko-message-{{ message.tags }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </section>
-    {% endif %}
+        <form action="/i18n/setlang/" method="post" style="margin-bottom:8px;">
+            {% csrf_token %}
 
-    {% if not modo_practica %}
+            <input
+                name="next"
+                type="hidden"
+                value="{{ request.get_full_path }}"
+            >
 
-    <nav class="praktiko-actions">
+            <select
+                name="language"
+                onchange="this.form.submit()"
+                style="
+                    padding:4px 8px;
+                    border-radius:8px;
+                    border:1px solid #cbd5e1;
+                "
+            >
+                {% get_current_language as LANGUAGE_CODE %}
+
+                <option value="es"
+                    {% if LANGUAGE_CODE == "es" %}selected{% endif %}>
+                    Español
+                </option>
+
+                <option value="en"
+                    {% if LANGUAGE_CODE == "en" %}selected{% endif %}>
+                    English
+                </option>
+
+                <option value="ru"
+                    {% if LANGUAGE_CODE == "ru" %}selected{% endif %}>
+                    Русский
+                </option>
+
+                <option value="eo"
+                    {% if LANGUAGE_CODE == "eo" %}selected{% endif %}>
+                    Esperanto
+                </option>
+
+            </select>
+        </form>
+
+        {% trans "Usuario" %}: <strong>{{ request.user.username }}</strong>
+        ·
+        <a href="{% url 'praktiko:logout' %}">
+            {% trans "Salir" %}
+        </a>
+
+    </div>
+</header>
+
+{% if messages %}
+    <section class="praktiko-messages">
+        {% for message in messages %}
+            <div class="praktiko-message praktiko-message-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </section>
+{% endif %}
+
+{% if not modo_practica %}
+
+<nav class="praktiko-actions">
 
     {% if modo_juego %}
 
         <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
-            ← Volver al panel
+            ← {% trans "Volver al panel" %}
         </a>
 
     {% else %}
 
         {% if request.user.is_superuser or request.user.groups.all %}
             <a href="{% url 'praktiko:gestion_usuarios' %}" class="praktiko-btn">
-                Gestión
+                {% trans "Gestión" %}
             </a>
         {% endif %}
 
-        <a href="{% url 'praktiko:home' %}" class="praktiko-btn">Panel</a>
+        <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+            {% trans "Panel" %}
+        </a>
 
         <a href="{% url 'praktiko:listado_diccionarios' %}" class="praktiko-btn">
-            Diccionarios
+            {% trans "Diccionarios" %}
         </a>
 
         <a href="{% url 'praktiko:listado_temas' %}" class="praktiko-btn">
-            Temas
+            {% trans "Temas" %}
         </a>
 
         <a href="{% url 'praktiko:listado_vocabulario' %}" class="praktiko-btn">
-            Vocabulario
+            {% trans "Vocabulario" %}
         </a>
+
         <a href="{% url 'praktiko:asistente_ia' %}" class="praktiko-btn">
-            🤖 Asistente IA
+            🤖 {% trans "Asistente IA" %}
         </a>
+
         <a href="{% url 'praktiko:configurar_practica' %}"
            class="praktiko-btn praktiko-btn-main">
-            Practicar
+            {% trans "Practicar" %}
         </a>
 
         <a href="{% url 'praktiko:juego_configurar' %}" class="praktiko-btn">
-            🎮 Jugar
+            🎮 {% trans "Jugar" %}
         </a>
+
         <a href="{% url 'praktiko:listado_grupos' %}" class="praktiko-btn">
-            👥 Grupos
+            👥 {% trans "Grupos" %}
         </a>
+
         <a href="{% url 'praktiko:mis_invitaciones' %}" class="praktiko-btn">
-            📨 Invitaciones
+            📨 {% trans "Invitaciones" %}
         </a>
+
         <a href="{% url 'praktiko:importar_vocabulario' %}"
            class="praktiko-btn">
-            📁 Importar vocabulario
+            📁 {% trans "Importar vocabulario" %}
         </a>
 
         <a href="{% url 'praktiko:mis_estadisticas' %}" class="praktiko-btn">
-            Estadísticas
+            {% trans "Estadísticas" %}
         </a>
 
     {% endif %}
 
 </nav>
 
-    {% endif %}
-    
-    {% block content %}
-    {% endblock %}
+{% endif %}
+
+{% block content %}
+{% endblock %}
 
 </div>
 

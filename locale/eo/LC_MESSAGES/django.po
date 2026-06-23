@@ -1,0 +1,1150 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR [EMAIL@ADDRESS](mailto:EMAIL@ADDRESS), YEAR.
+#
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Praktiko\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-23 17:53+0100\n"
+"PO-Revision-Date: 2026-06-23 17:53+0100\n"
+"Last-Translator: Wladimir Cova\n"
+"Language-Team: Esperanto\n"
+"Language: eo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\praktiko\templates\praktiko\auth\login.html:8
+msgid "Login"
+msgstr "Ensaluto"
+
+#: .\praktiko\templates\praktiko\auth\login.html:20
+#: .\praktiko\templates\praktiko\base.html:21
+msgid "Tu entrenador personal de idiomas."
+msgstr "Via persona lingva trejnisto."
+
+#: .\praktiko\templates\praktiko\auth\login.html:38
+#: .\praktiko\templates\praktiko\base.html:69
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:34
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:35
+#: .\praktiko\templates\praktiko\grupos\detalle.html:52
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:36
+#: .\praktiko\templates\praktiko\importacion\importar.html:27
+msgid "Usuario"
+msgstr "Uzanto"
+
+#: .\praktiko\templates\praktiko\auth\login.html:46
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:67
+msgid "Contraseña"
+msgstr "Pasvorto"
+
+#: .\praktiko\templates\praktiko\auth\login.html:55
+msgid "Entrar"
+msgstr "Ensaluti"
+
+#: .\praktiko\templates\praktiko\base.html:72
+msgid "Salir"
+msgstr "Elsaluti"
+
+#: .\praktiko\templates\praktiko\base.html:95
+#: .\praktiko\templates\praktiko\gestion\sin_permiso.html:29
+#: .\praktiko\templates\praktiko\juego\resultado.html:60
+#: .\praktiko\templates\praktiko\practica\resultado.html:69
+msgid "Volver al panel"
+msgstr "Reiri al panelo"
+
+#: .\praktiko\templates\praktiko\base.html:102
+msgid "Gestión"
+msgstr "Administrado"
+
+#: .\praktiko\templates\praktiko\base.html:107
+msgid "Panel"
+msgstr "Panelo"
+
+#: .\praktiko\templates\praktiko\base.html:111
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:39
+#: .\praktiko\templates\praktiko\home.html:16
+msgid "Diccionarios"
+msgstr "Vortaroj"
+
+#: .\praktiko\templates\praktiko\base.html:115
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:47
+#: .\praktiko\templates\praktiko\home.html:22
+#: .\praktiko\templates\praktiko\temas\listado.html:5
+#: .\praktiko\templates\praktiko\temas\listado.html:9
+msgid "Temas"
+msgstr "Temoj"
+
+#: .\praktiko\templates\praktiko\base.html:119
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:4
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:6
+msgid "Vocabulario"
+msgstr "Vortprovizo"
+
+#: .\praktiko\templates\praktiko\base.html:123
+#: .\praktiko\templates\praktiko\ia\asistente.html:5
+#: .\praktiko\templates\praktiko\ia\asistente.html:9
+msgid "Asistente IA"
+msgstr "IA-asistanto"
+
+#: .\praktiko\templates\praktiko\base.html:128
+#: .\praktiko\templates\praktiko\practica\configurar.html:5
+#: .\praktiko\templates\praktiko\practica\configurar.html:9
+msgid "Practicar"
+msgstr "Praktiki"
+
+#: .\praktiko\templates\praktiko\base.html:132
+msgid "Jugar"
+msgstr "Ludi"
+
+#: .\praktiko\templates\praktiko\base.html:136
+#: .\praktiko\templates\praktiko\grupos\listado.html:5
+msgid "Grupos"
+msgstr "Grupoj"
+
+#: .\praktiko\templates\praktiko\base.html:140
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:5
+msgid "Invitaciones"
+msgstr "Invitoj"
+
+#: .\praktiko\templates\praktiko\base.html:145
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:9
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:53
+#: .\praktiko\templates\praktiko\importacion\importar.html:5
+#: .\praktiko\templates\praktiko\importacion\importar.html:9
+#: .\praktiko\templates\praktiko\importacion\importar.html:61
+msgid "Importar vocabulario"
+msgstr "Importi vortprovizon"
+
+#: .\praktiko\templates\praktiko\base.html:149
+msgid "Estadísticas"
+msgstr "Statistikoj"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:13
+msgid "Crea o modifica un espacio de aprendizaje por idioma."
+msgstr "Kreu aŭ modifu lernospacon laŭ lingvo."
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:27
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:50
+#: .\praktiko\templates\praktiko\grupos\formulario.html:27
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:25
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:25
+#: .\praktiko\templates\praktiko\temas\formulario.html:33
+msgid "Nombre"
+msgstr "Nomo"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:35
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:31
+msgid "Idioma origen"
+msgstr "Fontlingvo"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:43
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:37
+msgid "Idioma destino"
+msgstr "Cellingvo"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:51
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:43
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:31
+#: .\praktiko\templates\praktiko\temas\formulario.html:41
+msgid "Icono"
+msgstr "Ikono"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:59
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:49
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:37
+#: .\praktiko\templates\praktiko\temas\formulario.html:49
+msgid "Color"
+msgstr "Koloro"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:67
+#: .\praktiko\templates\praktiko\grupos\formulario.html:35
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:55
+#: .\praktiko\templates\praktiko\temas\formulario.html:65
+msgid "Descripción"
+msgstr "Priskribo"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:76
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:55
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:37
+#: .\praktiko\templates\praktiko\grupos\formulario.html:44
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:62
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:50
+#: .\praktiko\templates\praktiko\temas\formulario.html:74
+#: .\praktiko\templates\praktiko\temas\listado.html:53
+msgid "Activo"
+msgstr "Aktiva"
+
+#: .\praktiko\templates\praktiko\diccionarios\formulario.html:85
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:109
+#: .\praktiko\templates\praktiko\grupos\formulario.html:53
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:70
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:76
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:58
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:49
+#: .\praktiko\templates\praktiko\grupos\invitar.html:39
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:81
+#: .\praktiko\templates\praktiko\practica\configurar.html:66
+#: .\praktiko\templates\praktiko\temas\formulario.html:82
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:99
+msgid "Cancelar"
+msgstr "Nuligi"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:5
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:9
+#: .\praktiko\templates\praktiko\home.html:144
+msgid "Mis diccionarios"
+msgstr "Miaj vortaroj"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:13
+msgid "Gestiona tus espacios de aprendizaje por idioma."
+msgstr "Administru viajn lernospacojn laŭ lingvo."
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:20
+msgid "Nuevo diccionario"
+msgstr "Nova vortaro"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:51
+#: .\praktiko\templates\praktiko\grupos\detalle.html:125
+#: .\praktiko\templates\praktiko\home.html:161
+msgid "temas"
+msgstr "temoj"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:52
+#: .\praktiko\templates\praktiko\grupos\detalle.html:126
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:54
+#: .\praktiko\templates\praktiko\home.html:162
+#: .\praktiko\templates\praktiko\temas\listado.html:49
+msgid "entradas"
+msgstr "eroj"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:57
+#: .\praktiko\templates\praktiko\temas\listado.html:55
+msgid "Inactivo"
+msgstr "Neaktiva"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:63
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:76
+#: .\praktiko\templates\praktiko\temas\listado.html:61
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:66
+msgid "Editar"
+msgstr "Redakti"
+
+#: .\praktiko\templates\praktiko\diccionarios\listado.html:76
+#: .\praktiko\templates\praktiko\home.html:169
+msgid "Todavía no tienes diccionarios creados."
+msgstr "Vi ankoraŭ ne havas kreitajn vortarojn."
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:5
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:9
+msgid "Mis estadísticas"
+msgstr "Miaj statistikoj"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:13
+msgid "Palabras y frases practicadas."
+msgstr "Praktikitaj vortoj kaj frazoj."
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:22
+msgid "Ver palabras difíciles"
+msgstr "Vidi malfacilajn vortojn"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:33
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:39
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:25
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:13
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:103
+#: .\praktiko\templates\praktiko\importacion\importar.html:35
+#: .\praktiko\templates\praktiko\juego\configurar.html:31
+#: .\praktiko\templates\praktiko\practica\configurar.html:32
+#: .\praktiko\templates\praktiko\temas\formulario.html:25
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:27
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:31
+msgid "Diccionario"
+msgstr "Vortaro"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:34
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:40
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:76
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:31
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:34
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:104
+#: .\praktiko\templates\praktiko\juego\configurar.html:44
+#: .\praktiko\templates\praktiko\practica\configurar.html:40
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:34
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:32
+msgid "Tema"
+msgstr "Temo"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:35
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:41
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:77
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:101
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:29
+msgid "Origen"
+msgstr "Fonto"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:36
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:42
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:78
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:102
+msgid "Destino"
+msgstr "Celo"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:37
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:43
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:105
+msgid "Preguntada"
+msgstr "Demandita"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:38
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:44
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:38
+#: .\praktiko\templates\praktiko\home.html:37
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:32
+#: .\praktiko\templates\praktiko\juego\resultado.html:40
+#: .\praktiko\templates\praktiko\juego\tablero.html:27
+#: .\praktiko\templates\praktiko\practica\resultado.html:32
+msgid "Aciertos"
+msgstr "Ĝustaj respondoj"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:39
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:45
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:39
+#: .\praktiko\templates\praktiko\home.html:42
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:37
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:106
+#: .\praktiko\templates\praktiko\practica\resultado.html:37
+msgid "Fallos"
+msgstr "Eraroj"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:40
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:46
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:40
+#, python-format
+msgid "%% Éxito"
+msgstr "%% sukceso"
+
+#: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:63
+msgid ""
+"Todavía no hay estadísticas. Juega una partida para empezar a generar datos."
+msgstr "Ankoraŭ ne estas statistikoj. Ludu partion por komenci generi datumojn."
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:5
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:9
+#: .\praktiko\templates\praktiko\home.html:91
+#: .\praktiko\templates\praktiko\home.html:121
+msgid "Palabras difíciles"
+msgstr "Malfacilaj vortoj"
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:13
+#, python-format
+msgid "Palabras con más errores y menos de un 60%% de éxito."
+msgstr "Vortoj kun plej multaj eraroj kaj malpli ol 60%% sukceso."
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:20
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:21
+msgid "Volver al panel principal"
+msgstr "Reiri al ĉefa panelo"
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:28
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:5
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:9
+msgid "Repasar palabras difíciles"
+msgstr "Ripasi malfacilajn vortojn"
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:69
+msgid "Todavía no hay palabras difíciles suficientes."
+msgstr "Ankoraŭ ne estas sufiĉe da malfacilaj vortoj."
+
+#: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:71
+#, python-format
+msgid ""
+"Se mostrarán aquí las palabras preguntadas al menos 3 veces y con menos de "
+"un 60%% de acierto."
+msgstr ""
+"Ĉi tie aperos vortoj demanditaj almenaŭ 3 fojojn kaj kun malpli ol 60%% da "
+"ĝustaj respondoj."
+
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:13
+msgid "Vocabulario que merece atención especial."
+msgstr "Vortprovizo kiu meritas specialan atenton."
+
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:57
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:145
+msgid "fallos"
+msgstr "eraroj"
+
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:74
+msgid "¡Buen trabajo!"
+msgstr "Bonega laboro!"
+
+#: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:77
+msgid "No hay palabras difíciles pendientes de repaso."
+msgstr "Ne estas malfacilaj vortoj por ripasi."
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:13
+msgid "Alta y mantenimiento de usuarios del sistema Praktiko."
+msgstr "Kreado kaj administrado de uzantoj de la sistemo Praktiko."
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:42
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:36
+#: .\praktiko\templates\praktiko\grupos\detalle.html:53
+msgid "Email"
+msgstr "Retpoŝto"
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:58
+msgid "Apellidos"
+msgstr "Familia nomo"
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:74
+msgid "En edición puedes dejarla vacía para conservar la contraseña actual."
+msgstr "Dum redaktado vi povas lasi ĝin malplena por konservi la nunan pasvorton."
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:84
+msgid "Usuario activo"
+msgstr "Aktiva uzanto"
+
+#: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:96
+msgid "Administrador Praktiko"
+msgstr "Praktiko-administranto"
+
+#: .\praktiko\templates\praktiko\gestion\sin_permiso.html:5
+msgid "Sin permiso"
+msgstr "Sen permeso"
+
+#: .\praktiko\templates\praktiko\gestion\sin_permiso.html:9
+msgid "Acceso no permitido"
+msgstr "Aliro ne permesita"
+
+#: .\praktiko\templates\praktiko\gestion\sin_permiso.html:13
+msgid "No tienes permisos para acceder a esta zona."
+msgstr "Vi ne havas permeson por aliri ĉi tiun areon."
+
+#: .\praktiko\templates\praktiko\gestion\sin_permiso.html:23
+msgid "No tienes permisos de administración sobre Praktiko."
+msgstr "Vi ne havas administrajn permesojn en Praktiko."
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:5
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:9
+msgid "Gestión de usuarios"
+msgstr "Administrado de uzantoj"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:13
+msgid "Usuarios con acceso al sistema Praktiko."
+msgstr "Uzantoj kun aliro al la sistemo Praktiko."
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:22
+msgid "Nuevo usuario"
+msgstr "Nova uzanto"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:38
+msgid "Alta"
+msgstr "Kreita"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:40
+msgid "Entradas"
+msgstr "Eroj"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:41
+#: .\praktiko\templates\praktiko\home.html:32
+msgid "Prácticas"
+msgstr "Praktikoj"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:42
+msgid "Acciones"
+msgstr "Agoj"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:58
+msgid "Sí"
+msgstr "Jes"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:60
+msgid "No"
+msgstr "Ne"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:86
+msgid "Desactivar"
+msgstr "Malaktivigi"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:91
+msgid "Activar"
+msgstr "Aktivigi"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:102
+msgid "Reset clave"
+msgstr "Restarigi pasvorton"
+
+#: .\praktiko\templates\praktiko\gestion\usuarios.html:117
+msgid "No hay usuarios Praktiko registrados."
+msgstr "Ne estas registritaj uzantoj de Praktiko."
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:13
+msgid "Shared learning group."
+msgstr "Komuna lernogrupo."
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:21
+#: .\praktiko\templates\praktiko\grupos\listado.html:9
+msgid "Mis grupos"
+msgstr "Miaj grupoj"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:26
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:5
+msgid "Estadísticas grupo"
+msgstr "Grupaj statistikoj"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:31
+msgid "Salir del grupo"
+msgstr "Forlasi grupon"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:37
+#: .\praktiko\templates\praktiko\grupos\invitar.html:5
+#: .\praktiko\templates\praktiko\grupos\invitar.html:9
+msgid "Invitar usuario"
+msgstr "Inviti uzanton"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:47
+msgid "Miembros"
+msgstr "Membroj"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:54
+msgid "Rol"
+msgstr "Rolo"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:55
+msgid "Desde"
+msgstr "Ekde"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:74
+msgid "No hay miembros en el grupo."
+msgstr "Ne estas membroj en ĉi tiu grupo."
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:92
+msgid "Diccionarios compartidos"
+msgstr "Komunaj vortaroj"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:99
+msgid "Crear diccionario compartido"
+msgstr "Krei komunan vortaron"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:127
+msgid "Compartido"
+msgstr "Komuna"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:134
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:25
+msgid "Crear tema"
+msgstr "Krei temon"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:139
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:30
+msgid "Añadir palabra/frase"
+msgstr "Aldoni vorton/frazon"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:144
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:103
+msgid "Ver diccionario"
+msgstr "Vidi vortaron"
+
+#: .\praktiko\templates\praktiko\grupos\detalle.html:158
+msgid "Este grupo todavía no tiene diccionarios compartidos."
+msgstr "Ĉi tiu grupo ankoraŭ ne havas komunajn vortarojn."
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:13
+#: .\praktiko\templates\praktiko\grupos\formulario_diccionario_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:13
+#: .\praktiko\templates\praktiko\grupos\invitar.html:13
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:18
+msgid "Grupo"
+msgstr "Grupo"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:20
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:22
+msgid "Volver al grupo"
+msgstr "Reiri al grupo"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:35
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:5
+msgid "Importar CSV"
+msgstr "Importi CSV"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:40
+msgid "Jugar con este diccionario"
+msgstr "Ludi per ĉi tiu vortaro"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:60
+msgid "Este diccionario compartido todavía no tiene temas."
+msgstr "Ĉi tiu komuna vortaro ankoraŭ ne havas temojn."
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:70
+msgid "Palabras y frases"
+msgstr "Vortoj kaj frazoj"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:79
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:37
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:41
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:28
+msgid "Tipo"
+msgstr "Tipo"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:80
+msgid "Añadido por"
+msgstr "Aldonita de"
+
+#: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:104
+msgid "Este diccionario compartido todavía no tiene palabras ni frases."
+msgstr "Ĉi tiu komuna vortaro ankoraŭ ne havas vortojn nek frazojn."
+
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:13
+msgid "Estadísticas generales del grupo."
+msgstr "Ĝeneralaj statistikoj de la grupo."
+
+#: .\praktiko\templates\praktiko\grupos\estadisticas_grupo.html:37
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:27
+msgid "Preguntas"
+msgstr "Demandoj"
+
+#: .\praktiko\templates\praktiko\grupos\formulario.html:13
+msgid "Crea un grupo para compartir aprendizaje con otros usuarios."
+msgstr "Kreu grupon por kunhavigi lernadon kun aliaj uzantoj."
+
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:43
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:48
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:33
+msgid "Nivel"
+msgstr "Nivelo"
+
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:49
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:55
+msgid "Texto origen"
+msgstr "Fonta teksto"
+
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:55
+msgid "Texto destino"
+msgstr "Cela teksto"
+
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:61
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:83
+msgid "Notas"
+msgstr "Notoj"
+
+#: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:68
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:91
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:58
+msgid "Activa"
+msgstr "Aktiva"
+
+#: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:43
+#: .\praktiko\templates\praktiko\temas\formulario.html:57
+#: .\praktiko\templates\praktiko\temas\listado.html:50
+msgid "Orden"
+msgstr "Ordo"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:28
+#: .\praktiko\templates\praktiko\importacion\importar.html:43
+msgid "Archivo CSV"
+msgstr "CSV-dosiero"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:39
+#: .\praktiko\templates\praktiko\importacion\importar.html:52
+msgid "Formato esperado:"
+msgstr "Atendata formato:"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:65
+#: .\praktiko\templates\praktiko\importacion\importar.html:74
+msgid "Resultado de importación"
+msgstr "Importa rezulto"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:69
+#: .\praktiko\templates\praktiko\importacion\importar.html:79
+msgid "Total filas"
+msgstr "Totalaj vicoj"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:74
+#: .\praktiko\templates\praktiko\importacion\importar.html:84
+msgid "Creadas"
+msgstr "Kreitaj"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:79
+#: .\praktiko\templates\praktiko\importacion\importar.html:89
+msgid "Duplicadas"
+msgstr "Duobligitaj"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:84
+#: .\praktiko\templates\praktiko\importacion\importar.html:94
+#: .\praktiko\templates\praktiko\juego\resultado.html:45
+#: .\praktiko\templates\praktiko\juego\tablero.html:28
+msgid "Errores"
+msgstr "Eraroj"
+
+#: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:91
+#: .\praktiko\templates\praktiko\importacion\importar.html:103
+msgid "Errores encontrados:"
+msgstr "Trovitaj eraroj:"
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:9
+msgid "Mis invitaciones"
+msgstr "Miaj invitoj"
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:13
+msgid "Invitaciones pendientes a grupos de aprendizaje."
+msgstr "Atendantaj invitoj al lernogrupoj."
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:39
+msgid "Invitado por"
+msgstr "Invitita de"
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:47
+msgid "Aceptar"
+msgstr "Akcepti"
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:52
+msgid "Rechazar"
+msgstr "Rifuzi"
+
+#: .\praktiko\templates\praktiko\grupos\invitaciones.html:65
+msgid "No tienes invitaciones pendientes."
+msgstr "Vi ne havas atendantajn invitojn."
+
+#: .\praktiko\templates\praktiko\grupos\invitar.html:26
+msgid "Email del usuario"
+msgstr "Retpoŝto de la uzanto"
+
+#: .\praktiko\templates\praktiko\grupos\invitar.html:34
+msgid "Solo puedes invitar a usuarios ya registrados en Praktiko."
+msgstr "Vi povas inviti nur uzantojn jam registritajn en Praktiko."
+
+#: .\praktiko\templates\praktiko\grupos\invitar.html:43
+msgid "Enviar invitación"
+msgstr "Sendi inviton"
+
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:10
+msgid "Jugar con diccionario compartido"
+msgstr "Ludi per komuna vortaro"
+
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:14
+msgid "Jugar con"
+msgstr "Ludi per"
+
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:39
+#: .\praktiko\templates\praktiko\juego\configurar.html:49
+msgid "Todo el vocabulario del diccionario"
+msgstr "La tuta vortprovizo de la vortaro"
+
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:54
+#: .\praktiko\templates\praktiko\juego\configurar.html:64
+msgid "Número de fichas"
+msgstr "Nombro de kaheloj"
+
+#: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:85
+#: .\praktiko\templates\praktiko\juego\configurar.html:88
+msgid "Comenzar partida"
+msgstr "Komenci ludon"
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:13
+msgid "Grupos de aprendizaje compartido."
+msgstr "Komunaj lernogrupoj."
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:20
+msgid "Crear grupo"
+msgstr "Krei grupon"
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:44
+msgid "miembros"
+msgstr "membroj"
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:47
+msgid "Creador"
+msgstr "Kreinto"
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:53
+msgid "Ver grupo"
+msgstr "Vidi grupon"
+
+#: .\praktiko\templates\praktiko\grupos\listado.html:66
+msgid "Todavía no perteneces a ningún grupo."
+msgstr "Vi ankoraŭ ne apartenas al iu grupo."
+
+#: .\praktiko\templates\praktiko\home.html:9
+msgid "Tu espacio personal de práctica de vocabulario y frases."
+msgstr "Via persona spaco por praktiki vortprovizon kaj frazojn."
+
+#: .\praktiko\templates\praktiko\home.html:27
+msgid "Palabras / frases"
+msgstr "Vortoj / frazoj"
+
+#: .\praktiko\templates\praktiko\home.html:47
+#: .\praktiko\templates\praktiko\practica\resultado.html:42
+#, python-format
+msgid "%% acierto"
+msgstr "%% ĝusteco"
+
+#: .\praktiko\templates\praktiko\home.html:60
+msgid "Invitaciones pendientes"
+msgstr "Atendantaj invitoj"
+
+#: .\praktiko\templates\praktiko\home.html:63
+#, python-format
+msgid ""
+"\n"
+"            Tienes %(contador)s invitación pendiente a grupos de "
+"aprendizaje.\n"
+"        "
+msgid_plural ""
+"\n"
+"            Tienes %(contador)s invitaciones pendientes a grupos de "
+"aprendizaje.\n"
+"        "
+msgstr[0] ""
+"\n"
+"            Vi havas %(contador)s atendantan inviton al lernogrupoj.\n"
+"        "
+msgstr[1] ""
+"\n"
+"            Vi havas %(contador)s atendantajn invitojn al lernogrupoj.\n"
+"        "
+
+#: .\praktiko\templates\praktiko\home.html:73
+msgid "Ver invitaciones"
+msgstr "Vidi invitojn"
+
+#: .\praktiko\templates\praktiko\home.html:94
+#, python-format
+msgid ""
+"\n"
+"                Tienes %(contador)s palabra difícil pendiente de repaso.\n"
+"            "
+msgid_plural ""
+"\n"
+"                Tienes %(contador)s palabras difíciles pendientes de "
+"repaso.\n"
+"            "
+msgstr[0] ""
+"\n"
+"                Vi havas %(contador)s malfacilan vorton por ripasi.\n"
+"            "
+msgstr[1] ""
+"\n"
+"                Vi havas %(contador)s malfacilajn vortojn por ripasi.\n"
+"            "
+
+#: .\praktiko\templates\praktiko\home.html:105
+msgid "Jugar difíciles"
+msgstr "Ludi malfacilajn vortojn"
+
+#: .\praktiko\templates\praktiko\home.html:110
+msgid "Ver detalle"
+msgstr "Vidi detalojn"
+
+#: .\praktiko\templates\praktiko\home.html:124
+msgid ""
+"Todavía no tienes suficientes palabras difíciles. Necesitas al menos 3 para "
+"activar este modo."
+msgstr ""
+"Vi ankoraŭ ne havas sufiĉe da malfacilaj vortoj. Vi bezonas almenaŭ 3 por "
+"aktivigi ĉi tiun reĝimon."
+
+#: .\praktiko\templates\praktiko\home.html:131
+msgid "Ver estadísticas"
+msgstr "Vidi statistikojn"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:13
+msgid "Herramientas inteligentes para mejorar tu aprendizaje."
+msgstr "Inteligentaj iloj por plibonigi vian lernadon."
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:23
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:5
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:9
+msgid "Recomendación de estudio"
+msgstr "Lernorekomendo"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:25
+msgid "Analiza tus estadísticas y propone qué deberías repasar."
+msgstr "Analizas viajn statistikojn kaj proponas kion vi devus ripasi."
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:30
+msgid "Abrir"
+msgstr "Malfermi"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:36
+msgid "Explicar palabra difícil"
+msgstr "Klarigi malfacilan vorton"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:38
+msgid "Explicaciones personalizadas para palabras que fallas a menudo."
+msgstr "Personigitaj klarigoj por vortoj kiujn vi ofte eraras."
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:42
+#: .\praktiko\templates\praktiko\ia\asistente.html:54
+#: .\praktiko\templates\praktiko\ia\asistente.html:66
+msgid "Próximamente"
+msgstr "Baldaŭ"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:48
+msgid "Generar ejercicios"
+msgstr "Generi ekzercojn"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:50
+msgid "Crea ejercicios con tus propias palabras y frases."
+msgstr "Kreas ekzercojn per viaj propraj vortoj kaj frazoj."
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:60
+msgid "Crear vocabulario por tema"
+msgstr "Krei vortprovizon laŭ temo"
+
+#: .\praktiko\templates\praktiko\ia\asistente.html:62
+msgid "Genera listas de vocabulario para importar a tus diccionarios."
+msgstr "Generas vortprovizajn listojn por importi en viajn vortarojn."
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:13
+msgid "Análisis automático basado en tus estadísticas."
+msgstr "Aŭtomata analizo bazita sur viaj statistikoj."
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:20
+msgid "Volver al asistente IA"
+msgstr "Reiri al la IA-asistanto"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:42
+#, python-format
+msgid "%% global"
+msgstr "%% ĝenerala"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:51
+msgid "Informe IA"
+msgstr "IA-raporto"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:59
+msgid "Ver prompt enviado a la IA"
+msgstr "Vidi la prompton senditan al la IA"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:80
+msgid "Recomendaciones automáticas"
+msgstr "Aŭtomataj rekomendoj"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:94
+msgid "Palabras difíciles detectadas"
+msgstr "Detektitaj malfacilaj vortoj"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:107
+#, python-format
+msgid "%% éxito"
+msgstr "%% sukceso"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:129
+msgid "No se han detectado palabras difíciles suficientes."
+msgstr "Ne estis detektitaj sufiĉe da malfacilaj vortoj."
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:140
+msgid "Temas con más fallos"
+msgstr "Temoj kun plej multaj eraroj"
+
+#: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:149
+msgid "No hay temas problemáticos detectados."
+msgstr "Neniuj problemaj temoj estis detektitaj."
+
+#: .\praktiko\templates\praktiko\importacion\importar.html:13
+msgid "Carga masiva de palabras desde CSV."
+msgstr "Amasa importado de vortoj el CSV."
+
+#: .\praktiko\templates\praktiko\juego\configurar.html:10
+msgid "Juego"
+msgstr "Ludo"
+
+#: .\praktiko\templates\praktiko\juego\configurar.html:14
+msgid "Juego de fichas"
+msgstr "Kahela ludo"
+
+#: .\praktiko\templates\praktiko\juego\configurar.html:18
+msgid "Modo experimental de aprendizaje mediante fichas."
+msgstr "Eksperimenta lernoreĝimo per kaheloj."
+
+#: .\praktiko\templates\praktiko\juego\pregunta.html:10
+#: .\praktiko\templates\praktiko\juego\pregunta.html:14
+msgid "Pregunta"
+msgstr "Demando"
+
+#: .\praktiko\templates\praktiko\juego\pregunta.html:18
+msgid "Responde correctamente para eliminar la ficha."
+msgstr "Respondu ĝuste por forigi la kahelon."
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:10
+#: .\praktiko\templates\praktiko\juego\resultado.html:14
+msgid "Resultado del juego"
+msgstr "Ludrezulto"
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:18
+msgid "Has completado el tablero de fichas."
+msgstr "Vi kompletigis la kahelan tabulon."
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:25
+msgid "Partida completada"
+msgstr "Ludo finita"
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:30
+#: .\praktiko\templates\praktiko\juego\tablero.html:26
+msgid "Puntos"
+msgstr "Poentoj"
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:35
+msgid "Fichas"
+msgstr "Kaheloj"
+
+#: .\praktiko\templates\praktiko\juego\resultado.html:55
+msgid "Nueva partida"
+msgstr "Nova ludo"
+
+#: .\praktiko\templates\praktiko\juego\tablero.html:10
+#: .\praktiko\templates\praktiko\juego\tablero.html:14
+msgid "Partida"
+msgstr "Ludo"
+
+#: .\praktiko\templates\praktiko\juego\tablero.html:18
+msgid "Elimina todas las fichas."
+msgstr "Forigu ĉiujn kahelojn."
+
+#: .\praktiko\templates\praktiko\juego\tablero.html:29
+msgid "Restantes"
+msgstr "Restantaj"
+
+#: .\praktiko\templates\praktiko\practica\configurar.html:13
+msgid "Configura una sesión de práctica con tus palabras y frases."
+msgstr "Agordu praktikan sesion per viaj vortoj kaj frazoj."
+
+#: .\praktiko\templates\praktiko\practica\configurar.html:48
+msgid "Número de preguntas"
+msgstr "Nombro de demandoj"
+
+#: .\praktiko\templates\praktiko\practica\configurar.html:56
+msgid "Modo de práctica"
+msgstr "Praktika reĝimo"
+
+#: .\praktiko\templates\praktiko\practica\configurar.html:70
+msgid "Comenzar práctica"
+msgstr "Komenci praktikon"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:5
+#: .\praktiko\templates\praktiko\practica\pregunta.html:9
+msgid "Práctica"
+msgstr "Praktiko"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:31
+#, python-format
+msgid "Pregunta %(indice_actual)s de %(total)s"
+msgstr "Demando %(indice_actual)s el %(total)s"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:41
+#, python-format
+msgid "Pregunta %(indice_actual)s / %(total)s"
+msgstr "Demando %(indice_actual)s / %(total)s"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:58
+msgid "Error"
+msgstr "Eraro"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:62
+msgid "Difícil"
+msgstr "Malfacila"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:66
+msgid "Correcto"
+msgstr "Ĝusta"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:70
+msgid "Fácil"
+msgstr "Facila"
+
+#: .\praktiko\templates\praktiko\practica\pregunta.html:87
+msgid "Mostrar respuesta"
+msgstr "Montri respondon"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:5
+msgid "Resultado"
+msgstr "Rezulto"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:9
+msgid "Resultado de la práctica"
+msgstr "Praktika rezulto"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:13
+msgid "Resumen de tu sesión de estudio."
+msgstr "Resumo de via lernsesio."
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:23
+msgid "Práctica finalizada"
+msgstr "Praktiko finita"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:27
+msgid "Total"
+msgstr "Sumo"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:49
+msgid "Palabras a repasar"
+msgstr "Reviziendaj vortoj"
+
+#: .\praktiko\templates\praktiko\practica\resultado.html:65
+msgid "Nueva práctica"
+msgstr "Nova praktiko"
+
+#: .\praktiko\templates\praktiko\temas\formulario.html:13
+msgid "Crea o modifica un tema dentro de un diccionario."
+msgstr "Kreu aŭ modifu temon ene de vortaro."
+
+#: .\praktiko\templates\praktiko\temas\listado.html:13
+msgid "Organiza tus palabras y frases por áreas de aprendizaje."
+msgstr "Organizu viajn vortojn kaj frazojn laŭ lernaj temoj."
+
+#: .\praktiko\templates\praktiko\temas\listado.html:20
+msgid "Nuevo tema"
+msgstr "Nova temo"
+
+#: .\praktiko\templates\praktiko\temas\listado.html:73
+msgid "Todavía no tienes temas creados."
+msgstr "Vi ankoraŭ ne kreis temojn."
+
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:13
+msgid "Añade palabras o frases a tus diccionarios de estudio."
+msgstr "Aldonu vortojn aŭ frazojn al viaj lernvortaroj."
+
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:62
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:30
+msgid "Traducción"
+msgstr "Traduko"
+
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:69
+msgid "Ejemplo origen"
+msgstr "Ekzemplo en la originala lingvo"
+
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:76
+msgid "Ejemplo traducido"
+msgstr "Tradukita ekzemplo"
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:9
+msgid "Gestiona tus palabras y frases de estudio."
+msgstr "Administru viajn lernajn vortojn kaj frazojn."
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:16
+msgid "Nueva entrada"
+msgstr "Nova enskribo"
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:34
+msgid "Estado"
+msgstr "Stato"
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:50
+msgid "Sin tema"
+msgstr "Sen temo"
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:60
+msgid "Inactiva"
+msgstr "Neaktiva"
+
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:77
+msgid "Todavía no tienes palabras o frases creadas."
+msgstr "Vi ankoraŭ ne kreis vortojn aŭ frazojn."

@@ -1,162 +1,176 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}Praktiko{% endblock %}
 
 {% block page_title %}Praktiko{% endblock %}
 
 {% block page_subtitle %}
-Tu espacio personal de práctica de vocabulario y frases.
+{% trans "Tu espacio personal de práctica de vocabulario y frases." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-grid resumen-grid">
     <article class="praktiko-card stat-card">
-        <span class="stat-label">Diccionarios</span>
+        <span class="stat-label">{% trans "Diccionarios" %}</span>
         <strong>{{ total_diccionarios }}</strong>
     </article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">Temas</span>
-        <strong>{{ total_temas }}</strong>
-    </article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">Palabras / frases</span>
-        <strong>{{ total_entradas }}</strong>
-    </article>
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "Temas" %}</span>
+    <strong>{{ total_temas }}</strong>
+</article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">Prácticas</span>
-        <strong>{{ total_sesiones }}</strong>
-    </article>
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "Palabras / frases" %}</span>
+    <strong>{{ total_entradas }}</strong>
+</article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">Aciertos</span>
-        <strong>{{ total_aciertos }}</strong>
-    </article>
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "Prácticas" %}</span>
+    <strong>{{ total_sesiones }}</strong>
+</article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">Fallos</span>
-        <strong>{{ total_fallos }}</strong>
-    </article>
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "Aciertos" %}</span>
+    <strong>{{ total_aciertos }}</strong>
+</article>
 
-    <article class="praktiko-card stat-card">
-        <span class="stat-label">% acierto</span>
-        <strong>{{ porcentaje_acierto }}%</strong>
-    </article>
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "Fallos" %}</span>
+    <strong>{{ total_fallos }}</strong>
+</article>
+
+<article class="praktiko-card stat-card">
+    <span class="stat-label">{% trans "% acierto" %}</span>
+    <strong>{{ porcentaje_acierto }}%</strong>
+</article>
+
+
 </section>
+
 {% if invitaciones_pendientes > 0 %}
 
 <section class="praktiko-section">
     <div class="praktiko-card invitaciones-card">
 
-        <h2>📨 Invitaciones pendientes</h2>
 
-        <p>
-            Tienes
-            <strong>{{ invitaciones_pendientes }}</strong>
-            invitación{% if invitaciones_pendientes != 1 %}es{% endif %}
-            pendiente{% if invitaciones_pendientes != 1 %}s{% endif %}
-            a grupos de aprendizaje.
-        </p>
+    <h2>📨 {% trans "Invitaciones pendientes" %}</h2>
 
-        <div class="form-actions">
-            <a href="{% url 'praktiko:mis_invitaciones' %}"
-               class="praktiko-btn praktiko-btn-main">
-                Ver invitaciones
-            </a>
-        </div>
+    <p>
+        {% blocktrans count contador=invitaciones_pendientes %}
+            Tienes {{ contador }} invitación pendiente a grupos de aprendizaje.
+        {% plural %}
+            Tienes {{ contador }} invitaciones pendientes a grupos de aprendizaje.
+        {% endblocktrans %}
+    </p>
 
+    <div class="form-actions">
+        <a href="{% url 'praktiko:mis_invitaciones' %}"
+           class="praktiko-btn praktiko-btn-main">
+            {% trans "Ver invitaciones" %}
+        </a>
     </div>
+
+</div>
+
+
 </section>
 
 {% endif %}
 
 <section class="praktiko-section">
 
-    {% if total_palabras_dificiles >= 3 %}
 
-        <div class="praktiko-card">
+{% if total_palabras_dificiles >= 3 %}
 
-            <h2>🎯 Palabras difíciles</h2>
+    <div class="praktiko-card">
 
-            <p>
-                Tienes
-                <strong>{{ total_palabras_dificiles }}</strong>
-                palabras difíciles pendientes de repaso.
-            </p>
+        <h2>🎯 {% trans "Palabras difíciles" %}</h2>
 
-            <div class="form-actions">
+        <p>
+            {% blocktrans count contador=total_palabras_dificiles %}
+                Tienes {{ contador }} palabra difícil pendiente de repaso.
+            {% plural %}
+                Tienes {{ contador }} palabras difíciles pendientes de repaso.
+            {% endblocktrans %}
+        </p>
 
-                <a href="{% url 'praktiko:jugar_dificiles' %}"
-                   class="praktiko-btn praktiko-btn-main">
-                    🎮 Jugar difíciles
-                </a>
+        <div class="form-actions">
 
-                <a href="{% url 'praktiko:palabras_dificiles' %}"
-                   class="praktiko-btn">
-                    Ver detalle
-                </a>
+            <a href="{% url 'praktiko:jugar_dificiles' %}"
+               class="praktiko-btn praktiko-btn-main">
+                🎮 {% trans "Jugar difíciles" %}
+            </a>
 
-            </div>
-
-        </div>
-
-    {% else %}
-
-        <div class="praktiko-card">
-
-            <h2>🎯 Palabras difíciles</h2>
-
-            <p>
-                Todavía no tienes suficientes palabras difíciles.
-                Necesitas al menos 3 para activar este modo.
-            </p>
-
-            <div class="form-actions">
-
-                <a href="{% url 'praktiko:palabras_dificiles' %}"
-                   class="praktiko-btn">
-                    Ver estadísticas
-                </a>
-
-            </div>
+            <a href="{% url 'praktiko:palabras_dificiles' %}"
+               class="praktiko-btn">
+                {% trans "Ver detalle" %}
+            </a>
 
         </div>
 
-    {% endif %}
+    </div>
+
+{% else %}
+
+    <div class="praktiko-card">
+
+        <h2>🎯 {% trans "Palabras difíciles" %}</h2>
+
+        <p>
+            {% trans "Todavía no tienes suficientes palabras difíciles. Necesitas al menos 3 para activar este modo." %}
+        </p>
+
+        <div class="form-actions">
+
+            <a href="{% url 'praktiko:palabras_dificiles' %}"
+               class="praktiko-btn">
+                {% trans "Ver estadísticas" %}
+            </a>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
 
 </section>
 
 <section class="praktiko-section">
-    <h2>Mis diccionarios</h2>
+    <h2>{% trans "Mis diccionarios" %}</h2>
 
-    {% if diccionarios %}
-        <div class="praktiko-grid diccionarios-grid">
-            {% for diccionario in diccionarios %}
-                <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ diccionario.color }};">
-                    <h3 class="diccionario-title">
-                        <span class="diccionario-icono">{{ diccionario.icono }}</span>
-                        <span>{{ diccionario.nombre }}</span>
-                    </h3>
-                    <p>
-                        {{ diccionario.idioma_origen }}
-                        →
-                        {{ diccionario.idioma_destino }}
-                    </p>
-                    <div class="diccionario-meta">
-                        <span>{{ diccionario.total_temas }} temas</span>
-                        <span>{{ diccionario.total_entradas }} entradas</span>
-                    </div>
-                </article>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="praktiko-empty">
-            Todavía no tienes diccionarios creados.
-        </div>
-    {% endif %}
+
+{% if diccionarios %}
+    <div class="praktiko-grid diccionarios-grid">
+        {% for diccionario in diccionarios %}
+            <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ diccionario.color }};">
+                <h3 class="diccionario-title">
+                    <span class="diccionario-icono">{{ diccionario.icono }}</span>
+                    <span>{{ diccionario.nombre }}</span>
+                </h3>
+                <p>
+                    {{ diccionario.idioma_origen }}
+                    →
+                    {{ diccionario.idioma_destino }}
+                </p>
+                <div class="diccionario-meta">
+                    <span>{{ diccionario.total_temas }} {% trans "temas" %}</span>
+                    <span>{{ diccionario.total_entradas }} {% trans "entradas" %}</span>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="praktiko-empty">
+        {% trans "Todavía no tienes diccionarios creados." %}
+    </div>
+{% endif %}
+
+
 </section>
 
 {% endblock %}

@@ -1,7 +1,8 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Estadísticas grupo
+{% trans "Estadísticas grupo" %}
 {% endblock %}
 
 {% block page_title %}
@@ -9,7 +10,7 @@ Estadísticas grupo
 {% endblock %}
 
 {% block page_subtitle %}
-Estadísticas generales del grupo.
+{% trans "Estadísticas generales del grupo." %}
 {% endblock %}
 
 {% block content %}
@@ -18,7 +19,7 @@ Estadísticas generales del grupo.
 
     <a href="{% url 'praktiko:detalle_grupo' grupo.id %}"
        class="praktiko-btn">
-        ← Volver al grupo
+        ← {% trans "Volver al grupo" %}
     </a>
 
 </section>
@@ -32,11 +33,11 @@ Estadísticas generales del grupo.
             <thead>
 
                 <tr>
-                    <th>Usuario</th>
-                    <th>Preguntas</th>
-                    <th>Aciertos</th>
-                    <th>Fallos</th>
-                    <th>% Éxito</th>
+                    <th>{% trans "Usuario" %}</th>
+                    <th>{% trans "Preguntas" %}</th>
+                    <th>{% trans "Aciertos" %}</th>
+                    <th>{% trans "Fallos" %}</th>
+                    <th>{% trans "% Éxito" %}</th>
                 </tr>
 
             </thead>

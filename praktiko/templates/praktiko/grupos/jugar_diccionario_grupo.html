@@ -1,20 +1,21 @@
 {% extends "praktiko/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
 {% endblock %}
 
 {% block title %}
-Jugar con diccionario compartido
+{% trans "Jugar con diccionario compartido" %}
 {% endblock %}
 
 {% block page_title %}
-🎮 Jugar con {{ diccionario.nombre }}
+🎮 {% trans "Jugar con" %} {{ diccionario.nombre }}
 {% endblock %}
 
 {% block page_subtitle %}
-Grupo: {{ grupo.nombre }}
+{% trans "Grupo" %}: {{ grupo.nombre }}
 {% endblock %}
 
 {% block content %}
@@ -29,11 +30,13 @@ Grupo: {{ grupo.nombre }}
             <input type="hidden" name="grupo" value="{{ grupo.id }}">
 
             <div class="form-group">
-                <label>Tema</label>
+
+                <label>{% trans "Tema" %}</label>
 
                 <select name="tema" class="form-control">
+
                     <option value="">
-                        🎲 Todo el vocabulario del diccionario
+                        🎲 {% trans "Todo el vocabulario del diccionario" %}
                     </option>
 
                     {% for tema in temas %}
@@ -41,12 +44,14 @@ Grupo: {{ grupo.nombre }}
                             {{ tema.icono }} {{ tema.nombre }}
                         </option>
                     {% endfor %}
+
                 </select>
+
             </div>
 
             <div class="form-group">
 
-                <label>Número de fichas</label>
+                <label>{% trans "Número de fichas" %}</label>
 
                 <div class="juego-opciones">
 
@@ -70,14 +75,16 @@ Grupo: {{ grupo.nombre }}
             </div>
 
             <div class="form-actions">
+
                 <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
                    class="praktiko-btn">
-                    Cancelar
+                    {% trans "Cancelar" %}
                 </a>
 
                 <button type="submit" class="praktiko-btn praktiko-btn-main">
-                    Comenzar partida
+                    {% trans "Comenzar partida" %}
                 </button>
+
             </div>
 
         </form>

@@ -1,4 +1,5 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
 {{ titulo }}
@@ -9,7 +10,7 @@
 {% endblock %}
 
 {% block page_subtitle %}
-Crea o modifica un tema dentro de un diccionario.
+{% trans "Crea o modifica un tema dentro de un diccionario." %}
 {% endblock %}
 
 {% block content %}
@@ -20,51 +21,70 @@ Crea o modifica un tema dentro de un diccionario.
 
         <div class="form-grid">
             <div class="form-group form-group-full">
-                <label for="{{ form.diccionario.id_for_label }}">Diccionario</label>
+                <label for="{{ form.diccionario.id_for_label }}">
+                    {% trans "Diccionario" %}
+                </label>
                 {{ form.diccionario }}
                 {{ form.diccionario.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                <label for="{{ form.nombre.id_for_label }}">
+                    {% trans "Nombre" %}
+                </label>
                 {{ form.nombre }}
                 {{ form.nombre.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.icono.id_for_label }}">Icono</label>
+                <label for="{{ form.icono.id_for_label }}">
+                    {% trans "Icono" %}
+                </label>
                 {{ form.icono }}
                 {{ form.icono.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.color.id_for_label }}">Color</label>
+                <label for="{{ form.color.id_for_label }}">
+                    {% trans "Color" %}
+                </label>
                 {{ form.color }}
                 {{ form.color.errors }}
             </div>
 
             <div class="form-group">
-                <label for="{{ form.orden.id_for_label }}">Orden</label>
+                <label for="{{ form.orden.id_for_label }}">
+                    {% trans "Orden" %}
+                </label>
                 {{ form.orden }}
                 {{ form.orden.errors }}
             </div>
 
             <div class="form-group form-group-full">
-                <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+                <label for="{{ form.descripcion.id_for_label }}">
+                    {% trans "Descripción" %}
+                </label>
                 {{ form.descripcion }}
                 {{ form.descripcion.errors }}
             </div>
 
             <div class="form-group form-check">
                 {{ form.activo }}
-                <label for="{{ form.activo.id_for_label }}">Activo</label>
+                <label for="{{ form.activo.id_for_label }}">
+                    {% trans "Activo" %}
+                </label>
                 {{ form.activo.errors }}
             </div>
         </div>
 
         <div class="form-actions">
-            <a href="{% url 'praktiko:listado_temas' %}" class="praktiko-btn">Cancelar</a>
-            <button type="submit" class="praktiko-btn praktiko-btn-main">{{ boton }}</button>
+            <a href="{% url 'praktiko:listado_temas' %}" class="praktiko-btn">
+                {% trans "Cancelar" %}
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                {{ boton }}
+            </button>
         </div>
     </form>
 </section>

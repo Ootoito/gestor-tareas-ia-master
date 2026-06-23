@@ -1,15 +1,16 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Importar CSV
+{% trans "Importar CSV" %}
 {% endblock %}
 
 {% block page_title %}
-📥 Importar vocabulario
+📥 {% trans "Importar vocabulario" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
+{% trans "Grupo" %}: {{ grupo.nombre }} · {% trans "Diccionario" %}: {{ diccionario.nombre }}
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
         <div class="form-grid">
 
             <div class="form-group form-group-full">
-                <label for="archivo_csv">Archivo CSV</label>
+                <label for="archivo_csv">{% trans "Archivo CSV" %}</label>
                 <input type="file"
                        name="archivo_csv"
                        id="archivo_csv"
@@ -35,7 +36,7 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
         </div>
 
         <div class="praktiko-empty" style="margin-top: 20px;">
-            Formato esperado:
+            {% trans "Formato esperado:" %}
             <br>
             <strong>tema;origen;destino</strong>
             <br>
@@ -45,11 +46,11 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
         <div class="form-actions">
             <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
                class="praktiko-btn">
-                Cancelar
+                {% trans "Cancelar" %}
             </a>
 
             <button type="submit" class="praktiko-btn praktiko-btn-main">
-                Importar vocabulario
+                {% trans "Importar vocabulario" %}
             </button>
         </div>
 
@@ -61,33 +62,33 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
     <section class="praktiko-section">
         <div class="praktiko-card">
 
-            <h2>Resultado de importación</h2>
+            <h2>{% trans "Resultado de importación" %}</h2>
 
             <div class="resultado-grid">
                 <div class="resultado-item">
-                    <span>Total filas</span>
+                    <span>{% trans "Total filas" %}</span>
                     <strong>{{ resultado.total }}</strong>
                 </div>
 
                 <div class="resultado-item">
-                    <span>Creadas</span>
+                    <span>{% trans "Creadas" %}</span>
                     <strong>{{ resultado.creadas }}</strong>
                 </div>
 
                 <div class="resultado-item">
-                    <span>Duplicadas</span>
+                    <span>{% trans "Duplicadas" %}</span>
                     <strong>{{ resultado.duplicadas }}</strong>
                 </div>
 
                 <div class="resultado-item">
-                    <span>Errores</span>
+                    <span>{% trans "Errores" %}</span>
                     <strong>{{ resultado.errores|length }}</strong>
                 </div>
             </div>
 
             {% if resultado.errores %}
                 <div class="form-errors">
-                    <strong>Errores encontrados:</strong>
+                    <strong>{% trans "Errores encontrados:" %}</strong>
                     <ul>
                         {% for error in resultado.errores %}
                             <li>{{ error }}</li>
@@ -99,7 +100,7 @@ Grupo: {{ grupo.nombre }} · Diccionario: {{ diccionario.nombre }}
             <div class="form-actions">
                 <a href="{% url 'praktiko:detalle_diccionario_grupo' grupo.id diccionario.id %}"
                    class="praktiko-btn praktiko-btn-main">
-                    Ver diccionario
+                    {% trans "Ver diccionario" %}
                 </a>
             </div>
 

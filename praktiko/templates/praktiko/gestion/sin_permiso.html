@@ -1,29 +1,37 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Sin permiso
+{% trans "Sin permiso" %}
 {% endblock %}
 
 {% block page_title %}
-Acceso no permitido
+{% trans "Acceso no permitido" %}
 {% endblock %}
 
 {% block page_subtitle %}
-No tienes permisos para acceder a esta zona.
+{% trans "No tienes permisos para acceder a esta zona." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-section">
+
     <div class="praktiko-card">
-        <p>No tienes permisos de administración sobre Praktiko.</p>
+
+        <p>
+            {% trans "No tienes permisos de administración sobre Praktiko." %}
+        </p>
 
         <div class="form-actions">
-            <a href="{% url 'praktiko:home' %}" class="praktiko-btn praktiko-btn-main">
-                Volver al panel
+            <a href="{% url 'praktiko:home' %}"
+               class="praktiko-btn praktiko-btn-main">
+                {% trans "Volver al panel" %}
             </a>
         </div>
+
     </div>
+
 </section>
 
 {% endblock %}

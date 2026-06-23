@@ -1,12 +1,14 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Práctica
+{% trans "Práctica" %}
 {% endblock %}
 
 {% block page_title %}
-Práctica
+{% trans "Práctica" %}
 {% endblock %}
+
 {% block extra_css %}
 <style>
     @media (max-width: 768px) {
@@ -24,8 +26,9 @@ Práctica
     }
 </style>
 {% endblock %}
+
 {% block page_subtitle %}
-Pregunta {{ indice_actual }} de {{ total }}
+{% blocktrans %}Pregunta {{ indice_actual }} de {{ total }}{% endblocktrans %}
 {% endblock %}
 
 {% block content %}
@@ -35,7 +38,7 @@ Pregunta {{ indice_actual }} de {{ total }}
     <div class="praktiko-card practica-card">
 
         <div class="practica-progreso">
-            Pregunta {{ indice_actual }} / {{ total }}
+            {% blocktrans %}Pregunta {{ indice_actual }} / {{ total }}{% endblocktrans %}
         </div>
 
         <div class="practica-pregunta">
@@ -52,19 +55,19 @@ Pregunta {{ indice_actual }} de {{ total }}
                 {% csrf_token %}
 
                 <button name="accion" value="error" class="btn-error">
-                    ❌ Error
+                    ❌ {% trans "Error" %}
                 </button>
 
                 <button name="accion" value="dificil" class="btn-dificil">
-                    ⚠️ Difícil
+                    ⚠️ {% trans "Difícil" %}
                 </button>
 
                 <button name="accion" value="correcto" class="btn-correcto">
-                    ✅ Correcto
+                    ✅ {% trans "Correcto" %}
                 </button>
 
                 <button name="accion" value="facil" class="btn-facil">
-                    🚀 Fácil
+                    🚀 {% trans "Fácil" %}
                 </button>
 
             </form>
@@ -81,7 +84,7 @@ Pregunta {{ indice_actual }} de {{ total }}
                     value="mostrar"
                     class="praktiko-btn praktiko-btn-main"
                 >
-                    Mostrar respuesta
+                    {% trans "Mostrar respuesta" %}
                 </button>
 
             </form>

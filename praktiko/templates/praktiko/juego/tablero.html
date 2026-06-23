@@ -1,20 +1,21 @@
 {% extends "praktiko/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
 {% endblock %}
 
 {% block title %}
-Partida
+{% trans "Partida" %}
 {% endblock %}
 
 {% block page_title %}
-🎮 Partida
+🎮 {% trans "Partida" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Elimina todas las fichas.
+{% trans "Elimina todas las fichas." %}
 {% endblock %}
 
 {% block content %}
@@ -22,25 +23,27 @@ Elimina todas las fichas.
 <div class="juego-panel">
 
     <div class="juego-marcador">
-        <span>🎯 Puntos: {{ puntos }}</span>
-        <span>✅ Aciertos: {{ aciertos }}</span>
-        <span>❌ Errores: {{ errores }}</span>
-        <span>🧩 Restantes: {{ restantes }}</span>
+        <span>🎯 {% trans "Puntos" %}: {{ puntos }}</span>
+        <span>✅ {% trans "Aciertos" %}: {{ aciertos }}</span>
+        <span>❌ {% trans "Errores" %}: {{ errores }}</span>
+        <span>🧩 {% trans "Restantes" %}: {{ restantes }}</span>
     </div>
 
     <div class="juego-tablero-mahjong">
+
         {% for ficha in fichas %}
-    {% with ficha_str=ficha|stringformat:"s" %}
-        {% if ficha_str not in eliminadas %}
-            <a
-                href="{% url 'praktiko:juego_pregunta' %}?ficha={{ ficha }}"
-                class="juego-ficha-mahjong ficha-pos-{{ ficha }}"
-            >
-                <span>?</span>
-            </a>
-        {% endif %}
-    {% endwith %}
-{% endfor %}
+            {% with ficha_str=ficha|stringformat:"s" %}
+                {% if ficha_str not in eliminadas %}
+                    <a
+                        href="{% url 'praktiko:juego_pregunta' %}?ficha={{ ficha }}"
+                        class="juego-ficha-mahjong ficha-pos-{{ ficha }}"
+                    >
+                        <span>?</span>
+                    </a>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+
     </div>
 
 </div>

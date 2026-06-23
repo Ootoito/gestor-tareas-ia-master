@@ -1,33 +1,34 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Palabras difíciles
+{% trans "Palabras difíciles" %}
 {% endblock %}
 
 {% block page_title %}
-🔥 Palabras difíciles
+🔥 {% trans "Palabras difíciles" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Palabras con más errores y menos de un 60% de éxito.
+{% trans "Palabras con más errores y menos de un 60% de éxito." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-actions">
     <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
-        ← Volver al panel principal
+        ← {% trans "Volver al panel principal" %}
     </a>
 </section>
 
 <section class="praktiko-section">
     <div class="form-actions">
         <a href="{% url 'praktiko:repasar_dificiles' %}"
-            class="praktiko-btn praktiko-btn-main">
-                📚 Repasar palabras difíciles
-        </a>       
+           class="praktiko-btn praktiko-btn-main">
+            📚 {% trans "Repasar palabras difíciles" %}
+        </a>
     </div>
-    
+
     <div class="praktiko-card table-card">
 
         {% if estadisticas %}
@@ -35,14 +36,14 @@ Palabras con más errores y menos de un 60% de éxito.
             <table class="praktiko-table">
                 <thead>
                     <tr>
-                        <th>Diccionario</th>
-                        <th>Tema</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Preguntada</th>
-                        <th>Aciertos</th>
-                        <th>Fallos</th>
-                        <th>% Éxito</th>
+                        <th>{% trans "Diccionario" %}</th>
+                        <th>{% trans "Tema" %}</th>
+                        <th>{% trans "Origen" %}</th>
+                        <th>{% trans "Destino" %}</th>
+                        <th>{% trans "Preguntada" %}</th>
+                        <th>{% trans "Aciertos" %}</th>
+                        <th>{% trans "Fallos" %}</th>
+                        <th>{% trans "% Éxito" %}</th>
                     </tr>
                 </thead>
 
@@ -65,10 +66,9 @@ Palabras con más errores y menos de un 60% de éxito.
         {% else %}
 
             <div class="praktiko-empty">
-                Todavía no hay palabras difíciles suficientes.
+                {% trans "Todavía no hay palabras difíciles suficientes." %}
                 <br>
-                Se mostrarán aquí las palabras preguntadas al menos 3 veces
-                y con menos de un 60% de acierto.
+                {% trans "Se mostrarán aquí las palabras preguntadas al menos 3 veces y con menos de un 60% de acierto." %}
             </div>
 
         {% endif %}

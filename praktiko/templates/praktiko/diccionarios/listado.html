@@ -1,79 +1,83 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Mis diccionarios
+{% trans "Mis diccionarios" %}
 {% endblock %}
 
 {% block page_title %}
-Mis diccionarios
+{% trans "Mis diccionarios" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Gestiona tus espacios de aprendizaje por idioma.
+{% trans "Gestiona tus espacios de aprendizaje por idioma." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-actions">
 <a href="{% url 'praktiko:crear_diccionario' %}" class="praktiko-btn praktiko-btn-main">
-    Nuevo diccionario
+    {% trans "Nuevo diccionario" %}
 </a>
 </section>
 
 <section class="praktiko-section">
 
-    {% if diccionarios %}
+```
+{% if diccionarios %}
 
-        <div class="praktiko-grid diccionarios-grid">
+    <div class="praktiko-grid diccionarios-grid">
 
-            {% for diccionario in diccionarios %}
+        {% for diccionario in diccionarios %}
 
-                <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ diccionario.color }};">
+            <article class="praktiko-card diccionario-card" style="border-left: 8px solid {{ diccionario.color }};">
 
-                    <h3 class="diccionario-title">
-                        <span class="diccionario-icono">{{ diccionario.icono }}</span>
-                        <span>{{ diccionario.nombre }}</span>
-                    </h3>
+                <h3 class="diccionario-title">
+                    <span class="diccionario-icono">{{ diccionario.icono }}</span>
+                    <span>{{ diccionario.nombre }}</span>
+                </h3>
 
-                    <p>
-                        {{ diccionario.idioma_origen }}
-                        →
-                        {{ diccionario.idioma_destino }}
-                    </p>
+                <p>
+                    {{ diccionario.idioma_origen }}
+                    →
+                    {{ diccionario.idioma_destino }}
+                </p>
 
-                    {% if diccionario.descripcion %}
-                        <p>{{ diccionario.descripcion }}</p>
+                {% if diccionario.descripcion %}
+                    <p>{{ diccionario.descripcion }}</p>
+                {% endif %}
+
+                <div class="diccionario-meta">
+                    <span>{{ diccionario.total_temas }} {% trans "temas" %}</span>
+                    <span>{{ diccionario.total_entradas }} {% trans "entradas" %}</span>
+
+                    {% if diccionario.activo %}
+                        <span>{% trans "Activo" %}</span>
+                    {% else %}
+                        <span>{% trans "Inactivo" %}</span>
                     {% endif %}
+                </div>
 
-                    <div class="diccionario-meta">
-                        <span>{{ diccionario.total_temas }} temas</span>
-                        <span>{{ diccionario.total_entradas }} entradas</span>
+                <div class="card-actions">
+                    <a href="{% url 'praktiko:editar_diccionario' diccionario.id %}" class="praktiko-btn">
+                        {% trans "Editar" %}
+                    </a>
+                </div>
 
-                        {% if diccionario.activo %}
-                            <span>Activo</span>
-                        {% else %}
-                            <span>Inactivo</span>
-                        {% endif %}
-                    </div>
-                    <div class="card-actions">
-                        <a href="{% url 'praktiko:editar_diccionario' diccionario.id %}" class="praktiko-btn">
-                            Editar
-                        </a>
-                    </div>
+            </article>
 
-                </article>
+        {% endfor %}
 
-            {% endfor %}
+    </div>
 
-        </div>
+{% else %}
 
-    {% else %}
+    <div class="praktiko-empty">
+        {% trans "Todavía no tienes diccionarios creados." %}
+    </div>
 
-        <div class="praktiko-empty">
-            Todavía no tienes diccionarios creados.
-        </div>
-
-    {% endif %}
+{% endif %}
+```
 
 </section>
 

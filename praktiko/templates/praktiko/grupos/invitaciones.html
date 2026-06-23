@@ -1,15 +1,16 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Invitaciones
+{% trans "Invitaciones" %}
 {% endblock %}
 
 {% block page_title %}
-📨 Mis invitaciones
+📨 {% trans "Mis invitaciones" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Invitaciones pendientes a grupos de aprendizaje.
+{% trans "Invitaciones pendientes a grupos de aprendizaje." %}
 {% endblock %}
 
 {% block content %}
@@ -34,19 +35,21 @@ Invitaciones pendientes a grupos de aprendizaje.
                     {% endif %}
 
                     <div class="diccionario-meta">
-                        <span>Invitado por {{ invitacion.invitado_por.username }}</span>
+                        <span>
+                            {% trans "Invitado por" %} {{ invitacion.invitado_por.username }}
+                        </span>
                         <span>{{ invitacion.creada_en|date:"d/m/Y H:i" }}</span>
                     </div>
 
                     <div class="card-actions">
                         <a href="{% url 'praktiko:aceptar_invitacion' invitacion.id %}"
-                            class="praktiko-btn praktiko-btn-main">
-                            Aceptar
+                           class="praktiko-btn praktiko-btn-main">
+                            {% trans "Aceptar" %}
                         </a>
 
                         <a href="{% url 'praktiko:rechazar_invitacion' invitacion.id %}"
-                            class="praktiko-btn">
-                            Rechazar
+                           class="praktiko-btn">
+                            {% trans "Rechazar" %}
                         </a>
                     </div>
 
@@ -59,7 +62,7 @@ Invitaciones pendientes a grupos de aprendizaje.
     {% else %}
 
         <div class="praktiko-empty">
-            No tienes invitaciones pendientes.
+            {% trans "No tienes invitaciones pendientes." %}
         </div>
 
     {% endif %}

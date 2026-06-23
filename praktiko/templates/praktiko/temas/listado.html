@@ -1,22 +1,23 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Temas
+{% trans "Temas" %}
 {% endblock %}
 
 {% block page_title %}
-Temas
+{% trans "Temas" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Organiza tus palabras y frases por áreas de aprendizaje.
+{% trans "Organiza tus palabras y frases por áreas de aprendizaje." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-actions">
     <a href="{% url 'praktiko:crear_tema' %}" class="praktiko-btn praktiko-btn-main">
-        Nuevo tema
+        {% trans "Nuevo tema" %}
     </a>
 </section>
 
@@ -45,18 +46,19 @@ Organiza tus palabras y frases por áreas de aprendizaje.
                     {% endif %}
 
                     <div class="diccionario-meta">
-                        <span>{{ tema.total_entradas }} entradas</span>
-                        <span>Orden {{ tema.orden }}</span>
+                        <span>{{ tema.total_entradas }} {% trans "entradas" %}</span>
+                        <span>{% trans "Orden" %} {{ tema.orden }}</span>
 
                         {% if tema.activo %}
-                            <span>Activo</span>
+                            <span>{% trans "Activo" %}</span>
                         {% else %}
-                            <span>Inactivo</span>
+                            <span>{% trans "Inactivo" %}</span>
                         {% endif %}
                     </div>
+
                     <div class="card-actions">
                         <a href="{% url 'praktiko:editar_tema' tema.id %}" class="praktiko-btn">
-                            Editar
+                            {% trans "Editar" %}
                         </a>
                     </div>
                 </article>
@@ -68,7 +70,7 @@ Organiza tus palabras y frases por áreas de aprendizaje.
     {% else %}
 
         <div class="praktiko-empty">
-            Todavía no tienes temas creados.
+            {% trans "Todavía no tienes temas creados." %}
         </div>
 
     {% endif %}

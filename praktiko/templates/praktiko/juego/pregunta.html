@@ -1,20 +1,21 @@
 {% extends "praktiko/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
 {% endblock %}
 
 {% block title %}
-Pregunta
+{% trans "Pregunta" %}
 {% endblock %}
 
 {% block page_title %}
-🎮 Pregunta
+🎮 {% trans "Pregunta" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Responde correctamente para eliminar la ficha.
+{% trans "Responde correctamente para eliminar la ficha." %}
 {% endblock %}
 
 {% block content %}
@@ -27,22 +28,23 @@ Responde correctamente para eliminar la ficha.
 
     <div class="juego-respuestas">
 
-    {% for opcion in opciones %}
+        {% for opcion in opciones %}
 
-    <form method="post" action="{% url 'praktiko:juego_pregunta' %}">
-        {% csrf_token %}
+            <form method="post" action="{% url 'praktiko:juego_pregunta' %}">
+                {% csrf_token %}
 
-        <input type="hidden" name="entrada_correcta_id" value="{{ entrada.id }}">
-        <input type="hidden" name="respuesta_id" value="{{ opcion.id }}">
-        <input type="hidden" name="ficha" value="{{ ficha }}">
-        <button type="submit" class="juego-respuesta-btn">
-            {{ opcion.texto_destino }}
-        </button>
-    </form>
+                <input type="hidden" name="entrada_correcta_id" value="{{ entrada.id }}">
+                <input type="hidden" name="respuesta_id" value="{{ opcion.id }}">
+                <input type="hidden" name="ficha" value="{{ ficha }}">
 
-{% endfor %}
+                <button type="submit" class="juego-respuesta-btn">
+                    {{ opcion.texto_destino }}
+                </button>
+            </form>
 
-</div>
+        {% endfor %}
+
+    </div>
 
 </div>
 

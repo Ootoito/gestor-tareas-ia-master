@@ -1,22 +1,23 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Grupos
+{% trans "Grupos" %}
 {% endblock %}
 
 {% block page_title %}
-👥 Mis grupos
+👥 {% trans "Mis grupos" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Grupos de aprendizaje compartido.
+{% trans "Grupos de aprendizaje compartido." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-actions">
     <a href="{% url 'praktiko:crear_grupo' %}" class="praktiko-btn praktiko-btn-main">
-        Crear grupo
+        {% trans "Crear grupo" %}
     </a>
 </section>
 
@@ -40,17 +41,19 @@ Grupos de aprendizaje compartido.
                     {% endif %}
 
                     <div class="diccionario-meta">
-                        <span>{{ grupo.total_miembros }} miembros</span>
+                        <span>{{ grupo.total_miembros }} {% trans "miembros" %}</span>
 
                         {% if grupo.creador_id == request.user.id %}
-                            <span>Creador</span>
+                            <span>{% trans "Creador" %}</span>
                         {% endif %}
                     </div>
+
                     <div class="card-actions">
                         <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
-                            Ver grupo
+                            {% trans "Ver grupo" %}
                         </a>
                     </div>
+
                 </article>
 
             {% endfor %}
@@ -60,7 +63,7 @@ Grupos de aprendizaje compartido.
     {% else %}
 
         <div class="praktiko-empty">
-            Todavía no perteneces a ningún grupo.
+            {% trans "Todavía no perteneces a ningún grupo." %}
         </div>
 
     {% endif %}

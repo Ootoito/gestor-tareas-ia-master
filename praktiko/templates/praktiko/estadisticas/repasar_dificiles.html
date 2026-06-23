@@ -1,23 +1,24 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Repasar palabras difíciles
+{% trans "Repasar palabras difíciles" %}
 {% endblock %}
 
 {% block page_title %}
-📚 Repasar palabras difíciles
+📚 {% trans "Repasar palabras difíciles" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Vocabulario que merece atención especial.
+{% trans "Vocabulario que merece atención especial." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-actions">
     <a href="{% url 'praktiko:home' %}"
-        class="praktiko-btn">
-            ← Volver al panel principal
+       class="praktiko-btn">
+        ← {% trans "Volver al panel principal" %}
     </a>
 </section>
 
@@ -53,7 +54,7 @@ Vocabulario que merece atención especial.
                     {% endif %}
 
                     <span>
-                        🔥 {{ estadistica.fallos }} fallos
+                        🔥 {{ estadistica.fallos }} {% trans "fallos" %}
                     </span>
 
                     <span>
@@ -70,10 +71,10 @@ Vocabulario que merece atención especial.
 
         <div class="praktiko-card">
 
-            <h3>🎉 ¡Buen trabajo!</h3>
+            <h3>🎉 {% trans "¡Buen trabajo!" %}</h3>
 
             <p>
-                No hay palabras difíciles pendientes de repaso.
+                {% trans "No hay palabras difíciles pendientes de repaso." %}
             </p>
 
         </div>

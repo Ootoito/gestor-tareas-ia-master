@@ -1,18 +1,21 @@
 {% extends "praktiko/base.html" %}
 {% load static %}
+{% load i18n %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'praktiko/css/juego.css' %}">
 {% endblock %}
+
 {% block title %}
-Juego
+{% trans "Juego" %}
 {% endblock %}
 
 {% block page_title %}
-🎮 Juego de fichas
+🎮 {% trans "Juego de fichas" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Modo experimental de aprendizaje mediante fichas.
+{% trans "Modo experimental de aprendizaje mediante fichas." %}
 {% endblock %}
 
 {% block content %}
@@ -25,28 +28,12 @@ Modo experimental de aprendizaje mediante fichas.
       action="{% url 'praktiko:juego_tablero' %}">
 
         <div class="form-group">
-    <label>Diccionario</label>
+            <label>{% trans "Diccionario" %}</label>
 
-    <select name="diccionario" class="form-control">
-        {% for diccionario in diccionarios %}
-            <option value="{{ diccionario.id }}">
-                {{ diccionario.nombre }}
-            </option>
-        {% endfor %}
-    </select>
-</div>
-
-        <div class="form-group">
-            <label>Tema</label>
-
-            <select name="tema" class="form-control">
-                <option value="">
-                🎲 Todo el vocabulario del diccionario
-                </option>
-
-                {% for tema in temas %}
-                    <option value="{{ tema.id }}">
-                        {{ tema.diccionario.icono }} {{ tema.diccionario.nombre }} - {{ tema.icono }} {{ tema.nombre }}
+            <select name="diccionario" class="form-control">
+                {% for diccionario in diccionarios %}
+                    <option value="{{ diccionario.id }}">
+                        {{ diccionario.nombre }}
                     </option>
                 {% endfor %}
             </select>
@@ -54,31 +41,51 @@ Modo experimental de aprendizaje mediante fichas.
 
         <div class="form-group">
 
-            <label>Número de fichas</label>
+            <label>{% trans "Tema" %}</label>
+
+            <select name="tema" class="form-control">
+
+                <option value="">
+                    🎲 {% trans "Todo el vocabulario del diccionario" %}
+                </option>
+
+                {% for tema in temas %}
+                    <option value="{{ tema.id }}">
+                        {{ tema.diccionario.icono }} {{ tema.diccionario.nombre }} - {{ tema.icono }} {{ tema.nombre }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>{% trans "Número de fichas" %}</label>
 
             <div class="juego-opciones">
 
                 <label>
-    <input type="radio" name="fichas" value="12" checked>
-    12
-</label>
+                    <input type="radio" name="fichas" value="12" checked>
+                    12
+                </label>
 
-<label>
-    <input type="radio" name="fichas" value="25">
-    25
-</label>
+                <label>
+                    <input type="radio" name="fichas" value="25">
+                    25
+                </label>
 
-<label>
-    <input type="radio" name="fichas" value="36">
-    36
-</label>
+                <label>
+                    <input type="radio" name="fichas" value="36">
+                    36
+                </label>
 
             </div>
 
         </div>
 
         <button type="submit" class="praktiko-btn praktiko-btn-main">
-            Comenzar partida
+            {% trans "Comenzar partida" %}
         </button>
 
     </form>

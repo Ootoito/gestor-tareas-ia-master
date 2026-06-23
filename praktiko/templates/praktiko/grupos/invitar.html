@@ -1,15 +1,16 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Invitar usuario
+{% trans "Invitar usuario" %}
 {% endblock %}
 
 {% block page_title %}
-Invitar usuario
+{% trans "Invitar usuario" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Grupo: {{ grupo.nombre }}
+{% trans "Grupo" %}: {{ grupo.nombre }}
 {% endblock %}
 
 {% block content %}
@@ -21,23 +22,25 @@ Grupo: {{ grupo.nombre }}
 
         <div class="form-grid">
             <div class="form-group form-group-full">
-                <label for="{{ form.email.id_for_label }}">Email del usuario</label>
+                <label for="{{ form.email.id_for_label }}">
+                    {% trans "Email del usuario" %}
+                </label>
                 {{ form.email }}
                 {{ form.email.errors }}
             </div>
         </div>
 
         <div class="praktiko-empty" style="margin-top: 20px;">
-            Solo puedes invitar a usuarios ya registrados en Praktiko.
+            {% trans "Solo puedes invitar a usuarios ya registrados en Praktiko." %}
         </div>
 
         <div class="form-actions">
             <a href="{% url 'praktiko:detalle_grupo' grupo.id %}" class="praktiko-btn">
-                Cancelar
+                {% trans "Cancelar" %}
             </a>
 
             <button type="submit" class="praktiko-btn praktiko-btn-main">
-                Enviar invitación
+                {% trans "Enviar invitación" %}
             </button>
         </div>
     </form>

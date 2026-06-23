@@ -1,26 +1,28 @@
 {% extends "praktiko/base.html" %}
+{% load i18n %}
 
 {% block title %}
-Mis estadísticas
+{% trans "Mis estadísticas" %}
 {% endblock %}
 
 {% block page_title %}
-📊 Mis estadísticas
+📊 {% trans "Mis estadísticas" %}
 {% endblock %}
 
 {% block page_subtitle %}
-Palabras y frases practicadas.
+{% trans "Palabras y frases practicadas." %}
 {% endblock %}
 
 {% block content %}
 
 <section class="praktiko-section">
     <div class="form-actions">
-    <a href="{% url 'praktiko:palabras_dificiles' %}"
-       class="praktiko-btn praktiko-btn-main">
-        🔥 Ver palabras difíciles
-    </a>
+        <a href="{% url 'praktiko:palabras_dificiles' %}"
+           class="praktiko-btn praktiko-btn-main">
+            🔥 {% trans "Ver palabras difíciles" %}
+        </a>
     </div>
+
     <div class="praktiko-card table-card">
 
         {% if estadisticas %}
@@ -28,14 +30,14 @@ Palabras y frases practicadas.
             <table class="praktiko-table">
                 <thead>
                     <tr>
-                        <th>Diccionario</th>
-                        <th>Tema</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Preguntada</th>
-                        <th>Aciertos</th>
-                        <th>Fallos</th>
-                        <th>% Éxito</th>
+                        <th>{% trans "Diccionario" %}</th>
+                        <th>{% trans "Tema" %}</th>
+                        <th>{% trans "Origen" %}</th>
+                        <th>{% trans "Destino" %}</th>
+                        <th>{% trans "Preguntada" %}</th>
+                        <th>{% trans "Aciertos" %}</th>
+                        <th>{% trans "Fallos" %}</th>
+                        <th>{% trans "% Éxito" %}</th>
                     </tr>
                 </thead>
 
@@ -58,7 +60,7 @@ Palabras y frases practicadas.
         {% else %}
 
             <div class="praktiko-empty">
-                Todavía no hay estadísticas. Juega una partida para empezar a generar datos.
+                {% trans "Todavía no hay estadísticas. Juega una partida para empezar a generar datos." %}
             </div>
 
         {% endif %}
