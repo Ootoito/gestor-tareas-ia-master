@@ -62,8 +62,9 @@
                 {% trans "Genera listas de vocabulario para importar a tus diccionarios." %}
             </p>
             <div class="form-actions">
-                <a href="#" class="praktiko-btn">
-                    {% trans "Próximamente" %}
+                <a href="{% url 'praktiko:ia_crear_vocabulario' %}"
+                    class="praktiko-btn praktiko-btn-main">
+                        {% trans "Abrir" %}
                 </a>
             </div>
         </article>

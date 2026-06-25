@@ -154,3 +154,90 @@ def generar_recomendacion_openai(prompt):
             return "La IA está integrada, pero la cuenta API no tiene saldo disponible."
 
         return f"Error IA: {e}"
+    
+def generar_vocabulario_openai(prompt):
+    import json
+    import os
+
+    from openai import OpenAI
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+    modelo = os.environ.get("OPENAI_MODEL", "gpt-5.2")
+
+    if not api_key:
+        return {
+            "ok": False,
+            "error": "No existe OPENAI_API_KEY configurada."
+        }
+
+    client = OpenAI(api_key=api_key)
+
+    try:
+
+        response = client.responses.create(
+            model=modelo,
+            input=prompt,
+        )
+
+        texto = response.output_text.strip()
+
+        return {
+            "ok": True,
+            "datos": json.loads(texto),
+        }
+
+    except Exception as e:
+
+        return {
+            "ok": False,
+            "error": str(e),
+        }
+
+def generar_prompt_vocabulario(
+    idioma_origen,
+    idioma_destino,
+    tema,
+    nivel,
+    cantidad,
+    palabras_existentes,
+):
+    prompt = f"""
+Eres un profesor de idiomas.
+
+Genera exactamente {cantidad} palabras o frases cortas.
+
+Tema:
+{tema}
+
+Idioma origen:
+{idioma_origen}
+
+Idioma destino:
+{idioma_destino}
+
+Nivel:
+{nivel}
+
+NO repitas ninguna de estas palabras:
+
+{", ".join(palabras_existentes)}
+
+Devuelve EXCLUSIVAMENTE un JSON válido.
+
+Formato:
+
+[
+    {{
+        "origen":"...",
+        "destino":"...",
+        "tipo":"Palabra"
+    }}
+]
+
+No escribas explicaciones.
+No utilices markdown.
+No pongas json.
+Devuelve únicamente el JSON.
+"""
+
+    return prompt

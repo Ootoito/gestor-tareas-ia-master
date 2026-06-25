@@ -6,14 +6,18 @@ from django.shortcuts import render
 from django.utils import timezone
 
 from praktiko.models import (
+    Diccionario,
     EstadisticaEntradaUsuario,
     EntradaDiccionario,
     RespuestaPractica,
+    Tema,
 )
 
 from praktiko.servicios.ia_service import (
     generar_prompt_recomendacion,
     generar_recomendacion_openai,
+    generar_prompt_vocabulario,
+    generar_vocabulario_openai,
 )
 
 
@@ -51,6 +55,15 @@ def calcular_tendencia(porcentaje_7_dias, porcentaje_30_dias):
         return "Empeorando"
 
     return "Estable"
+
+
+def normalizar_tipo_entrada(tipo):
+    tipo_normalizado = (tipo or "").strip().lower()
+
+    if "frase" in tipo_normalizado:
+        return EntradaDiccionario.TIPO_FRASE
+
+    return EntradaDiccionario.TIPO_PALABRA
 
 
 @login_required
@@ -221,9 +234,7 @@ def recomendacion_estudio(request):
         tendencia=tendencia,
     )
 
-    informe_ia = generar_recomendacion_openai(
-        prompt_ia
-    )
+    informe_ia = generar_recomendacion_openai(prompt_ia)
 
     return render(
         request,
@@ -246,5 +257,168 @@ def recomendacion_estudio(request):
             "porcentaje_30_dias": porcentaje_30_dias,
             "total_respuestas_30_dias": total_respuestas_30_dias,
             "tendencia": tendencia,
+        },
+    )
+
+
+@login_required
+def crear_vocabulario_tema(request):
+    diccionarios = (
+        Diccionario.objects
+        .filter(
+            usuario=request.user,
+            activo=True,
+        )
+        .order_by("nombre")
+    )
+
+    for diccionario in diccionarios:
+        diccionario.total_entradas_activas = (
+            EntradaDiccionario.objects
+            .filter(
+                usuario=request.user,
+                diccionario=diccionario,
+                activa=True,
+            )
+            .count()
+        )
+
+    resultado = None
+    resumen_guardado = None
+
+    if request.method == "POST":
+        accion = request.POST.get("accion", "generar")
+        diccionario_id = request.POST.get("diccionario")
+        tema_nombre = request.POST.get("tema", "").strip()
+        cantidad = request.POST.get("cantidad")
+        nivel = request.POST.get("nivel")
+
+        diccionario = (
+            Diccionario.objects
+            .filter(
+                id=diccionario_id,
+                usuario=request.user,
+                activo=True,
+            )
+            .first()
+        )
+
+        if diccionario and accion == "guardar":
+            tema, _ = Tema.objects.get_or_create(
+                usuario=request.user,
+                diccionario=diccionario,
+                nombre=tema_nombre,
+                defaults={
+                    "icono": "📁",
+                    "color": "#64748b",
+                    "activo": True,
+                },
+            )
+
+            indices_seleccionados = request.POST.getlist("seleccionadas")
+
+            creadas = 0
+            duplicadas = 0
+            errores = 0
+
+            for indice in indices_seleccionados:
+                origen = request.POST.get(f"origen_{indice}", "").strip()
+                destino = request.POST.get(f"destino_{indice}", "").strip()
+                tipo = request.POST.get(f"tipo_{indice}", "").strip()
+
+                if not origen or not destino:
+                    errores += 1
+                    continue
+
+                ya_existe = EntradaDiccionario.objects.filter(
+                    usuario=request.user,
+                    diccionario=diccionario,
+                    texto_origen__iexact=origen,
+                ).exists()
+
+                if ya_existe:
+                    duplicadas += 1
+                    continue
+
+                EntradaDiccionario.objects.create(
+                    usuario=request.user,
+                    diccionario=diccionario,
+                    tema=tema,
+                    tipo=normalizar_tipo_entrada(tipo),
+                    texto_origen=origen,
+                    texto_destino=destino,
+                    nivel=nivel,
+                    activa=True,
+                )
+
+                creadas += 1
+
+            resumen_guardado = {
+                "diccionario": diccionario,
+                "tema": tema,
+                "seleccionadas": len(indices_seleccionados),
+                "creadas": creadas,
+                "duplicadas": duplicadas,
+                "errores": errores,
+            }
+
+        elif diccionario and accion == "generar":
+            palabras_existentes = list(
+                EntradaDiccionario.objects
+                .filter(
+                    usuario=request.user,
+                    diccionario=diccionario,
+                    activa=True,
+                )
+                .values_list(
+                    "texto_origen",
+                    flat=True,
+                )
+                .order_by("texto_origen")
+            )
+
+            tema_existente = None
+
+            if tema_nombre:
+                tema_existente = (
+                    Tema.objects
+                    .filter(
+                        usuario=request.user,
+                        diccionario=diccionario,
+                        nombre__iexact=tema_nombre,
+                    )
+                    .first()
+                )
+
+            prompt = generar_prompt_vocabulario(
+                idioma_origen=diccionario.idioma_origen,
+                idioma_destino=diccionario.idioma_destino,
+                tema=tema_nombre,
+                nivel=nivel,
+                cantidad=cantidad,
+                palabras_existentes=palabras_existentes,
+            )
+
+            respuesta = generar_vocabulario_openai(prompt)
+
+            resultado = {
+                "diccionario": diccionario,
+                "tema": tema_nombre,
+                "tema_existe": tema_existente is not None,
+                "nivel": nivel,
+                "cantidad": cantidad,
+                "total_palabras_existentes": len(palabras_existentes),
+                "palabras_existentes_muestra": palabras_existentes[:25],
+                "prompt": prompt,
+                "respuesta": respuesta,
+            }
+
+    return render(
+        request,
+        "praktiko/ia/crear_vocabulario.html",
+        {
+            "diccionarios": diccionarios,
+            "resultado": resultado,
+            "resumen_guardado": resumen_guardado,
         },
     )

@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR [EMAIL@ADDRESS](mailto:EMAIL@ADDRESS), YEAR.
 #
-
 msgid ""
 msgstr ""
 "Project-Id-Version: Praktiko\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-23 17:53+0100\n"
+"POT-Creation-Date: 2026-06-25 21:28+0100\n"
 "PO-Revision-Date: 2026-06-23 17:53+0100\n"
 "Last-Translator: Wladimir Cova\n"
 "Language-Team: Russian\n"
@@ -16,19 +15,20 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: .\praktiko\templates\praktiko\auth\login.html:8
 msgid "Login"
 msgstr "Вход"
 
 #: .\praktiko\templates\praktiko\auth\login.html:20
-#: .\praktiko\templates\praktiko\base.html:21
+#: .\praktiko\templates\praktiko\base.html:29
 msgid "Tu entrenador personal de idiomas."
 msgstr "Твой персональный тренер по изучению языков."
 
 #: .\praktiko\templates\praktiko\auth\login.html:38
-#: .\praktiko\templates\praktiko\base.html:69
+#: .\praktiko\templates\praktiko\base.html:77
 #: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:34
 #: .\praktiko\templates\praktiko\gestion\usuarios.html:35
 #: .\praktiko\templates\praktiko\grupos\detalle.html:52
@@ -46,32 +46,32 @@ msgstr "Пароль"
 msgid "Entrar"
 msgstr "Войти"
 
-#: .\praktiko\templates\praktiko\base.html:72
+#: .\praktiko\templates\praktiko\base.html:80
 msgid "Salir"
 msgstr "Выйти"
 
-#: .\praktiko\templates\praktiko\base.html:95
+#: .\praktiko\templates\praktiko\base.html:103
 #: .\praktiko\templates\praktiko\gestion\sin_permiso.html:29
 #: .\praktiko\templates\praktiko\juego\resultado.html:60
 #: .\praktiko\templates\praktiko\practica\resultado.html:69
 msgid "Volver al panel"
 msgstr "Вернуться на главную"
 
-#: .\praktiko\templates\praktiko\base.html:102
+#: .\praktiko\templates\praktiko\base.html:110
 msgid "Gestión"
 msgstr "Управление"
 
-#: .\praktiko\templates\praktiko\base.html:107
+#: .\praktiko\templates\praktiko\base.html:115
 msgid "Panel"
 msgstr "Панель"
 
-#: .\praktiko\templates\praktiko\base.html:111
+#: .\praktiko\templates\praktiko\base.html:119
 #: .\praktiko\templates\praktiko\gestion\usuarios.html:39
 #: .\praktiko\templates\praktiko\home.html:16
 msgid "Diccionarios"
 msgstr "Словари"
 
-#: .\praktiko\templates\praktiko\base.html:115
+#: .\praktiko\templates\praktiko\base.html:123
 #: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:47
 #: .\praktiko\templates\praktiko\home.html:22
 #: .\praktiko\templates\praktiko\temas\listado.html:5
@@ -79,39 +79,39 @@ msgstr "Словари"
 msgid "Temas"
 msgstr "Темы"
 
-#: .\praktiko\templates\praktiko\base.html:119
+#: .\praktiko\templates\praktiko\base.html:127
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:4
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:6
 msgid "Vocabulario"
 msgstr "Словарь"
 
-#: .\praktiko\templates\praktiko\base.html:123
+#: .\praktiko\templates\praktiko\base.html:131
 #: .\praktiko\templates\praktiko\ia\asistente.html:5
 #: .\praktiko\templates\praktiko\ia\asistente.html:9
 msgid "Asistente IA"
 msgstr "ИИ-помощник"
 
-#: .\praktiko\templates\praktiko\base.html:128
+#: .\praktiko\templates\praktiko\base.html:136
 #: .\praktiko\templates\praktiko\practica\configurar.html:5
 #: .\praktiko\templates\praktiko\practica\configurar.html:9
 msgid "Practicar"
 msgstr "Практика"
 
-#: .\praktiko\templates\praktiko\base.html:132
+#: .\praktiko\templates\praktiko\base.html:140
 msgid "Jugar"
 msgstr "Играть"
 
-#: .\praktiko\templates\praktiko\base.html:136
+#: .\praktiko\templates\praktiko\base.html:144
 #: .\praktiko\templates\praktiko\grupos\listado.html:5
 msgid "Grupos"
 msgstr "Группы"
 
-#: .\praktiko\templates\praktiko\base.html:140
+#: .\praktiko\templates\praktiko\base.html:148
 #: .\praktiko\templates\praktiko\grupos\invitaciones.html:5
 msgid "Invitaciones"
 msgstr "Приглашения"
 
-#: .\praktiko\templates\praktiko\base.html:145
+#: .\praktiko\templates\praktiko\base.html:153
 #: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:9
 #: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:53
 #: .\praktiko\templates\praktiko\importacion\importar.html:5
@@ -120,7 +120,7 @@ msgstr "Приглашения"
 msgid "Importar vocabulario"
 msgstr "Импортировать словарь"
 
-#: .\praktiko\templates\praktiko\base.html:149
+#: .\praktiko\templates\praktiko\base.html:157
 msgid "Estadísticas"
 msgstr "Статистика"
 
@@ -188,6 +188,7 @@ msgstr "Активен"
 #: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:49
 #: .\praktiko\templates\praktiko\grupos\invitar.html:39
 #: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:81
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:106
 #: .\praktiko\templates\praktiko\practica\configurar.html:66
 #: .\praktiko\templates\praktiko\temas\formulario.html:82
 #: .\praktiko\templates\praktiko\vocabulario\formulario.html:99
@@ -218,6 +219,7 @@ msgstr "темы"
 #: .\praktiko\templates\praktiko\grupos\detalle.html:126
 #: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:54
 #: .\praktiko\templates\praktiko\home.html:162
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:45
 #: .\praktiko\templates\praktiko\temas\listado.html:49
 msgid "entradas"
 msgstr "записи"
@@ -258,6 +260,8 @@ msgstr "Посмотреть сложные слова"
 #: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:25
 #: .\praktiko\templates\praktiko\grupos\formulario_tema_grupo.html:13
 #: .\praktiko\templates\praktiko\grupos\importar_diccionario_grupo.html:13
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:131
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:173
 #: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:103
 #: .\praktiko\templates\praktiko\importacion\importar.html:35
 #: .\praktiko\templates\praktiko\juego\configurar.html:31
@@ -273,6 +277,8 @@ msgstr "Словарь"
 #: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:76
 #: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:31
 #: .\praktiko\templates\praktiko\grupos\jugar_diccionario_grupo.html:34
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:136
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:178
 #: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:104
 #: .\praktiko\templates\praktiko\juego\configurar.html:44
 #: .\praktiko\templates\praktiko\practica\configurar.html:40
@@ -284,6 +290,7 @@ msgstr "Тема"
 #: .\praktiko\templates\praktiko\estadisticas\mis_estadisticas.html:35
 #: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:41
 #: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:77
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:215
 #: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:101
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:29
 msgid "Origen"
@@ -345,7 +352,8 @@ msgstr "Сложные слова"
 #: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:13
 #, python-format
 msgid "Palabras con más errores y menos de un 60%% de éxito."
-msgstr "Слова с наибольшим количеством ошибок и менее чем 60%% успешных ответов."
+msgstr "Слова с наибольшим количеством ошибок и успешностью менее 60%%."
+"Слова с наибольшим количеством ошибок и менее чем 60%% успешных ответов."
 
 #: .\praktiko\templates\praktiko\estadisticas\palabras_dificiles.html:20
 #: .\praktiko\templates\praktiko\estadisticas\repasar_dificiles.html:21
@@ -404,7 +412,9 @@ msgstr "Фамилия"
 
 #: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:74
 msgid "En edición puedes dejarla vacía para conservar la contraseña actual."
-msgstr "При редактировании можешь оставить поле пустым, чтобы сохранить текущий пароль."
+msgstr "При редактировании можно оставить поле пустым, чтобы сохранить текущий пароль."
+"При редактировании можешь оставить поле пустым, чтобы сохранить текущий "
+"пароль."
 
 #: .\praktiko\templates\praktiko\gestion\formulario_usuario.html:84
 msgid "Usuario activo"
@@ -589,6 +599,7 @@ msgstr "Слова и фразы"
 
 #: .\praktiko\templates\praktiko\grupos\detalle_diccionario.html:79
 #: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:37
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:217
 #: .\praktiko\templates\praktiko\vocabulario\formulario.html:41
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:28
 msgid "Tipo"
@@ -616,6 +627,8 @@ msgid "Crea un grupo para compartir aprendizaje con otros usuarios."
 msgstr "Создай группу для совместного обучения с другими пользователями."
 
 #: .\praktiko\templates\praktiko\grupos\formulario_entrada_grupo.html:43
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:81
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:183
 #: .\praktiko\templates\praktiko\vocabulario\formulario.html:48
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:33
 msgid "Nivel"
@@ -719,7 +732,8 @@ msgstr "Электронная почта пользователя"
 
 #: .\praktiko\templates\praktiko\grupos\invitar.html:34
 msgid "Solo puedes invitar a usuarios ya registrados en Praktiko."
-msgstr "Ты можешь приглашать только пользователей, уже зарегистрированных в Praktiko."
+msgstr "Вы можете приглашать только пользователей, уже зарегистрированных в Praktiko."
+"Ты можешь приглашать только пользователей, уже зарегистрированных в Praktiko."
 
 #: .\praktiko\templates\praktiko\grupos\invitar.html:43
 msgid "Enviar invitación"
@@ -878,6 +892,7 @@ msgid "Analiza tus estadísticas y propone qué deberías repasar."
 msgstr "Анализирует твою статистику и предлагает, что стоит повторить."
 
 #: .\praktiko\templates\praktiko\ia\asistente.html:30
+#: .\praktiko\templates\praktiko\ia\asistente.html:67
 msgid "Abrir"
 msgstr "Открыть"
 
@@ -887,11 +902,11 @@ msgstr "Объяснить сложное слово"
 
 #: .\praktiko\templates\praktiko\ia\asistente.html:38
 msgid "Explicaciones personalizadas para palabras que fallas a menudo."
-msgstr "Персонализированные объяснения для слов, в которых ты часто ошибаешься."
+msgstr "Персонализированные объяснения для слов, в которых вы часто ошибаетесь."
+"Персонализированные объяснения для слов, в которых ты часто ошибаешься."
 
 #: .\praktiko\templates\praktiko\ia\asistente.html:42
 #: .\praktiko\templates\praktiko\ia\asistente.html:54
-#: .\praktiko\templates\praktiko\ia\asistente.html:66
 msgid "Próximamente"
 msgstr "Скоро"
 
@@ -904,12 +919,110 @@ msgid "Crea ejercicios con tus propias palabras y frases."
 msgstr "Создаёт упражнения на основе твоих собственных слов и фраз."
 
 #: .\praktiko\templates\praktiko\ia\asistente.html:60
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:5
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:9
 msgid "Crear vocabulario por tema"
 msgstr "Создать словарь по теме"
 
 #: .\praktiko\templates\praktiko\ia\asistente.html:62
 msgid "Genera listas de vocabulario para importar a tus diccionarios."
 msgstr "Создаёт списки слов для импорта в твои словари."
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:13
+#, fuzzy
+#| msgid "Genera listas de vocabulario para importar a tus diccionarios."
+msgid "Genera listas de vocabulario nuevas para completar tus diccionarios."
+msgstr "Создаёт списки слов для импорта в твои словари."
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:30
+#, fuzzy
+#| msgid "Diccionarios"
+msgid "Diccionario destino"
+msgstr "Словари"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:38
+#, fuzzy
+#| msgid "Nuevo diccionario"
+msgid "Selecciona un diccionario"
+msgstr "Новый словарь"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:53
+msgid "Tema que quieres generar"
+msgstr "Тема для генерации"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:61
+msgid "Ejemplo: Aeropuerto, comida, saludos..."
+msgstr "Например: аэропорт, еда, приветствия..."
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:66
+#, fuzzy
+#| msgid "Número de preguntas"
+msgid "Número de palabras"
+msgstr "Количество вопросов"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:89
+msgid "Básico"
+msgstr "Базовый"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:92
+msgid "Intermedio"
+msgstr "Средний"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:95
+msgid "Avanzado"
+msgstr "Продвинутый"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:111
+#, fuzzy
+#| msgid "Importar vocabulario"
+msgid "Generar vocabulario"
+msgstr "Импортировать словарь"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:127
+#, fuzzy
+#| msgid "Vocabulario"
+msgid "Vocabulario guardado"
+msgstr "Словарь"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:147
+#, fuzzy
+#| msgid "Vocabulario"
+msgid "Ver vocabulario"
+msgstr "Словарь"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:152
+#, fuzzy
+#| msgid "Importar vocabulario"
+msgid "Generar más vocabulario"
+msgstr "Импортировать словарь"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:169
+#, fuzzy
+#| msgid "Resultado de importación"
+msgid "Resultado de la generación"
+msgstr "Результат импорта"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:188
+#, fuzzy
+#| msgid "Partida completada"
+msgid "Cantidad solicitada"
+msgstr "Игра завершена"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:214
+#, fuzzy
+#| msgid "Añadido por"
+msgid "Añadir"
+msgstr "Добавлено пользователем"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:216
+#: .\praktiko\templates\praktiko\vocabulario\formulario.html:62
+#: .\praktiko\templates\praktiko\vocabulario\listado.html:30
+msgid "Traducción"
+msgstr "Перевод"
+
+#: .\praktiko\templates\praktiko\ia\crear_vocabulario.html:253
+msgid "Guardar seleccionadas"
+msgstr "Сохранить выбранные"
 
 #: .\praktiko\templates\praktiko\ia\recomendacion_estudio.html:13
 msgid "Análisis automático basado en tus estadísticas."
@@ -1120,11 +1233,6 @@ msgstr "У тебя пока нет созданных тем."
 msgid "Añade palabras o frases a tus diccionarios de estudio."
 msgstr "Добавляй слова и фразы в свои учебные словари."
 
-#: .\praktiko\templates\praktiko\vocabulario\formulario.html:62
-#: .\praktiko\templates\praktiko\vocabulario\listado.html:30
-msgid "Traducción"
-msgstr "Перевод"
-
 #: .\praktiko\templates\praktiko\vocabulario\formulario.html:69
 msgid "Ejemplo origen"
 msgstr "Пример исходного текста"
@@ -1156,4 +1264,3 @@ msgstr "Неактивна"
 #: .\praktiko\templates\praktiko\vocabulario\listado.html:77
 msgid "Todavía no tienes palabras o frases creadas."
 msgstr "У тебя пока нет созданных слов или фраз."
-

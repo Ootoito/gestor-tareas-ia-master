@@ -75,4 +75,5 @@ urlpatterns = [
 
     path("ia/", ia_views.asistente_ia, name="asistente_ia",),
     path("ia/recomendacion/", ia_views.recomendacion_estudio, name="ia_recomendacion_estudio",),
+    path("ia/vocabulario/", ia_views.crear_vocabulario_tema, name="ia_crear_vocabulario",),
 ]

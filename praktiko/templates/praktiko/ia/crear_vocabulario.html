@@ -1,0 +1,267 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans "Crear vocabulario por tema" %}
+{% endblock %}
+
+{% block page_title %}
+📥 {% trans "Crear vocabulario por tema" %}
+{% endblock %}
+
+{% block page_subtitle %}
+{% trans "Genera listas de vocabulario nuevas para completar tus diccionarios." %}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+
+    <form method="post" class="praktiko-card praktiko-form">
+
+        {% csrf_token %}
+
+        <input type="hidden" name="accion" value="generar">
+
+        <div class="form-grid">
+
+            <div class="form-group form-group-full">
+                <label for="diccionario">
+                    {% trans "Diccionario destino" %}
+                </label>
+
+                <select name="diccionario"
+                        id="diccionario"
+                        class="form-control"
+                        required>
+                    <option value="">
+                        {% trans "Selecciona un diccionario" %}
+                    </option>
+
+                    {% for diccionario in diccionarios %}
+                        <option value="{{ diccionario.id }}">
+                            {{ diccionario.nombre }}
+                            ({{ diccionario.idioma_origen }} → {{ diccionario.idioma_destino }})
+                            - {{ diccionario.total_entradas_activas }} {% trans "entradas" %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group form-group-full">
+                <label for="tema">
+                    {% trans "Tema que quieres generar" %}
+                </label>
+
+                <input type="text"
+                       id="tema"
+                       name="tema"
+                       class="form-control"
+                       required
+                       placeholder="{% trans 'Ejemplo: Aeropuerto, comida, saludos...' %}">
+            </div>
+
+            <div class="form-group">
+                <label for="cantidad">
+                    {% trans "Número de palabras" %}
+                </label>
+
+                <select name="cantidad"
+                        id="cantidad"
+                        class="form-control"
+                        required>
+                    <option value="25">25</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nivel">
+                    {% trans "Nivel" %}
+                </label>
+
+                <select name="nivel"
+                        id="nivel"
+                        class="form-control"
+                        required>
+                    <option value="basico">
+                        {% trans "Básico" %}
+                    </option>
+                    <option value="intermedio">
+                        {% trans "Intermedio" %}
+                    </option>
+                    <option value="avanzado">
+                        {% trans "Avanzado" %}
+                    </option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="form-actions">
+
+            <a href="{% url 'praktiko:asistente_ia' %}"
+               class="praktiko-btn">
+                {% trans "Cancelar" %}
+            </a>
+
+            <button type="submit"
+                    class="praktiko-btn praktiko-btn-main">
+                {% trans "Generar vocabulario" %}
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+{% if resumen_guardado %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card">
+
+        <h3>
+            ✅ {% trans "Vocabulario guardado" %}
+        </h3>
+
+        <p>
+            <strong>{% trans "Diccionario" %}:</strong>
+            {{ resumen_guardado.diccionario.nombre }}
+        </p>
+
+        <p>
+            <strong>{% trans "Tema" %}:</strong>
+            {{ resumen_guardado.tema.nombre }}
+        </p>
+
+        <div class="resultado-grid">
+            ...
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:listado_vocabulario' %}"
+               class="praktiko-btn praktiko-btn-main">
+                {% trans "Ver vocabulario" %}
+            </a>
+
+            <a href="{% url 'praktiko:ia_crear_vocabulario' %}"
+               class="praktiko-btn">
+                {% trans "Generar más vocabulario" %}
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% if resultado %}
+
+<section class="praktiko-section">
+
+    <div class="praktiko-card">
+
+        <h3>
+            {% trans "Resultado de la generación" %}
+        </h3>
+
+        <p>
+            <strong>{% trans "Diccionario" %}:</strong>
+            {{ resultado.diccionario.nombre }}
+        </p>
+
+        <p>
+            <strong>{% trans "Tema" %}:</strong>
+            {{ resultado.tema }}
+        </p>
+
+        <p>
+            <strong>{% trans "Nivel" %}:</strong>
+            {{ resultado.nivel }}
+        </p>
+
+        <p>
+            <strong>{% trans "Cantidad solicitada" %}:</strong>
+            {{ resultado.cantidad }}
+        </p>
+
+        {% if not resultado.respuesta.ok %}
+
+            <div class="praktiko-message praktiko-message-error">
+                {{ resultado.respuesta.error }}
+            </div>
+
+        {% else %}
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <input type="hidden" name="accion" value="guardar">
+                <input type="hidden" name="diccionario" value="{{ resultado.diccionario.id }}">
+                <input type="hidden" name="tema" value="{{ resultado.tema }}">
+                <input type="hidden" name="nivel" value="{{ resultado.nivel }}">
+                <input type="hidden" name="cantidad" value="{{ resultado.cantidad }}">
+
+                <div class="table-card">
+                    <table class="praktiko-table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Añadir" %}</th>
+                                <th>{% trans "Origen" %}</th>
+                                <th>{% trans "Traducción" %}</th>
+                                <th>{% trans "Tipo" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entrada in resultado.respuesta.datos %}
+                                <tr>
+                                    <td>
+                                        <input type="checkbox"
+                                               name="seleccionadas"
+                                               value="{{ forloop.counter0 }}"
+                                               checked>
+
+                                        <input type="hidden"
+                                               name="origen_{{ forloop.counter0 }}"
+                                               value="{{ entrada.origen }}">
+
+                                        <input type="hidden"
+                                               name="destino_{{ forloop.counter0 }}"
+                                               value="{{ entrada.destino }}">
+
+                                        <input type="hidden"
+                                               name="tipo_{{ forloop.counter0 }}"
+                                               value="{{ entrada.tipo }}">
+                                    </td>
+                                    <td>{{ entrada.origen }}</td>
+                                    <td>{{ entrada.destino }}</td>
+                                    <td>{{ entrada.tipo }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit"
+                            class="praktiko-btn praktiko-btn-main">
+                        {% trans "Guardar seleccionadas" %}
+                    </button>
+                </div>
+
+            </form>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}
