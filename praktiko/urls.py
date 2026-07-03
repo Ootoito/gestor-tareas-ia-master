@@ -13,6 +13,7 @@ from praktiko.vistas import grupo_views
 from praktiko.vistas import estadistica_views
 from praktiko.vistas import estadistica_grupo_views
 from praktiko.vistas import ia_views
+from praktiko import ayuda_views
 
 app_name = "praktiko"
 
@@ -76,4 +77,6 @@ urlpatterns = [
     path("ia/", ia_views.asistente_ia, name="asistente_ia",),
     path("ia/recomendacion/", ia_views.recomendacion_estudio, name="ia_recomendacion_estudio",),
     path("ia/vocabulario/", ia_views.crear_vocabulario_tema, name="ia_crear_vocabulario",),
+    
+    path("ayuda/manual/", ayuda_views.manual_usuario, name="manual_usuario"),
 ]

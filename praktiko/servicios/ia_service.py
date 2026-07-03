@@ -1,3 +1,6 @@
+import os
+from openai import OpenAI
+
 def generar_prompt_recomendacion(
     porcentaje_global,
     total_preguntas,
@@ -122,38 +125,178 @@ def generar_prompt_recomendacion(
     return "\n".join(lineas)
 
 
-def generar_recomendacion_openai(prompt):
-    import os
-    from openai import OpenAI
-
+def generar_recomendacion_openai(
+    prompt,
+    total_preguntas=0,
+    porcentaje_global=0,
+    total_palabras_dificiles=0,
+    tema_principal=None,
+):
     api_key = os.environ.get("OPENAI_API_KEY")
     modelo = os.environ.get("OPENAI_MODEL", "gpt-5.2")
 
     if not api_key:
-        return (
-            "MODO PRUEBA IA\n\n"
-            "No hay clave OPENAI_API_KEY configurada en el archivo .env.\n\n"
-            "Este es el resumen que se enviaría al modelo:\n\n"
-            f"{prompt}"
-        )
+        return {
+            "titulo": "Modo prueba IA",
+            "mensaje": (
+                "No hay clave OPENAI_API_KEY configurada. "
+                "Se muestra una recomendación local."
+            ),
+            "accion_principal": "estadisticas",
+            "texto_boton": "📊 Ver estadísticas",
+            "prioridad": "media",
+            "detalle": prompt,
+            "prompt": prompt,
+        }
 
     client = OpenAI(api_key=api_key)
+
+    prompt_final = f"""
+Devuelve una recomendación de estudio en formato JSON válido.
+
+No añadas texto fuera del JSON.
+
+El JSON debe tener exactamente estas claves:
+- titulo
+- mensaje
+- accion_principal
+- texto_boton
+- prioridad
+- detalle
+
+Valores permitidos para accion_principal:
+- jugar_dificiles
+- jugar_normal
+- estadisticas
+
+Valores permitidos para prioridad:
+- baja
+- media
+- alta
+
+Datos del usuario:
+{prompt}
+"""
 
     try:
         response = client.responses.create(
             model=modelo,
-            input=prompt,
+            input=prompt_final,
         )
 
-        return response.output_text
+        texto = response.output_text
+
+        return convertir_respuesta_ia_a_dict(
+            texto=texto,
+            prompt=prompt,
+            total_preguntas=total_preguntas,
+            porcentaje_global=porcentaje_global,
+            total_palabras_dificiles=total_palabras_dificiles,
+        )
 
     except Exception as e:
-        texto_error = str(e)
+        return {
+            "titulo": "Error IA",
+            "mensaje": "No se pudo generar la recomendación con IA.",
+            "accion_principal": "estadisticas",
+            "texto_boton": "📊 Ver estadísticas",
+            "prioridad": "media",
+            "detalle": f"Error: {e}",
+            "prompt": prompt,
+        }
+    
+def convertir_respuesta_ia_a_dict(
+    texto,
+    prompt,
+    total_preguntas=0,
+    porcentaje_global=0,
+    total_palabras_dificiles=0,
+):
+    import json
 
-        if "insufficient_quota" in texto_error:
-            return "La IA está integrada, pero la cuenta API no tiene saldo disponible."
+    try:
+        datos = json.loads(texto)
 
-        return f"Error IA: {e}"
+        return {
+            "titulo": datos.get("titulo", "Recomendación de estudio"),
+            "mensaje": datos.get("mensaje", ""),
+            "accion_principal": datos.get("accion_principal", "estadisticas"),
+            "texto_boton": datos.get("texto_boton", "📊 Ver estadísticas"),
+            "prioridad": datos.get("prioridad", "media"),
+            "detalle": datos.get("detalle", ""),
+            "prompt": prompt,
+        }
+
+    except Exception:
+        return generar_recomendacion_local_estructurada(
+            prompt=prompt,
+            total_preguntas=total_preguntas,
+            porcentaje_global=porcentaje_global,
+            total_palabras_dificiles=total_palabras_dificiles,
+        )
+
+def generar_recomendacion_local_estructurada(
+    prompt,
+    total_preguntas=0,
+    porcentaje_global=0,
+    total_palabras_dificiles=0,
+):
+    if total_preguntas == 0:
+        return {
+            "titulo": "Empieza a generar datos",
+            "mensaje": (
+                "Todavía no hay suficientes estadísticas para darte una "
+                "recomendación personalizada."
+            ),
+            "accion_principal": "jugar_normal",
+            "texto_boton": "🎮 Empezar una partida",
+            "prioridad": "media",
+            "detalle": (
+                "Juega algunas partidas o realiza prácticas para que Praktiko "
+                "pueda analizar tus aciertos y fallos."
+            ),
+            "prompt": prompt,
+        }
+
+    if total_palabras_dificiles >= 3:
+        return {
+            "titulo": "Refuerza tus palabras difíciles",
+            "mensaje": (
+                "Se han detectado varias palabras con bajo porcentaje de acierto."
+            ),
+            "accion_principal": "jugar_dificiles",
+            "texto_boton": "🎮 Jugar palabras difíciles",
+            "prioridad": "alta",
+            "detalle": (
+                "Empieza con una partida de palabras difíciles antes de añadir "
+                "nuevo vocabulario."
+            ),
+            "prompt": prompt,
+        }
+
+    if porcentaje_global < 70:
+        return {
+            "titulo": "Consolida antes de avanzar",
+            "mensaje": "Tu porcentaje global de acierto todavía puede mejorar.",
+            "accion_principal": "estadisticas",
+            "texto_boton": "📊 Ver estadísticas",
+            "prioridad": "media",
+            "detalle": "Revisa tus estadísticas y practica los temas con más fallos.",
+            "prompt": prompt,
+        }
+
+    return {
+        "titulo": "Buen progreso",
+        "mensaje": (
+            "Tu rendimiento general es positivo. Puedes continuar practicando "
+            "o añadir nuevo vocabulario."
+        ),
+        "accion_principal": "jugar_normal",
+        "texto_boton": "🎮 Jugar una partida",
+        "prioridad": "baja",
+        "detalle": "Mantén la práctica regular y sigue ampliando tus diccionarios.",
+        "prompt": prompt,
+    }
     
 def generar_vocabulario_openai(prompt):
     import json
@@ -204,7 +347,7 @@ def generar_prompt_vocabulario(
     prompt = f"""
 Eres un profesor de idiomas.
 
-Genera exactamente {cantidad} palabras o frases cortas.
+Genera exactamente {cantidad} palabras o frases cortas para estudiar.
 
 Tema:
 {tema}
@@ -218,26 +361,35 @@ Idioma destino:
 Nivel:
 {nivel}
 
-NO repitas ninguna de estas palabras:
+NO repitas ninguna de estas palabras ya existentes:
 
 {", ".join(palabras_existentes)}
 
 Devuelve EXCLUSIVAMENTE un JSON válido.
 
-Formato:
+Formato exacto:
 
 [
     {{
-        "origen":"...",
-        "destino":"...",
-        "tipo":"Palabra"
+        "origen": "...",
+        "destino": "...",
+        "tipo": "Palabra",
+        "ejemplo_origen": "...",
+        "ejemplo_destino": "..."
     }}
 ]
 
-No escribas explicaciones.
-No utilices markdown.
-No pongas json.
-Devuelve únicamente el JSON.
+Reglas:
+- "origen" debe estar en {idioma_origen}.
+- "destino" debe estar en {idioma_destino}.
+- "ejemplo_origen" debe ser una frase breve en {idioma_origen}.
+- "ejemplo_destino" debe ser la traducción natural de esa frase en {idioma_destino}.
+- El campo "tipo" solo puede ser "Palabra" o "Frase".
+- No incluyas palabras repetidas.
+- No escribas explicaciones.
+- No utilices markdown.
+- No pongas ```json.
+- Devuelve únicamente el JSON.
 """
 
     return prompt

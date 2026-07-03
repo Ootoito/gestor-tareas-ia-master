@@ -188,6 +188,13 @@
             <strong>{% trans "Cantidad solicitada" %}:</strong>
             {{ resultado.cantidad }}
         </p>
+        
+        {% if resultado.respuesta.descartadas_por_duplicadas %}
+            <p>
+                <strong>{% trans "Descartadas por duplicadas" %}:</strong>
+                {{ resultado.respuesta.descartadas_por_duplicadas }}
+            </p>
+        {% endif %}
 
         {% if not resultado.respuesta.ok %}
 

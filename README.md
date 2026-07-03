@@ -151,7 +151,7 @@ Un ejemplo es el sistema de alertas, cuyos intervalos temporales son gestionados
 
 # Arquitectura
 
-```text
+text
 Usuario
    │
    ▼
@@ -168,7 +168,6 @@ Django
    │
    ▼
 MariaDB
-```
 
 ---
 
@@ -176,35 +175,32 @@ MariaDB
 
 ## Clonar repositorio
 
-```bash
+bash
 git clone https://github.com/Ootoito/gestor-tareas-ia-master.git
-```
 
 ## Crear entorno virtual
 
-```bash
+bash
 python -m venv .venv
-```
 
 ## Activar entorno virtual
 
 Windows:
 
-```bash
+bash
 .venv\Scripts\activate
-```
+
 
 Linux:
 
-```bash
+bash
 source .venv/bin/activate
-```
+
 
 ## Instalar dependencias
 
-```bash
+bash
 pip install -r requirements.txt
-```
 
 ## Configurar variables de entorno
 
@@ -212,15 +208,13 @@ Crear archivo `.env` usando como referencia `.env.example`.
 
 ## Ejecutar migraciones
 
-```bash
+bash
 python manage.py migrate
-```
 
 ## Lanzar servidor
 
-```bash
+bash
 python manage.py runserver
-```
 
 ---
 

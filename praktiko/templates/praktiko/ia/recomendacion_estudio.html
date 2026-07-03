@@ -48,11 +48,40 @@
 <section class="praktiko-section">
     <div class="praktiko-card">
 
-        <h2>🧠 {% trans "Informe IA" %}</h2>
+        <h2>🧠 Recomendación IA</h2>
 
-        <div style="white-space: pre-line;">
-            {{ informe_ia }}
-        </div>
+<h3>{{ recomendacion_ia.titulo }}</h3>
+
+<p>
+    {{ recomendacion_ia.mensaje }}
+</p>
+
+<p>
+    {{ recomendacion_ia.detalle }}
+</p>
+
+{% if recomendacion_ia.accion_principal == "jugar_dificiles" %}
+    <div class="form-actions">
+        <a href="{% url 'praktiko:jugar_dificiles' %}"
+           class="praktiko-btn praktiko-btn-main">
+            {{ recomendacion_ia.texto_boton }}
+        </a>
+    </div>
+{% elif recomendacion_ia.accion_principal == "jugar_normal" %}
+    <div class="form-actions">
+        <a href="{% url 'praktiko:juego_configurar' %}"
+           class="praktiko-btn praktiko-btn-main">
+            {{ recomendacion_ia.texto_boton }}
+        </a>
+    </div>
+{% elif recomendacion_ia.accion_principal == "estadisticas" %}
+    <div class="form-actions">
+        <a href="{% url 'praktiko:mis_estadisticas' %}"
+           class="praktiko-btn praktiko-btn-main">
+            {{ recomendacion_ia.texto_boton }}
+        </a>
+    </div>
+{% endif %}
 
         <details style="margin-top: 1.5rem;">
             <summary>

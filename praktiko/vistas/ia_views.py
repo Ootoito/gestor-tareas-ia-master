@@ -65,6 +65,8 @@ def normalizar_tipo_entrada(tipo):
 
     return EntradaDiccionario.TIPO_PALABRA
 
+def normalizar_texto_comparacion(texto):
+    return (texto or "").strip().lower()
 
 @login_required
 def asistente_ia(request):
@@ -234,7 +236,9 @@ def recomendacion_estudio(request):
         tendencia=tendencia,
     )
 
-    informe_ia = generar_recomendacion_openai(prompt_ia)
+    recomendacion_ia = generar_recomendacion_openai(
+        prompt_ia
+    )
 
     return render(
         request,
@@ -247,8 +251,8 @@ def recomendacion_estudio(request):
             "total_aciertos": total_aciertos,
             "total_fallos": total_fallos,
             "porcentaje_global": porcentaje_global,
-            "recomendaciones": recomendaciones,
-            "informe_ia": informe_ia,
+            "recomendaciones": recomendaciones,            
+            "recomendacion_ia": recomendacion_ia,
             "prompt_ia": prompt_ia,
             "minimo_preguntas_dominio": minimo_preguntas_dominio,
             "minimo_porcentaje_dominio": minimo_porcentaje_dominio,
@@ -400,7 +404,33 @@ def crear_vocabulario_tema(request):
             )
 
             respuesta = generar_vocabulario_openai(prompt)
+            palabras_existentes_normalizadas = {
+                normalizar_texto_comparacion(palabra)
+                for palabra in palabras_existentes
+            }
 
+            if respuesta.get("ok"):
+                datos_filtrados = []
+                descartadas_por_duplicadas = 0
+
+                for entrada in respuesta.get("datos", []):
+                    origen = entrada.get("origen", "").strip()
+
+                    if not origen:
+                        continue
+
+                    origen_normalizado = normalizar_texto_comparacion(origen)
+
+                    if origen_normalizado in palabras_existentes_normalizadas:
+                        descartadas_por_duplicadas += 1
+                        continue
+
+                    palabras_existentes_normalizadas.add(origen_normalizado)
+                    datos_filtrados.append(entrada)
+
+                respuesta["datos"] = datos_filtrados
+                respuesta["descartadas_por_duplicadas"] = descartadas_por_duplicadas
+                
             resultado = {
                 "diccionario": diccionario,
                 "tema": tema_nombre,

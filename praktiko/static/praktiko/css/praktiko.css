@@ -792,3 +792,34 @@ body {
     color: #334155;
     font-size: 1.05rem;
 }
+
+/*#   =========================================================
+#   Ayuda y manual de usuario
+#   ========================================================= */
+
+   .manual-praktiko {
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.manual-praktiko h1,
+.manual-praktiko h2,
+.manual-praktiko h3 {
+    margin-top: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.manual-praktiko h1:first-child {
+    margin-top: 0;
+}
+
+.manual-praktiko pre {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+}
+
+.manual-praktiko code {
+    font-size: 0.95rem;
+}
