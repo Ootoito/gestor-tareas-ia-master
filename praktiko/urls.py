@@ -13,6 +13,7 @@ from praktiko.vistas import grupo_views
 from praktiko.vistas import estadistica_views
 from praktiko.vistas import estadistica_grupo_views
 from praktiko.vistas import ia_views
+from praktiko.vistas import examen_views
 from praktiko import ayuda_views
 
 app_name = "praktiko"
@@ -49,6 +50,10 @@ urlpatterns = [
     path("juego/tablero/", juego_views.tablero_juego, name="juego_tablero",),
     path("juego/pregunta/", juego_views.pregunta_juego, name="juego_pregunta",),
     path("juego/resultado/", juego_views.resultado_juego, name="juego_resultado",),
+
+    path("examen/", examen_views.configurar_examen, name="examen_configurar"),
+    path("examen/pregunta/", examen_views.pregunta_examen, name="examen_pregunta"),
+    path("examen/resultado/", examen_views.resultado_examen, name="examen_resultado"),
 
     path("importacion/", importacion_views.importar_vocabulario, name="importar_vocabulario",),
 

@@ -141,6 +141,23 @@
 </section>
 
 <section class="praktiko-section">
+    <div class="praktiko-card">
+        <h2>📝 {% trans "Examen" %}</h2>
+
+        <p>
+            {% trans "Evalúa tus conocimientos con una prueba de 15 o 25 preguntas y recibe una calificación final." %}
+        </p>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:examen_configurar' %}"
+               class="praktiko-btn praktiko-btn-main">
+                {% trans "Comenzar examen" %}
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="praktiko-section">
     <h2>{% trans "Mis diccionarios" %}</h2>
 
 

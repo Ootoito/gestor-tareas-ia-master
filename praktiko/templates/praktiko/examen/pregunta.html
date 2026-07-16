@@ -1,0 +1,48 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Examen en curso" %}{% endblock %}
+{% block page_title %}{% trans "Examen en curso" %}{% endblock %}
+
+{% block page_subtitle %}
+{% blocktrans with actual=numero_actual total_preguntas=total %}
+Pregunta {{ actual }} de {{ total_preguntas }}
+{% endblocktrans %}
+{% endblock %}
+
+{% block content %}
+<section class="praktiko-section">
+    <form method="post" class="praktiko-card praktiko-form" autocomplete="off">
+        {% csrf_token %}
+
+        <div class="stat-card">
+            <span class="stat-label">{% trans "Traduce" %}</span>
+            <strong>{{ pregunta.texto_pregunta }}</strong>
+        </div>
+
+        <div class="form-group">
+            <label for="id_respuesta">{% trans "Tu respuesta" %}</label>
+            <input
+                type="text"
+                id="id_respuesta"
+                name="respuesta"
+                class="form-control"
+                maxlength="255"
+                required
+                autofocus
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                {% if numero_actual == total %}
+                    {% trans "Finalizar examen" %}
+                {% else %}
+                    {% trans "Siguiente pregunta" %}
+                {% endif %}
+            </button>
+        </div>
+    </form>
+</section>
+{% endblock %}

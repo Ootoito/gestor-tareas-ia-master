@@ -1,0 +1,95 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Resultado del examen" %}{% endblock %}
+{% block page_title %}{% trans "Resultado del examen" %}{% endblock %}
+
+{% block page_subtitle %}
+{% trans "Evaluación final de tus respuestas." %}
+{% endblock %}
+
+{% block content %}
+<section class="praktiko-grid resumen-grid">
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Nota" %}</span>
+        <strong>{{ examen.nota }} / 10</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Calificación" %}</span>
+        <strong>{{ calificacion }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Aciertos" %}</span>
+        <strong>{{ examen.aciertos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Fallos" %}</span>
+        <strong>{{ examen.fallos }}</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Porcentaje" %}</span>
+        <strong>{{ examen.porcentaje }}%</strong>
+    </article>
+
+    <article class="praktiko-card stat-card">
+        <span class="stat-label">{% trans "Tiempo" %}</span>
+        <strong>{{ examen.tiempo_segundos }} s</strong>
+    </article>
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+        <h2>{% trans "Resultado por temas" %}</h2>
+
+        {% for tema in desglose_temas %}
+            <p>
+                <strong>{{ tema.nombre }}</strong>:
+                {{ tema.aciertos }}/{{ tema.total }}
+                — {{ tema.porcentaje }}%
+            </p>
+        {% empty %}
+            <p>{% trans "No hay resultados por temas." %}</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="praktiko-section">
+    <div class="praktiko-card">
+        <h2>{% trans "Revisión de respuestas" %}</h2>
+
+        {% for respuesta in respuestas %}
+            <article class="praktiko-card">
+                <p><strong>{{ respuesta.texto_pregunta }}</strong></p>
+                <p>
+                    {% trans "Tu respuesta" %}: {{ respuesta.respuesta_usuario }}
+                </p>
+                <p>
+                    {% trans "Respuesta correcta" %}: {{ respuesta.respuesta_correcta }}
+                </p>
+                <p>
+                    {% if respuesta.correcta %}
+                        ✅ {% trans "Correcta" %}
+                    {% else %}
+                        ❌ {% trans "Incorrecta" %}
+                    {% endif %}
+                </p>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<div class="form-actions">
+    <a href="{% url 'praktiko:examen_configurar' %}"
+       class="praktiko-btn praktiko-btn-main">
+        {% trans "Realizar otro examen" %}
+    </a>
+
+    <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+        {% trans "Volver al inicio" %}
+    </a>
+</div>
+{% endblock %}

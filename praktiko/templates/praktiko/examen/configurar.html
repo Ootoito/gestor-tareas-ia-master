@@ -1,0 +1,74 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Examen" %}{% endblock %}
+{% block page_title %}{% trans "Examen" %}{% endblock %}
+
+{% block page_subtitle %}
+{% trans "Evalúa tus conocimientos sin ayudas ni correcciones durante la prueba." %}
+{% endblock %}
+
+{% block content %}
+<section class="praktiko-section">
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="{{ form.diccionario.id_for_label }}">
+                    {% trans "Diccionario" %}
+                </label>
+                {{ form.diccionario }}
+                {{ form.diccionario.errors }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.tema.id_for_label }}">
+                    {% trans "Tema" %}
+                </label>
+                {{ form.tema }}
+                {{ form.tema.errors }}
+            </div>
+
+            <div class="form-group">
+                <span class="form-label">
+                    {% trans "Número de preguntas" %}
+                </span>
+                {{ form.numero_preguntas }}
+                {{ form.numero_preguntas.errors }}
+            </div>
+
+            <div class="form-group">
+                <span class="form-label">
+                    {% trans "Sentido de las preguntas" %}
+                </span>
+                {{ form.sentido }}
+                {{ form.sentido.errors }}
+            </div>
+        </div>
+
+        <div class="praktiko-card">
+            <strong>📝 {% trans "Condiciones del examen" %}</strong>
+            <p>
+                {% trans "No se mostrarán los aciertos ni los errores hasta finalizar. El resultado se guardará separado de tus estadísticas de práctica." %}
+            </p>
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+                {% trans "Cancelar" %}
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                {% trans "Comenzar examen" %}
+            </button>
+        </div>
+    </form>
+</section>
+{% endblock %}

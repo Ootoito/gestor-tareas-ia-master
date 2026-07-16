@@ -319,6 +319,212 @@ class RespuestaPractica(models.Model):
         estado = "Correcta" if self.correcta else "Fallida"
         return f"{estado}: {self.texto_origen}"
 
+
+class Examen(models.Model):
+    TIPO_NORMAL = "normal"
+    TIPO_OFICIAL = "oficial"
+    TIPO_NIVEL = "nivel"
+    TIPO_GRUPO = "grupo"
+    TIPO_IA = "ia"
+
+    TIPO_CHOICES = [
+        (TIPO_NORMAL, "Normal"),
+        (TIPO_OFICIAL, "Oficial"),
+        (TIPO_NIVEL, "Nivel"),
+        (TIPO_GRUPO, "Grupo"),
+        (TIPO_IA, "IA"),
+    ]
+
+    SENTIDO_ORIGEN_DESTINO = "origen_destino"
+    SENTIDO_DESTINO_ORIGEN = "destino_origen"
+    SENTIDO_MIXTO = "mixto"
+
+    SENTIDO_CHOICES = [
+        (SENTIDO_ORIGEN_DESTINO, "Origen → destino"),
+        (SENTIDO_DESTINO_ORIGEN, "Destino → origen"),
+        (SENTIDO_MIXTO, "Mixto"),
+    ]
+
+    ESTADO_EN_CURSO = "en_curso"
+    ESTADO_FINALIZADO = "finalizado"
+    ESTADO_CANCELADO = "cancelado"
+
+    ESTADO_CHOICES = [
+        (ESTADO_EN_CURSO, "En curso"),
+        (ESTADO_FINALIZADO, "Finalizado"),
+        (ESTADO_CANCELADO, "Cancelado"),
+    ]
+
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="praktiko_examenes",
+    )
+
+    diccionario = models.ForeignKey(
+        Diccionario,
+        on_delete=models.CASCADE,
+        related_name="examenes",
+    )
+
+    tema = models.ForeignKey(
+        Tema,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="examenes",
+    )
+
+    tipo = models.CharField(
+        max_length=20,
+        choices=TIPO_CHOICES,
+        default=TIPO_NORMAL,
+    )
+
+    sentido = models.CharField(
+        max_length=30,
+        choices=SENTIDO_CHOICES,
+        default=SENTIDO_MIXTO,
+    )
+
+    numero_preguntas = models.PositiveIntegerField(default=15)
+    aciertos = models.PositiveIntegerField(default=0)
+    fallos = models.PositiveIntegerField(default=0)
+
+    porcentaje = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=0,
+    )
+
+    nota = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        default=0,
+    )
+
+    tiempo_segundos = models.PositiveIntegerField(default=0)
+
+    estado = models.CharField(
+        max_length=20,
+        choices=ESTADO_CHOICES,
+        default=ESTADO_EN_CURSO,
+    )
+
+    iniciada_en = models.DateTimeField(auto_now_add=True)
+    finalizada_en = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Examen"
+        verbose_name_plural = "Exámenes"
+        ordering = ["-iniciada_en"]
+        indexes = [
+            models.Index(fields=["usuario", "iniciada_en"]),
+            models.Index(fields=["usuario", "estado"]),
+            models.Index(fields=["diccionario", "tema"]),
+        ]
+
+    @property
+    def total_respuestas(self):
+        return self.aciertos + self.fallos
+
+    def finalizar(self):
+        respuestas = self.respuestas.all()
+        total_respuestas = respuestas.count()
+        aciertos = respuestas.filter(correcta=True).count()
+        fallos = total_respuestas - aciertos
+
+        self.aciertos = aciertos
+        self.fallos = fallos
+
+        if total_respuestas > 0:
+            self.porcentaje = round(
+                (aciertos / total_respuestas) * 100,
+                2,
+            )
+            self.nota = round(
+                (aciertos / total_respuestas) * 10,
+                2,
+            )
+        else:
+            self.porcentaje = 0
+            self.nota = 0
+
+        self.finalizada_en = timezone.now()
+        self.tiempo_segundos = max(
+            0,
+            int((self.finalizada_en - self.iniciada_en).total_seconds()),
+        )
+        self.estado = self.ESTADO_FINALIZADO
+
+        self.save(
+            update_fields=[
+                "aciertos",
+                "fallos",
+                "porcentaje",
+                "nota",
+                "tiempo_segundos",
+                "finalizada_en",
+                "estado",
+            ]
+        )
+
+    def __str__(self):
+        return f"Examen {self.id} - {self.usuario}"
+
+
+class RespuestaExamen(models.Model):
+    examen = models.ForeignKey(
+        Examen,
+        on_delete=models.CASCADE,
+        related_name="respuestas",
+    )
+
+    entrada = models.ForeignKey(
+        EntradaDiccionario,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="respuestas_examen",
+    )
+
+    tema = models.ForeignKey(
+        Tema,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="respuestas_examen",
+    )
+
+    sentido = models.CharField(
+        max_length=30,
+        choices=Examen.SENTIDO_CHOICES,
+    )
+
+    texto_pregunta = models.CharField(max_length=255)
+    respuesta_usuario = models.CharField(max_length=255, blank=True)
+    respuesta_correcta = models.CharField(max_length=255)
+
+    correcta = models.BooleanField(default=False)
+    orden = models.PositiveIntegerField()
+
+    respondida_en = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Respuesta de examen"
+        verbose_name_plural = "Respuestas de examen"
+        ordering = ["orden"]
+        unique_together = ("examen", "orden")
+        indexes = [
+            models.Index(fields=["examen", "correcta"]),
+            models.Index(fields=["tema"]),
+            models.Index(fields=["respondida_en"]),
+        ]
+
+    def __str__(self):
+        estado = "Correcta" if self.correcta else "Fallida"
+        return f"{estado}: {self.texto_pregunta}"
+
 class GrupoAprendizaje(models.Model):
     nombre = models.CharField(max_length=150)
     descripcion = models.TextField(blank=True)
