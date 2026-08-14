@@ -1,0 +1,138 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Ficha de estudio" %}{% endblock %}
+{% block page_title %}📖 {% trans "Ficha de estudio" %}{% endblock %}
+
+{% block page_subtitle %}
+{{ diccionario.icono }} {{ diccionario.nombre }} · {{ cantidad }} {% trans "elementos" %}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-actions ficha-no-imprimir">
+    <a href="{% url 'praktiko:aprender_configurar' %}" class="praktiko-btn">
+        ← {% trans "Crear otra ficha" %}
+    </a>
+
+    <button
+        type="button"
+        class="praktiko-btn praktiko-btn-main"
+        onclick="window.print()"
+    >
+        🖨️ {% trans "Imprimir / Guardar como PDF" %}
+    </button>
+
+    <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+        {% trans "Volver al panel" %}
+    </a>
+</section>
+
+<section class="ficha-estudio">
+
+    <header class="ficha-estudio-cabecera">
+        <div>
+            <h2>
+                {{ diccionario.icono }}
+                {{ diccionario.nombre }}
+            </h2>
+
+            <p>
+                {{ diccionario.idioma_origen }}
+                →
+                {{ diccionario.idioma_destino }}
+            </p>
+        </div>
+
+        <div class="ficha-estudio-meta">
+            <strong>{% trans "Ficha de estudio" %}</strong>
+            <span>
+                {{ cantidad }} {% trans "palabras / frases" %}
+            </span>
+        </div>
+    </header>
+
+    {% if temas %}
+        <div class="ficha-estudio-temas">
+            <strong>{% trans "Temas" %}:</strong>
+            {% for tema in temas %}
+                <span>{{ tema.icono }} {{ tema.nombre }}</span>{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="ficha-estudio-temas">
+            <strong>{% trans "Temas" %}:</strong>
+            <span>{% trans "Todo el vocabulario" %}</span>
+        </div>
+    {% endif %}
+
+    <div class="ficha-estudio-lista">
+
+        {% for entrada in entradas %}
+            <article class="ficha-estudio-item">
+
+                <div class="ficha-estudio-numero">
+                    {{ forloop.counter }}
+                </div>
+
+                <div class="ficha-estudio-contenido">
+
+                    <div class="ficha-estudio-pareja">
+                        <div class="ficha-estudio-origen">
+                            <span class="ficha-estudio-etiqueta">
+                                {{ diccionario.idioma_origen }}
+                            </span>
+                            <strong>{{ entrada.texto_origen }}</strong>
+                        </div>
+
+                        <div class="ficha-estudio-flecha">
+                            →
+                        </div>
+
+                        <div class="ficha-estudio-destino">
+                            <span class="ficha-estudio-etiqueta">
+                                {{ diccionario.idioma_destino }}
+                            </span>
+                            <strong>{{ entrada.texto_destino }}</strong>
+                        </div>
+                    </div>
+
+                    {% if entrada.tema %}
+                        <div class="ficha-estudio-tema-item">
+                            {{ entrada.tema.icono }} {{ entrada.tema.nombre }}
+                        </div>
+                    {% endif %}
+
+                    {% if incluir_ejemplos %}
+                        {% if entrada.ejemplo_origen or entrada.ejemplo_destino %}
+                            <div class="ficha-estudio-ejemplos">
+                                {% if entrada.ejemplo_origen %}
+                                    <p>
+                                        <strong>{% trans "Ejemplo" %}:</strong>
+                                        {{ entrada.ejemplo_origen }}
+                                    </p>
+                                {% endif %}
+
+                                {% if entrada.ejemplo_destino %}
+                                    <p>
+                                        {{ entrada.ejemplo_destino }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+
+            </article>
+        {% endfor %}
+
+    </div>
+
+    <footer class="ficha-estudio-pie">
+        Praktiko · {% trans "Ficha de estudio" %}
+    </footer>
+
+</section>
+
+{% endblock %}

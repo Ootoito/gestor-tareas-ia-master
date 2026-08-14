@@ -1,0 +1,103 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Aprender" %}{% endblock %}
+{% block page_title %}📖 {% trans "Aprender" %}{% endblock %}
+
+{% block page_subtitle %}
+{% trans "Crea una ficha de estudio con vocabulario de tus diccionarios." %}
+{% endblock %}
+
+{% block content %}
+
+<section class="praktiko-section">
+    <form method="post" class="praktiko-card praktiko-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-grid">
+
+            <div class="form-group">
+                <label for="{{ form.diccionario.id_for_label }}">
+                    {% trans "Diccionario" %}
+                </label>
+                {{ form.diccionario }}
+                {{ form.diccionario.errors }}
+            </div>
+
+            <div class="form-group aprender-temas">
+                <span class="form-label">
+                    {% trans "Temas" %}
+                </span>
+
+                {{ form.temas }}
+                {{ form.temas.errors }}
+
+                {% if form.temas.help_text %}
+                    <small class="form-help">
+                        {{ form.temas.help_text }}
+                    </small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <span class="form-label">
+                    {% trans "Selección del vocabulario" %}
+                </span>
+                {{ form.modo_seleccion }}
+                {{ form.modo_seleccion.errors }}
+            </div>
+
+            <div class="form-group">
+                <span class="form-label">
+                    {% trans "Número de elementos" %}
+                </span>
+                {{ form.cantidad }}
+                {{ form.cantidad.errors }}
+            </div>
+
+            <div class="form-group">
+                <label class="aprender-check-principal">
+                    {{ form.incluir_ejemplos }}
+                    <span>{% trans "Incluir ejemplos" %}</span>
+                </label>
+
+                {% if form.incluir_ejemplos.help_text %}
+                    <small class="form-help">
+                        {{ form.incluir_ejemplos.help_text }}
+                    </small>
+                {% endif %}
+
+                {{ form.incluir_ejemplos.errors }}
+            </div>
+
+        </div>
+
+        <div class="praktiko-card aprender-info">
+            <strong>📚 {% trans "¿Para qué sirve esta ficha?" %}</strong>
+            <p>
+                {% trans "Utilízala para estudiar vocabulario nuevo antes de pasar a Practicar, Jugar o Examen." %}
+            </p>
+            <p>
+                {% trans "La ficha no modifica tus estadísticas de aprendizaje." %}
+            </p>
+        </div>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
+                {% trans "Cancelar" %}
+            </a>
+
+            <button type="submit" class="praktiko-btn praktiko-btn-main">
+                📄 {% trans "Crear ficha" %}
+            </button>
+        </div>
+    </form>
+</section>
+
+{% endblock %}

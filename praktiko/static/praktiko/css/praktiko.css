@@ -823,3 +823,279 @@ body {
 .manual-praktiko code {
     font-size: 0.95rem;
 }
+
+/* =========================================================
+   Aprender / Fichas de estudio
+   ========================================================= */
+
+.aprender-home-card {
+    border-color: #bbf7d0;
+    background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.aprender-home-card h2 {
+    margin-top: 0;
+}
+
+.aprender-temas ul,
+.form-group ul {
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.aprender-temas li,
+.form-group li {
+    margin: 6px 0;
+}
+
+.aprender-temas label,
+.form-group li label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.form-help {
+    display: block;
+    margin-top: 7px;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.aprender-check-principal {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+}
+
+.aprender-info {
+    margin-top: 20px;
+    background: #f8fafc;
+}
+
+.aprender-info p:last-child {
+    margin-bottom: 0;
+}
+
+.ficha-estudio {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+}
+
+.ficha-estudio-cabecera {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: flex-start;
+    padding-bottom: 18px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.ficha-estudio-cabecera h2 {
+    margin: 0 0 6px;
+    font-size: 1.55rem;
+}
+
+.ficha-estudio-cabecera p {
+    margin: 0;
+    color: #64748b;
+}
+
+.ficha-estudio-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    color: #475569;
+    text-align: right;
+}
+
+.ficha-estudio-temas {
+    margin: 16px 0 10px;
+    color: #475569;
+}
+
+.ficha-estudio-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.ficha-estudio-item {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    padding: 17px 0;
+    border-bottom: 1px solid #e2e8f0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.ficha-estudio-numero {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 800;
+}
+
+.ficha-estudio-pareja {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 36px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+}
+
+.ficha-estudio-origen,
+.ficha-estudio-destino {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ficha-estudio-origen strong,
+.ficha-estudio-destino strong {
+    font-size: 1.12rem;
+    overflow-wrap: anywhere;
+}
+
+.ficha-estudio-etiqueta {
+    color: #64748b;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ficha-estudio-flecha {
+    color: #94a3b8;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.ficha-estudio-tema-item {
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 0.86rem;
+}
+
+.ficha-estudio-ejemplos {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border-radius: 10px;
+    color: #334155;
+}
+
+.ficha-estudio-ejemplos p {
+    margin: 3px 0;
+}
+
+.ficha-estudio-pie {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+    color: #94a3b8;
+    font-size: 0.8rem;
+    text-align: right;
+}
+
+@media (max-width: 720px) {
+    .ficha-estudio {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .ficha-estudio-cabecera {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ficha-estudio-meta {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .ficha-estudio-item {
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 9px;
+    }
+
+    .ficha-estudio-numero {
+        width: 30px;
+        height: 30px;
+    }
+
+    .ficha-estudio-pareja {
+        grid-template-columns: 1fr;
+    }
+
+    .ficha-estudio-flecha {
+        text-align: left;
+        transform: rotate(90deg);
+        width: 18px;
+    }
+}
+
+@media print {
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
+
+    body {
+        background: #ffffff !important;
+    }
+
+    .praktiko-page {
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .praktiko-header,
+    .praktiko-actions,
+    .praktiko-messages,
+    .ficha-no-imprimir {
+        display: none !important;
+    }
+
+    .ficha-estudio {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .ficha-estudio-item {
+        padding: 10px 0;
+    }
+
+    .ficha-estudio-ejemplos {
+        background: transparent;
+        border: 1px solid #e2e8f0;
+    }
+
+    .ficha-estudio-origen strong,
+    .ficha-estudio-destino strong {
+        font-size: 10.5pt;
+    }
+
+    .ficha-estudio-etiqueta,
+    .ficha-estudio-tema-item,
+    .ficha-estudio-ejemplos,
+    .ficha-estudio-pie,
+    .ficha-estudio-temas {
+        font-size: 8.5pt;
+    }
+}

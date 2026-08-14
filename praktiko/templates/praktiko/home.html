@@ -140,6 +140,24 @@
 
 </section>
 
+
+<section class="praktiko-section">
+    <div class="praktiko-card aprender-home-card">
+        <h2>📖 {% trans "Aprender" %}</h2>
+
+        <p>
+            {% trans "Crea fichas de estudio de 10, 15, 20 o 25 palabras y frases para aprender vocabulario antes de practicarlo." %}
+        </p>
+
+        <div class="form-actions">
+            <a href="{% url 'praktiko:aprender_configurar' %}"
+               class="praktiko-btn praktiko-btn-main">
+                📄 {% trans "Crear ficha de estudio" %}
+            </a>
+        </div>
+    </div>
+</section>
+
 <section class="praktiko-section">
     <div class="praktiko-card">
         <h2>📝 {% trans "Examen" %}</h2>
