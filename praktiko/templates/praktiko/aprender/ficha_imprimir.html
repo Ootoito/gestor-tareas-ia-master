@@ -1,0 +1,135 @@
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% trans "Ficha de estudio" %} · {{ diccionario.nombre }} · Praktiko</title>
+    <link rel="stylesheet" href="{% static 'praktiko/css/ficha_impresion.css' %}">
+</head>
+<body>
+
+<div class="print-toolbar no-print">
+    <div class="print-toolbar-inner">
+        <div>
+            <strong>Praktiko · {% trans "Vista de impresión" %}</strong>
+            <span>{% trans "Comprueba la ficha y después imprime o guárdala como PDF." %}</span>
+        </div>
+
+        <div class="print-toolbar-actions">
+            <button type="button" class="btn btn-primary" onclick="window.print()">
+                🖨️ {% trans "Imprimir / Guardar PDF" %}
+            </button>
+            <button type="button" class="btn" onclick="window.close()">
+                {% trans "Cerrar" %}
+            </button>
+        </div>
+    </div>
+</div>
+
+<main class="paper">
+    <header class="document-header">
+        <div class="brand-block">
+            <div class="brand">PRAKTIKO</div>
+            <div class="document-type">{% trans "FICHA DE ESTUDIO" %}</div>
+        </div>
+
+        <div class="student-fields">
+            <div>
+                <span>{% trans "Nombre" %}</span>
+                <span class="write-line"></span>
+            </div>
+            <div>
+                <span>{% trans "Fecha" %}</span>
+                <span class="write-line write-line-short"></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="study-summary">
+        <div class="study-title">
+            <div class="dictionary-icon">{{ diccionario.icono }}</div>
+            <div>
+                <h1>{{ diccionario.nombre }}</h1>
+                <p>{{ diccionario.idioma_origen }} → {{ diccionario.idioma_destino }}</p>
+            </div>
+        </div>
+
+        <div class="summary-count">
+            <strong>{{ cantidad }}</strong>
+            <span>{% trans "palabras / frases" %}</span>
+        </div>
+    </section>
+
+    <section class="topics">
+        <strong>{% trans "Temas" %}:</strong>
+        {% if temas %}
+            {% for tema in temas %}
+                <span class="topic">{{ tema.icono }} {{ tema.nombre }}</span>
+            {% endfor %}
+        {% else %}
+            <span class="topic">{% trans "Todo el vocabulario" %}</span>
+        {% endif %}
+    </section>
+
+    <section class="instructions">
+        {% trans "Estudia cada término relacionando la expresión original con su traducción. Marca o anota aquello que necesites reforzar." %}
+    </section>
+
+    <section class="vocabulary-sheet">
+        <div class="table-header">
+            <div class="col-number">#</div>
+            <div class="col-origin">{{ diccionario.idioma_origen }}</div>
+            <div class="col-destination">{{ diccionario.idioma_destino }}</div>
+        </div>
+
+        {% for entrada in entradas %}
+            <article class="vocabulary-row">
+                <div class="main-row">
+                    <div class="col-number">{{ forloop.counter }}</div>
+                    <div class="col-origin">
+                        <strong>{{ entrada.texto_origen }}</strong>
+                    </div>
+                    <div class="col-destination">
+                        <strong>{{ entrada.texto_destino }}</strong>
+                    </div>
+                </div>
+
+                <div class="row-meta">
+                    {% if entrada.tema %}
+                        <span>{{ entrada.tema.icono }} {{ entrada.tema.nombre }}</span>
+                    {% endif %}
+                </div>
+
+                {% if incluir_ejemplos %}
+                    {% if entrada.ejemplo_origen or entrada.ejemplo_destino %}
+                        <div class="examples">
+                            {% if entrada.ejemplo_origen %}
+                                <div>
+                                    <span class="example-label">{{ diccionario.idioma_origen }}</span>
+                                    {{ entrada.ejemplo_origen }}
+                                </div>
+                            {% endif %}
+
+                            {% if entrada.ejemplo_destino %}
+                                <div>
+                                    <span class="example-label">{{ diccionario.idioma_destino }}</span>
+                                    {{ entrada.ejemplo_destino }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </article>
+        {% endfor %}
+    </section>
+
+    <footer class="document-footer">
+        <span>Praktiko · {% trans "Ficha de estudio" %}</span>
+        <span>{% trans "Aprender · Practicar · Jugar · Evaluar" %}</span>
+    </footer>
+</main>
+
+</body>
+</html>

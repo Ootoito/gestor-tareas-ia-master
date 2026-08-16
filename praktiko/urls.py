@@ -53,6 +53,7 @@ urlpatterns = [
     path("juego/resultado/", juego_views.resultado_juego, name="juego_resultado",),
 
     path("aprender/", aprender_views.configurar_aprender, name="aprender_configurar"),
+    path("aprender/imprimir/", aprender_views.imprimir_ficha_aprender, name="aprender_imprimir"),
 
     path("examen/", examen_views.configurar_examen, name="examen_configurar"),
     path("examen/pregunta/", examen_views.pregunta_examen, name="examen_pregunta"),

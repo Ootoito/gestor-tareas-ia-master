@@ -15,13 +15,14 @@
         ← {% trans "Crear otra ficha" %}
     </a>
 
-    <button
-        type="button"
+    <a
+        href="{% url 'praktiko:aprender_imprimir' %}"
         class="praktiko-btn praktiko-btn-main"
-        onclick="window.print()"
+        target="_blank"
+        rel="noopener"
     >
-        🖨️ {% trans "Imprimir / Guardar como PDF" %}
-    </button>
+        🖨️ {% trans "Preparar impresión / PDF" %}
+    </a>
 
     <a href="{% url 'praktiko:home' %}" class="praktiko-btn">
         {% trans "Volver al panel" %}
