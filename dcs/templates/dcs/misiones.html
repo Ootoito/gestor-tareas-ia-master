@@ -1,0 +1,116 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+Hangar · Misiones DCS World
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-header">
+
+    <div class="content-container">
+
+        <span class="eyebrow">
+            DCS WORLD
+        </span>
+
+        <h1>
+            Hangar
+        </h1>
+
+        <p>
+            Selecciona una aeronave para acceder a sus cursos,
+            campañas y misiones.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<section class="section">
+
+    <div class="content-container">
+
+
+        <div class="aircraft-grid">
+
+
+            {% for aeronave in aeronaves %}
+
+                <article class="aircraft-card">
+
+
+                    {% if aeronave.imagen %}
+
+                        <div class="aircraft-card-image">
+
+                            <img
+                                src="{% static 'dcs/' %}{{ aeronave.imagen }}"
+                                alt="{{ aeronave.nombre }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div class="aircraft-card-content">
+
+                        <h2>
+                            {{ aeronave.nombre }}
+                        </h2>
+
+
+                        {% if aeronave.descripcion %}
+
+                            <p>
+                                {{ aeronave.descripcion }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <a
+                            href="{% url 'dcs:aeronave' aeronave.slug %}"
+                            class="button button-secondary"
+                        >
+                            Ver misiones
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+            {% empty %}
+
+                <div class="empty-state">
+
+                    <h2>
+                        No hay aeronaves publicadas
+                    </h2>
+
+                    <p>
+                        Todavía no existen aeronaves activas en la base de datos.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

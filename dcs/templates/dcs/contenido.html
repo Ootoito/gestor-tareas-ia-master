@@ -1,0 +1,353 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+{{ contenido.titulo }} · {{ aeronave.nombre }}
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="campaign-header">
+
+    <div class="content-container campaign-header-grid">
+
+        <div>
+
+            <span class="eyebrow">
+
+                {{ aeronave.nombre }}
+
+                ·
+
+                {% if contenido.tipo == "curso" %}
+
+                    CURSO
+
+                {% elif contenido.tipo == "campana" %}
+
+                    CAMPAÑA
+
+                {% else %}
+
+                    MISIONES
+
+                {% endif %}
+
+            </span>
+
+
+            <h1>
+                {{ contenido.titulo }}
+            </h1>
+
+
+            {% if contenido.descripcion %}
+
+                <p>
+                    {{ contenido.descripcion }}
+                </p>
+
+            {% endif %}
+
+
+            <div class="aircraft-tags">
+
+
+                {% if contenido.tipo == "curso" %}
+
+                    <span>
+                        Entrenamiento
+                    </span>
+
+                {% elif contenido.tipo == "campana" %}
+
+                    <span>
+                        Campaña
+                    </span>
+
+                {% else %}
+
+                    <span>
+                        Misiones
+                    </span>
+
+                {% endif %}
+
+
+                <span>
+                    {{ misiones|length }}
+                    misión{{ misiones|length|pluralize:"es" }}
+                </span>
+
+
+                {% if contenido.estado == "desarrollo" %}
+
+                    <span class="tag-warning">
+                        En desarrollo
+                    </span>
+
+                {% elif contenido.estado == "publicado" %}
+
+                    <span>
+                        Publicado
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        {% if contenido.imagen %}
+
+            <img
+                src="{% static 'dcs/' %}{{ contenido.imagen }}"
+                alt="{{ contenido.titulo }}"
+            >
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+
+<section class="section">
+
+    <div class="content-container">
+
+
+        {% if contenido.estado == "desarrollo" %}
+
+            <div class="campaign-warning">
+
+                <span class="campaign-warning-icon">
+                    ⚠
+                </span>
+
+                <div>
+
+                    <strong>
+                        Contenido en desarrollo
+                    </strong>
+
+                    <p>
+                        Este contenido todavía no está finalizado.
+                        Actualmente contiene
+                        {{ misiones|length }}
+                        misión{{ misiones|length|pluralize:"es" }}.
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+
+        {% if contenido.situacion or contenido.objetivo %}
+
+            <div class="briefing-panel">
+
+
+                {% if contenido.situacion %}
+
+                    <div>
+
+                        <span class="briefing-label">
+                            SITUACIÓN
+                        </span>
+
+                        <p>
+                            {{ contenido.situacion|linebreaksbr }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+
+
+                {% if contenido.objetivo %}
+
+                    <div>
+
+                        <span class="briefing-label">
+                            OBJETIVO
+                        </span>
+
+                        <p>
+                            {{ contenido.objetivo|linebreaksbr }}
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+        {% endif %}
+
+
+
+        <div class="mission-heading">
+
+            <div>
+
+                <span class="section-label">
+
+                    {% if contenido.tipo == "curso" %}
+
+                        ENTRENAMIENTO
+
+                    {% elif contenido.tipo == "campana" %}
+
+                        CAMPAÑA
+
+                    {% else %}
+
+                        MISIONES
+
+                    {% endif %}
+
+                </span>
+
+
+                <h2>
+
+                    {% if contenido.tipo == "curso" %}
+
+                        Misiones del curso
+
+                    {% elif contenido.tipo == "campana" %}
+
+                        Misiones de {{ contenido.titulo }}
+
+                    {% else %}
+
+                        Misiones disponibles
+
+                    {% endif %}
+
+                </h2>
+
+            </div>
+
+
+            <div class="mission-count">
+
+                {{ misiones|length }}
+                misión{{ misiones|length|pluralize:"es" }}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mission-list">
+
+
+            {% for mision in misiones %}
+
+                <article class="mission-row">
+
+
+                    <div class="mission-number">
+
+                        {{ mision.numero|stringformat:"02d" }}
+
+                    </div>
+
+
+
+                    <div class="mission-info">
+
+                        <span>
+                            MISIÓN {{ mision.numero }}
+                        </span>
+
+
+                        <h3>
+                            {{ mision.titulo }}
+                        </h3>
+
+
+                        {% if mision.descripcion %}
+
+                            <p>
+                                {{ mision.descripcion }}
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <div class="mission-action">
+
+                        {% if mision.url_descarga %}
+
+                            <a
+                                href="{{ mision.url_descarga }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="button button-secondary"
+                            >
+                                Descargar .miz
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+
+            {% empty %}
+
+                <div class="empty-state">
+
+                    <h3>
+                        No hay misiones disponibles
+                    </h3>
+
+                    <p>
+                        Este contenido todavía no tiene misiones publicadas.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+
+        <div class="back-row">
+
+            <a
+                href="{% url 'dcs:aeronave' aeronave.slug %}"
+                class="button button-secondary"
+            >
+                ← Volver a {{ aeronave.nombre }}
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

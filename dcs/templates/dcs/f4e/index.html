@@ -1,0 +1,242 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+F-4E Phantom II · DCS World
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="aircraft-hero">
+
+    <div class="content-container aircraft-hero-grid">
+
+        <div class="aircraft-hero-text">
+
+            <span class="eyebrow">
+                DCS WORLD · F-4E PHANTOM II
+            </span>
+
+            <h1>
+                F-4E Phantom II
+            </h1>
+
+            <p class="aircraft-lead">
+                Cursos, campañas y misiones para uno de los
+                cazabombarderos más emblemáticos de la Guerra Fría.
+            </p>
+
+            <div class="aircraft-tags">
+                <span>Caza</span>
+                <span>Ataque</span>
+                <span>Guerra Fría</span>
+                <span>Dos tripulantes</span>
+            </div>
+
+        </div>
+
+
+        <div class="aircraft-hero-image">
+
+            <img
+                src="{% static 'dcs/imagenes/F4EPhantom.png' %}"
+                alt="F-4E Phantom II"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<section class="section">
+
+    <div class="content-container">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                OPERACIONES
+            </span>
+
+            <h2>
+                Contenido disponible
+            </h2>
+
+            <p>
+                Elige entre el curso progresivo de entrenamiento
+                o las campañas disponibles para el F-4E.
+            </p>
+
+        </div>
+
+
+        <div class="operation-grid">
+
+
+            <!-- CURSO -->
+
+            <article class="operation-card featured">
+
+                <div class="operation-image">
+
+                    <img
+                        src="{% static 'dcs/imagenes/PhantomFlightSchool.png' %}"
+                        alt="Curso F-4E Phantom II"
+                    >
+
+                    <span class="operation-badge">
+                        18 MISIONES
+                    </span>
+
+                </div>
+
+
+                <div class="operation-content">
+
+                    <span class="operation-type">
+                        CURSO DE VUELO
+                    </span>
+
+                    <h2>
+                        Phantom Flight School
+                    </h2>
+
+                    <p>
+                        Una serie de misiones para practicar desde
+                        los fundamentos del vuelo y la navegación
+                        hasta el empleo de armamento aire-tierra
+                        y aire-aire.
+                    </p>
+
+                    <a
+                        href="{% url 'dcs:f4e_curso' %}"
+                        class="button button-primary"
+                    >
+                        Entrar en el curso →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- FUEGO EN EL ESTRECHO -->
+
+            <article class="operation-card">
+
+                <div class="operation-image">
+
+                    <img
+                        src="{% static 'dcs/imagenes/fuegoenelestrecho.png' %}"
+                        alt="Fuego en el Estrecho"
+                    >
+
+                    <span class="operation-badge">
+                        8 MISIONES
+                    </span>
+
+                </div>
+
+
+                <div class="operation-content">
+
+                    <span class="operation-type">
+                        CAMPAÑA
+                    </span>
+
+                    <h2>
+                        Fuego en el Estrecho
+                    </h2>
+
+                    <p>
+                        Campaña ficticia ambientada en el Golfo
+                        Pérsico. El 36th TFS de la USAF ha sido
+                        desplegado ante la creciente tensión
+                        regional.
+                    </p>
+
+                    <a
+                        href="{% url 'dcs:f4e_fuego_estrecho' %}"
+                        class="button button-secondary"
+                    >
+                        Abrir campaña →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- MARIANAS -->
+
+            <article class="operation-card">
+
+                <div class="operation-image">
+
+                    <img
+                        src="{% static 'dcs/imagenes/phantomsovermarianas.png' %}"
+                        alt="Phantoms over Marianas"
+                    >
+
+                    <span class="operation-badge incomplete">
+                        EN DESARROLLO
+                    </span>
+
+                </div>
+
+
+                <div class="operation-content">
+
+                    <span class="operation-type">
+                        CAMPAÑA
+                    </span>
+
+                    <h2>
+                        Phantoms over Marianas
+                    </h2>
+
+                    <p>
+                        Ha llegado el momento de devolver las islas
+                        del norte del archipiélago tras finalizar
+                        el acuerdo suscrito cien años atrás.
+                    </p>
+
+                    <a
+                        href="{% url 'dcs:f4e_marianas' %}"
+                        class="button button-secondary"
+                    >
+                        Abrir campaña →
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <div class="back-row">
+
+            <a
+                href="{% url 'dcs:misiones' %}"
+                class="button button-secondary"
+            >
+                ← Volver al hangar
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

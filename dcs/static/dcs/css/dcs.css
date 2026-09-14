@@ -1,0 +1,2301 @@
+/* ============================================================
+   DCS WORLD · OOTOITO MISSIONS
+   ============================================================ */
+
+
+:root {
+    --bg: #070b12;
+    --bg-soft: #0c121d;
+    --surface: #111927;
+    --surface-light: #172235;
+
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.14);
+
+    --text: #f0f4fa;
+    --muted: #9baabe;
+
+    --accent: #4a9eff;
+    --accent-light: #75b8ff;
+    --accent-dark: #1768c5;
+
+    --signal: #31d0aa;
+
+    --radius-sm: 10px;
+    --radius: 16px;
+    --radius-lg: 24px;
+
+    --shadow:
+        0 18px 50px rgba(0, 0, 0, 0.35);
+
+    --max-width: 1240px;
+}
+
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    font-family:
+        "Segoe UI",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 5%,
+            rgba(36, 91, 160, 0.18),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
+
+    line-height: 1.6;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+
+a {
+    color: inherit;
+}
+
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ============================================================
+   CONTENEDOR
+   ============================================================ */
+
+
+.content-container,
+.nav-container,
+.footer-container {
+
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
+    );
+
+    margin-inline: auto;
+
+}
+
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+
+
+.main-nav {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    background:
+        rgba(7, 11, 18, 0.88);
+
+    backdrop-filter:
+        blur(16px);
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.nav-container {
+
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+}
+
+
+.brand-mark {
+
+    display: grid;
+
+    place-items: center;
+
+    width: 48px;
+    height: 34px;
+
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent-dark)
+        );
+
+    color: white;
+
+    font-size: 0.8rem;
+
+    font-weight: 900;
+
+    letter-spacing: 0.1em;
+
+}
+
+
+.brand-text {
+
+    color: #e8eef7;
+
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 26px;
+
+}
+
+
+.nav-links a {
+
+    position: relative;
+
+    color: var(--muted);
+
+    text-decoration: none;
+
+    font-size: 0.94rem;
+
+    font-weight: 600;
+
+    transition:
+        color 0.2s ease;
+
+}
+
+
+.nav-links a:hover {
+
+    color: white;
+
+}
+
+
+.nav-links a::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: -8px;
+
+    height: 2px;
+
+    background: var(--accent);
+
+    transform: scaleX(0);
+
+    transition:
+        transform 0.2s ease;
+
+}
+
+
+.nav-links a:hover::after {
+
+    transform: scaleX(1);
+
+}
+
+
+.nav-toggle {
+
+    display: none;
+
+    width: 42px;
+
+    height: 38px;
+
+    border: 1px solid var(--border-strong);
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+}
+
+
+.nav-toggle span {
+
+    display: block;
+
+    width: 20px;
+    height: 2px;
+
+    margin: 4px auto;
+
+    background: white;
+
+}
+
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+
+.site-main {
+
+    flex: 1;
+
+}
+
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+
+.hero {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 600px;
+    height: 600px;
+
+    right: -200px;
+    top: -250px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(59, 143, 255, 0.12);
+
+    filter: blur(50px);
+
+}
+
+
+.hero-content {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
+    );
+
+    margin-inline: auto;
+
+    min-height: 590px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    gap: 60px;
+
+    align-items: center;
+
+    padding:
+        70px 0;
+
+}
+
+
+.hero-text {
+
+    max-width: 640px;
+
+}
+
+
+.eyebrow,
+.section-label {
+
+    display: inline-block;
+
+    margin-bottom: 16px;
+
+    color: var(--signal);
+
+    font-size: 0.76rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.2em;
+
+}
+
+
+.hero h1 {
+
+    margin:
+        0 0 22px;
+
+    font-size:
+        clamp(3rem, 7vw, 5.8rem);
+
+    line-height: 0.95;
+
+    letter-spacing:
+        -0.055em;
+
+    text-transform: uppercase;
+
+}
+
+
+.hero-subtitle {
+
+    max-width: 590px;
+
+    margin:
+        0 0 34px;
+
+    color: var(--muted);
+
+    font-size: 1.15rem;
+
+}
+
+
+.hero-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.hero-image-wrapper {
+
+    position: relative;
+
+}
+
+
+.hero-image-wrapper::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 8%;
+
+    border-radius: 50%;
+
+    background:
+        rgba(58, 134, 255, 0.22);
+
+    filter: blur(55px);
+
+}
+
+
+.hero-image {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    display: block;
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        0 35px 80px
+        rgba(0, 0, 0, 0.55);
+
+    border:
+        1px solid var(--border-strong);
+
+}
+
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+
+
+.button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 46px;
+
+    padding:
+        0 21px;
+
+    border-radius:
+        var(--radius-sm);
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    font-size: 0.94rem;
+
+    transition:
+        transform 0.15s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.button-primary {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--accent),
+            var(--accent-dark)
+        );
+
+    color: white;
+
+    box-shadow:
+        0 10px 30px
+        rgba(47, 134, 239, 0.22);
+
+}
+
+
+.button-secondary {
+
+    color: #dce7f5;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border:
+        1px solid var(--border-strong);
+
+}
+
+
+.button-secondary:hover {
+
+    background:
+        rgba(255, 255, 255, 0.09);
+
+}
+
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+
+
+.section {
+
+    padding:
+        90px 0;
+
+}
+
+
+.section-dark {
+
+    background:
+        var(--bg-soft);
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.section-heading {
+
+    max-width: 720px;
+
+    margin-bottom:
+        42px;
+
+}
+
+
+.section-heading h2 {
+
+    margin:
+        0 0 12px;
+
+    font-size:
+        clamp(2rem, 5vw, 3.2rem);
+
+    line-height: 1.1;
+
+    letter-spacing:
+        -0.035em;
+
+}
+
+
+.section-heading p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 1.05rem;
+
+}
+
+
+/* ============================================================
+   CARACTERÍSTICAS
+   ============================================================ */
+
+
+.feature-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.feature-card {
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius);
+
+}
+
+
+.feature-icon {
+
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom: 20px;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(74, 158, 255, 0.13);
+
+    font-size: 1.35rem;
+
+}
+
+
+.feature-card h3 {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        1.15rem;
+
+}
+
+
+.feature-card p {
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* ============================================================
+   NOTICIAS
+   ============================================================ */
+
+
+.news-panel {
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            140deg,
+            #111b2a,
+            #0c1421
+        );
+
+    border:
+        1px solid var(--border-strong);
+
+    border-radius:
+        var(--radius-lg);
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.news-status {
+
+    padding:
+        14px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.72rem;
+
+    letter-spacing:
+        0.14em;
+
+    font-weight: 800;
+
+}
+
+
+.status-light {
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        var(--signal);
+
+    box-shadow:
+        0 0 12px
+        rgba(49, 208, 170, 0.9);
+
+}
+
+
+.news-container {
+
+    position: relative;
+
+    min-height: 210px;
+
+}
+
+
+.news-item {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    gap: 22px;
+
+    align-items: flex-start;
+
+    padding:
+        38px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateX(18px);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+
+}
+
+
+.news-item.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateX(0);
+
+}
+
+
+.news-icon {
+
+    flex:
+        0 0 auto;
+
+    width: 52px;
+    height: 52px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(74, 158, 255, 0.12);
+
+    font-size:
+        1.45rem;
+
+}
+
+
+.news-item h3 {
+
+    margin:
+        1px 0 8px;
+
+    color: white;
+
+    font-size:
+        1.3rem;
+
+}
+
+
+.news-item p {
+
+    margin: 0;
+
+    max-width: 850px;
+
+    color:
+        var(--muted);
+
+}
+
+
+.news-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        flex-end;
+
+    gap: 12px;
+
+    padding:
+        14px 18px;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+
+.news-control {
+
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid var(--border-strong);
+
+    border-radius:
+        8px;
+
+    color: white;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    cursor: pointer;
+
+    font-size:
+        1.4rem;
+
+}
+
+
+.news-control:hover {
+
+    background:
+        rgba(255, 255, 255, 0.1);
+
+}
+
+
+.news-counter {
+
+    min-width: 54px;
+
+    text-align: center;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.8rem;
+
+}
+
+
+/* ============================================================
+   CTA
+   ============================================================ */
+
+
+.cta-panel {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 40px;
+
+    padding:
+        42px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        linear-gradient(
+            130deg,
+            rgba(74, 158, 255, 0.09),
+            rgba(49, 208, 170, 0.04)
+        );
+
+}
+
+
+.cta-panel h2 {
+
+    margin:
+        0 0 9px;
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.7rem);
+
+}
+
+
+.cta-panel p {
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* ============================================================
+   CABECERA PÁGINAS
+   ============================================================ */
+
+
+.page-header {
+
+    padding:
+        90px 0 66px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #0d1726,
+            var(--bg)
+        );
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.page-header h1 {
+
+    max-width: 800px;
+
+    margin:
+        0 0 14px;
+
+    font-size:
+        clamp(2.7rem, 6vw, 4.8rem);
+
+    line-height:
+        1;
+
+    letter-spacing:
+        -0.045em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.page-header p {
+
+    max-width:
+        700px;
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+    font-size:
+        1.08rem;
+
+}
+
+
+/* ============================================================
+   AERONAVES
+   ============================================================ */
+
+
+.aircraft-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+
+}
+
+
+.aircraft-card {
+
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, 0.16);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+.aircraft-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(74, 158, 255, 0.38);
+
+    box-shadow:
+        0 22px 45px
+        rgba(0, 0, 0, 0.3);
+
+}
+
+
+.aircraft-card > img {
+
+    width: 100%;
+
+    aspect-ratio:
+        16 / 9;
+
+    object-fit:
+        cover;
+
+    background:
+        #080c13;
+
+}
+
+
+.aircraft-content {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction:
+        column;
+
+    padding:
+        22px;
+
+}
+
+
+.aircraft-type {
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--signal);
+
+    font-size:
+        0.68rem;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.15em;
+
+}
+
+
+.aircraft-card h2 {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        1.3rem;
+
+}
+
+
+.aircraft-card p {
+
+    flex: 1;
+
+    margin:
+        0 0 18px;
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.92rem;
+
+}
+
+
+.card-link {
+
+    color:
+        var(--accent-light);
+
+    text-decoration:
+        none;
+
+    font-weight:
+        700;
+
+    font-size:
+        0.9rem;
+
+}
+
+
+.card-link:hover {
+
+    color:
+        white;
+
+}
+
+
+.back-row {
+
+    margin-top:
+        46px;
+
+    text-align:
+        center;
+
+}
+
+
+
+
+/* ============================================================
+   TARJETAS DEL HANGAR · CONTENIDO CENTRADO
+   ============================================================ */
+
+.aircraft-card-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 22px;
+
+    text-align: center;
+}
+
+.aircraft-card-content h2 {
+    margin: 0 0 10px;
+
+    text-align: center;
+}
+
+.aircraft-card-content p {
+    flex: 1;
+
+    margin: 0 0 18px;
+
+    color: var(--muted);
+
+    text-align: center;
+}
+
+.aircraft-card-content .button {
+    margin-top: auto;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+
+.site-footer {
+
+    margin-top: auto;
+
+    padding:
+        40px 0;
+
+    background:
+        #05080d;
+
+    border-top:
+        1px solid var(--border);
+
+    color:
+        var(--muted);
+
+    font-size:
+        0.86rem;
+
+}
+
+
+.footer-container {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    gap: 30px;
+
+    align-items: center;
+
+}
+
+
+.footer-container > :last-child {
+
+    text-align: right;
+
+}
+
+
+.footer-container strong {
+
+    color: white;
+
+}
+
+
+.footer-container p {
+
+    margin:
+        3px 0 0;
+
+}
+
+
+.site-footer a {
+
+    color:
+        var(--signal);
+
+    text-decoration: none;
+
+}
+
+
+.site-footer a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+
+@media (max-width: 1000px) {
+
+    .hero-content {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 40px;
+
+        padding:
+            65px 0;
+
+    }
+
+
+    .hero-text {
+
+        max-width:
+            760px;
+
+    }
+
+
+    .hero-image-wrapper {
+
+        max-width:
+            850px;
+
+    }
+
+
+    .aircraft-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .feature-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+
+    }
+
+
+    .feature-card:last-child {
+
+        grid-column:
+            1 / -1;
+
+    }
+
+
+    .footer-container {
+
+        grid-template-columns:
+            1fr;
+
+        text-align:
+            center;
+
+    }
+
+
+    .footer-container > :last-child {
+
+        text-align:
+            center;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .content-container,
+    .nav-container,
+    .footer-container {
+
+        width:
+            min(
+                calc(100% - 28px),
+                var(--max-width)
+            );
+
+    }
+
+
+    .nav-toggle {
+
+        display:
+            block;
+
+    }
+
+
+    .nav-links {
+
+        position:
+            absolute;
+
+        left: 14px;
+        right: 14px;
+
+        top: 64px;
+
+        display:
+            none;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        gap:
+            0;
+
+        padding:
+            10px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius:
+            12px;
+
+        background:
+            #0c121d;
+
+        box-shadow:
+            var(--shadow);
+
+    }
+
+
+    .nav-links.open {
+
+        display:
+            flex;
+
+    }
+
+
+    .nav-links a {
+
+        padding:
+            11px 12px;
+
+    }
+
+
+    .nav-links a::after {
+
+        display:
+            none;
+
+    }
+
+
+    .hero-content {
+
+        min-height:
+            auto;
+
+        padding:
+            52px 0;
+
+    }
+
+
+    .hero h1 {
+
+        font-size:
+            clamp(2.6rem, 15vw, 4.3rem);
+
+    }
+
+
+    .hero-subtitle {
+
+        font-size:
+            1rem;
+
+    }
+
+
+    .section {
+
+        padding:
+            65px 0;
+
+    }
+
+
+    .feature-grid,
+    .aircraft-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .feature-card:last-child {
+
+        grid-column:
+            auto;
+
+    }
+
+
+    .news-container {
+
+        min-height:
+            300px;
+
+    }
+
+
+    .news-item {
+
+        padding:
+            26px 22px;
+
+        flex-direction:
+            column;
+
+        gap:
+            14px;
+
+    }
+
+
+    .news-icon {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+    }
+
+
+    .cta-panel {
+
+        padding:
+            30px 22px;
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .page-header {
+
+        padding:
+            65px 0 48px;
+
+    }
+
+    .aircraft-hero-image img,
+    .campaign-header img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+}
+/* ============================================================
+   PÁGINA DE AERONAVE
+   ============================================================ */
+
+
+.aircraft-hero {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border);
+
+    background:
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(74, 158, 255, 0.15),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #0d1624,
+            var(--bg)
+        );
+}
+
+
+.aircraft-hero-grid {
+    display: grid;
+
+    grid-template-columns:
+        0.85fr 1.15fr;
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+
+.aircraft-hero h1 {
+    margin: 0 0 20px;
+
+    font-size:
+        clamp(3rem, 7vw, 5.4rem);
+
+    line-height: 0.95;
+
+    letter-spacing: -0.05em;
+
+    text-transform: uppercase;
+}
+
+
+.aircraft-lead {
+    max-width: 600px;
+
+    color: var(--muted);
+
+    font-size: 1.1rem;
+}
+
+
+.aircraft-tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 28px;
+}
+
+
+.aircraft-tags span {
+    padding: 7px 12px;
+
+    border: 1px solid var(--border-strong);
+
+    border-radius: 999px;
+
+    color: #c9d4e3;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    font-size: 0.76rem;
+
+    font-weight: 700;
+}
+
+
+.aircraft-hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.aircraft-hero-image img {
+    width: auto;
+    max-width: 520px;
+    max-height: 380px;
+
+    display: block;
+
+    object-fit: contain;
+
+    border-radius: var(--radius);
+
+    border: 1px solid var(--border-strong);
+
+    box-shadow: var(--shadow);
+}
+
+
+
+/* ============================================================
+   OPERACIONES
+   ============================================================ */
+
+
+.operation-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+}
+
+
+.operation-card {
+    overflow: hidden;
+
+    display: flex;
+
+    flex-direction: column;
+
+    background:
+        var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius-lg);
+}
+
+
+.operation-card.featured {
+    grid-column:
+        1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+        1.15fr 0.85fr;
+}
+
+
+.operation-image {
+    position: relative;
+
+    min-height: 260px;
+
+    overflow: hidden;
+}
+
+
+.operation-image {
+    position: relative;
+
+    min-height: 260px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #080c13;
+}
+
+
+.operation-image img {
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 340px;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+.operation-badge {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    color: white;
+
+    background:
+        rgba(8, 15, 25, 0.88);
+
+    backdrop-filter: blur(8px);
+
+    font-size: 0.68rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.09em;
+}
+
+
+.operation-badge.incomplete {
+    color: #ffd77a;
+}
+
+
+.operation-content {
+    padding: 28px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+
+.operation-type {
+    color: var(--signal);
+
+    font-size: 0.69rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.operation-content h2 {
+    margin: 7px 0 10px;
+
+    font-size: 1.7rem;
+}
+
+
+.operation-content p {
+    flex: 1;
+
+    margin: 0 0 24px;
+
+    color: var(--muted);
+}
+
+
+
+/* ============================================================
+   CURSO / CAMPAÑA
+   ============================================================ */
+
+
+.campaign-header {
+    padding: 72px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    background:
+        linear-gradient(
+            180deg,
+            #0d1726,
+            var(--bg)
+        );
+}
+
+
+.campaign-header-grid {
+    display: grid;
+
+    grid-template-columns:
+        0.9fr 1.1fr;
+
+    gap: 55px;
+
+    align-items: center;
+}
+
+
+.campaign-header h1 {
+    margin: 0 0 18px;
+
+    font-size:
+        clamp(2.8rem, 6vw, 4.8rem);
+
+    line-height: 1;
+
+    letter-spacing: -0.045em;
+}
+
+
+.campaign-header p {
+    max-width: 650px;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 1.06rem;
+}
+
+
+.campaign-header img {
+    width: auto;
+    max-width: 520px;
+    max-height: 360px;
+
+    justify-self: center;
+
+    object-fit: contain;
+
+    border-radius: var(--radius);
+
+    border: 1px solid var(--border-strong);
+
+    box-shadow: var(--shadow);
+}
+
+
+
+/* ============================================================
+   BRIEFING
+   ============================================================ */
+
+
+.briefing-panel {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    margin-bottom: 65px;
+
+    background:
+        var(--border);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius);
+}
+
+
+.briefing-panel > div {
+    padding: 28px;
+
+    background:
+        var(--surface);
+}
+
+
+.briefing-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--signal);
+
+    font-size: 0.7rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+}
+
+
+.briefing-panel p {
+    margin: 0;
+
+    color: var(--muted);
+}
+
+
+
+/* ============================================================
+   LISTADO DE MISIONES
+   ============================================================ */
+
+
+.mission-heading {
+    display: flex;
+
+    align-items: end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 22px;
+}
+
+
+.mission-heading h2 {
+    margin: 0;
+
+    font-size:
+        clamp(1.8rem, 4vw, 2.8rem);
+}
+
+
+.mission-count {
+    padding: 7px 11px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        999px;
+
+    color: var(--muted);
+
+    font-size: 0.78rem;
+}
+
+
+.mission-list {
+    overflow: hidden;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        var(--radius);
+}
+
+
+.mission-row {
+    display: grid;
+
+    grid-template-columns:
+        72px minmax(0, 1fr) auto;
+
+    gap: 20px;
+
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        var(--surface);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.mission-row:last-child {
+    border-bottom: 0;
+}
+
+
+.mission-row:hover {
+    background:
+        var(--surface-light);
+}
+
+
+.mission-number {
+    color:
+        rgba(255, 255, 255, 0.22);
+
+    font-size: 1.8rem;
+
+    font-weight: 900;
+
+    text-align: center;
+}
+
+
+.mission-info span {
+    color: var(--signal);
+
+    font-size: 0.65rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+.mission-info h3 {
+    margin: 3px 0 0;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+}
+
+
+
+/* ============================================================
+   RESPONSIVE F-4E
+   ============================================================ */
+
+
+@media (max-width: 900px) {
+
+    .aircraft-hero-grid,
+    .campaign-header-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .operation-card.featured {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .operation-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .operation-card.featured {
+        grid-column: auto;
+    }
+
+
+    .briefing-panel {
+        grid-template-columns: 1fr;
+    }
+
+
+    .mission-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .mission-row {
+        grid-template-columns:
+            48px minmax(0, 1fr);
+    }
+
+
+    .mission-action {
+        grid-column:
+            1 / -1;
+    }
+
+
+    .mission-action .button {
+        width: 100%;
+    }
+
+}
+
+/* ============================================================
+   ESTADOS DE CAMPAÑA
+   ============================================================ */
+
+
+.tag-warning {
+    color: #ffd778 !important;
+
+    border-color:
+        rgba(255, 215, 120, 0.28) !important;
+
+    background:
+        rgba(255, 190, 70, 0.07) !important;
+}
+
+
+.campaign-warning {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+
+    padding: 20px 24px;
+
+    border:
+        1px solid rgba(255, 197, 75, 0.25);
+
+    border-radius:
+        var(--radius);
+
+    background:
+        rgba(255, 190, 70, 0.06);
+}
+
+
+.campaign-warning-icon {
+    flex: 0 0 auto;
+
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 190, 70, 0.10);
+
+    font-size: 1.25rem;
+}
+
+
+.campaign-warning strong {
+    color: #ffd778;
+}
+
+
+.campaign-warning p {
+    margin: 3px 0 0;
+
+    color: var(--muted);
+}

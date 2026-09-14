@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Misiones, campañas y cursos para DCS World creados por Ootoito."
+    >
+
+    <title>
+        {% block title %}
+            DCS World · Ootoito
+        {% endblock %}
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'dcs/css/dcs.css' %}"
+    >
+
+    {% block extra_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVEGACIÓN PRINCIPAL
+         ===================================================== -->
+
+    <nav class="main-nav">
+
+        <div class="nav-container">
+
+            <a
+                href="{% url 'dcs:inicio' %}"
+                class="brand"
+            >
+                <span class="brand-mark">DCS</span>
+
+                <span class="brand-text">
+                    Ootoito Missions
+                </span>
+            </a>
+
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Abrir menú"
+                aria-expanded="false"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links">
+
+                <a href="{% url 'dcs:inicio' %}">
+                    Inicio
+                </a>
+
+                <a href="{% url 'dcs:misiones' %}">
+                    Misiones
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         CONTENIDO
+         ===================================================== -->
+
+    <main class="site-main">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- =====================================================
+         PIE
+         ===================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <div>
+                <strong>DCS World Missions</strong>
+                <p>
+                    Campañas, cursos y misiones creadas por Ootoito.
+                </p>
+            </div>
+
+            <div class="footer-author">
+                © {% now "Y" %} · Wladimir Cova · Ootoito Totoy
+            </div>
+
+            <div>
+                Comentarios o sugerencias:
+
+                <a
+                    href="mailto:wladimircova@gmail.com?subject=Feedback%20Misiones%20DCS"
+                >
+                    contactar
+                </a>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="{% static 'dcs/js/dcs.js' %}"></script>
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+
+</html>

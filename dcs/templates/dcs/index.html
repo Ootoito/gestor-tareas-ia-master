@@ -1,0 +1,461 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+Misiones DCS World · Ootoito
+{% endblock %}
+
+
+{% block content %}
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-text">
+
+            <span class="eyebrow">
+                DIGITAL COMBAT SIMULATOR
+            </span>
+
+            <h1>
+                Misiones DCS World
+            </h1>
+
+            <p class="hero-subtitle">
+                Campañas, cursos de vuelo y misiones creadas por
+                <strong>Ootoito</strong>.
+            </p>
+
+            <div class="hero-actions">
+
+                <a
+                    href="{% url 'dcs:misiones' %}"
+                    class="button button-primary"
+                >
+                    Explorar misiones
+                </a>
+
+                <a
+                    href="#actualidad"
+                    class="button button-secondary"
+                >
+                    Últimas novedades
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-image-wrapper">
+
+            <img
+                src="{% static 'dcs/imagenes/portada.png' %}"
+                alt="Misiones DCS World"
+                class="hero-image"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     INTRODUCCIÓN
+     ========================================================= -->
+
+<section class="section">
+
+    <div class="content-container">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                OOTOITO MISSIONS
+            </span>
+
+            <h2>
+                Vuela. Entrena. Combate.
+            </h2>
+
+            <p>
+                Una colección personal de escenarios, campañas y cursos
+                para diferentes módulos de DCS World.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    ✈
+                </div>
+
+                <h3>Cursos de vuelo</h3>
+
+                <p>
+                    Misiones diseñadas para aprender progresivamente
+                    navegación, sistemas y empleo del armamento.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    🎯
+                </div>
+
+                <h3>Campañas</h3>
+
+                <p>
+                    Operaciones encadenadas con ambientación,
+                    briefing y objetivos propios.
+                </p>
+
+            </article>
+
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    ⚔
+                </div>
+
+                <h3>Misiones independientes</h3>
+
+                <p>
+                    Entrenamiento, combate aire-aire,
+                    ataque al suelo, transporte y operaciones combinadas.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     ACTUALIDAD
+     ========================================================= -->
+
+<section
+    class="section section-dark"
+    id="actualidad"
+>
+
+    <div class="content-container">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                ACTUALIDAD
+            </span>
+
+            <h2>
+                Últimas novedades
+            </h2>
+
+        </div>
+
+
+        <div class="news-panel">
+
+            <div class="news-status">
+
+                <span class="status-light"></span>
+
+                NOVEDADES DCS
+
+            </div>
+
+
+            <div class="news-container">
+
+
+                <article class="news-item active">
+
+                    <span class="news-icon">
+                        📰
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Publicada campaña Akichistan Crisis
+                        </h3>
+
+                        <p>
+                            Serie de misiones para el
+                            <strong>Mi-8 Hip</strong>.
+
+                            A los mandos de un helicóptero Mi-8
+                            abordaremos una cadena de operaciones
+                            tras el fallido golpe de Estado en la
+                            pequeña república de Akichistan.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        🚁
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Nueva sección Mi-24 Hind
+                        </h3>
+
+                        <p>
+                            Misiones variadas para este magnífico
+                            helicóptero de ataque de la era soviética.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        🚁
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Campaña Горячее небо
+                        </h3>
+
+                        <p>
+                            Publicada la campaña Gariachi nievo
+                            para el Mi-24, ambientada en un
+                            enfrentamiento ficticio entre
+                            Akichistan y Bokovia.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        ✈
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Actualizadas misiones del MiG-29A
+                        </h3>
+
+                        <p>
+                            Nuevos briefings y rutas revisadas
+                            para vuelos de patrulla aérea.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        🚁
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Misiones multiplayer
+                        </h3>
+
+                        <p>
+                            Nueva colección de misiones creadas
+                            para juego multijugador.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        ✈
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Mirage F1
+                        </h3>
+
+                        <p>
+                            Nueva sección dedicada a misiones
+                            para el Mirage F1.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        ✈
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            A-4E-C
+                        </h3>
+
+                        <p>
+                            Nueva colección de misiones para
+                            el magnífico módulo gratuito A-4E-C.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="news-item">
+
+                    <span class="news-icon">
+                        🛠
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Island Spear
+                        </h3>
+
+                        <p>
+                            Corregidos errores en las misiones 1 y 2
+                            de la campaña Island Spear.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+
+            <div class="news-controls">
+
+                <button
+                    type="button"
+                    class="news-control"
+                    id="news-prev"
+                    aria-label="Noticia anterior"
+                >
+                    ‹
+                </button>
+
+                <div
+                    class="news-counter"
+                    id="news-counter"
+                >
+                    1 / 8
+                </div>
+
+                <button
+                    type="button"
+                    class="news-control"
+                    id="news-next"
+                    aria-label="Noticia siguiente"
+                >
+                    ›
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     LLAMADA FINAL
+     ========================================================= -->
+
+<section class="section">
+
+    <div class="content-container">
+
+        <div class="cta-panel">
+
+            <div>
+
+                <span class="section-label">
+                    HANGAR
+                </span>
+
+                <h2>
+                    Explora las misiones disponibles
+                </h2>
+
+                <p>
+                    Selecciona una aeronave para acceder a sus
+                    campañas, entrenamientos y escenarios.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'dcs:misiones' %}"
+                class="button button-primary"
+            >
+                Ver todas las aeronaves →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

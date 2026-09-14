@@ -1,0 +1,221 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+{{ aeronave.nombre }} · DCS World
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="aircraft-hero">
+
+    <div class="content-container aircraft-hero-grid">
+
+        <div>
+
+            <span class="eyebrow">
+                DCS WORLD · AERONAVE
+            </span>
+
+            <h1>
+                {{ aeronave.nombre }}
+            </h1>
+
+
+            {% if aeronave.descripcion %}
+
+                <p>
+                    {{ aeronave.descripcion }}
+                </p>
+
+            {% endif %}
+
+
+            <div class="aircraft-tags">
+
+                <span>
+                    DCS World
+                </span>
+
+                <span>
+                    {{ contenidos|length }}
+                    contenido{{ contenidos|length|pluralize }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        {% if aeronave.imagen %}
+
+            <div class="aircraft-hero-image">
+
+                <img
+                    src="{% static 'dcs/' %}{{ aeronave.imagen }}"
+                    alt="{{ aeronave.nombre }}"
+                >
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+
+<section class="section">
+
+    <div class="content-container">
+
+
+        <div class="section-heading">
+
+            <div>
+
+                <span class="section-label">
+                    OPERACIONES
+                </span>
+
+                <h2>
+                    Cursos, campañas y misiones
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="operation-grid">
+
+            {% for contenido in contenidos %}
+
+                <article class="operation-card">
+
+
+                    {% if contenido.imagen %}
+
+                        <div class="operation-image">
+
+                            <img
+                                src="{% static 'dcs/' %}{{ contenido.imagen }}"
+                                alt="{{ contenido.titulo }}"
+                            >
+
+
+                            {% if contenido.estado == "desarrollo" %}
+
+                                <span class="operation-badge development">
+                                    En desarrollo
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <div class="operation-content">
+
+
+                        <span class="operation-type">
+
+                            {% if contenido.tipo == "curso" %}
+
+                                CURSO
+
+                            {% elif contenido.tipo == "campana" %}
+
+                                CAMPAÑA
+
+                            {% else %}
+
+                                MISIONES
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <h3>
+                            {{ contenido.titulo }}
+                        </h3>
+
+
+                        {% if contenido.descripcion %}
+
+                            <p>
+                                {{ contenido.descripcion }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <div class="operation-meta">
+
+                            <span>
+                                {{ contenido.misiones.count }}
+                                misión{{ contenido.misiones.count|pluralize:"es" }}
+                            </span>
+
+                        </div>
+
+
+                        <a
+                            href="{% url 'dcs:contenido' aeronave.slug contenido.slug %}"
+                            class="button button-secondary"
+                        >
+                            Ver contenido
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+            {% empty %}
+
+                <div class="empty-state">
+
+                    <h3>
+                        Todavía no hay contenido disponible
+                    </h3>
+
+                    <p>
+                        Actualmente no existen cursos, campañas o misiones
+                        publicados para esta aeronave.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+
+        <div class="back-row">
+
+            <a
+                href="{% url 'dcs:misiones' %}"
+                class="button button-secondary"
+            >
+                ← Volver al hangar
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

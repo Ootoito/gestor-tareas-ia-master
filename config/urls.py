@@ -8,6 +8,8 @@ urlpatterns = [
 
     path("i18n/", include("django.conf.urls.i18n")),
 
+    path("dcs/", include("dcs.urls")),
+
     path("", include("gestor_tareas.urls")),
 ]
 

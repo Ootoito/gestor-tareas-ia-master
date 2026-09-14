@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'gestor_tareas.apps.GestorTareasConfig',
     'praktiko',
+    'dcs',
 ]
 
 MIDDLEWARE = [

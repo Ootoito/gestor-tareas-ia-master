@@ -1,0 +1,191 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+
+{% block title %}
+{{ contenido.titulo }} · F-4E Phantom II
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="campaign-header">
+
+    <div class="content-container campaign-header-grid">
+
+        <div>
+
+            <span class="eyebrow">
+                F-4E PHANTOM II · CURSO
+            </span>
+
+            <h1>
+                {{ contenido.titulo }}
+            </h1>
+
+            <p>
+                {{ contenido.descripcion }}
+            </p>
+
+            <div class="aircraft-tags">
+                <span>Entrenamiento</span>
+                <span>{{ misiones|length }} misiones</span>
+                <span>Curso progresivo</span>
+            </div>
+
+        </div>
+
+
+        {% if contenido.imagen %}
+
+            <img
+                src="{% static 'dcs/' %}{{ contenido.imagen }}"
+                alt="{{ contenido.titulo }}"
+            >
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+
+<section class="section">
+
+    <div class="content-container">
+
+
+        <div class="briefing-panel">
+
+            <div>
+
+                <span class="briefing-label">
+                    SITUACIÓN
+                </span>
+
+                <p>
+                    {{ contenido.situacion }}
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <span class="briefing-label">
+                    OBJETIVO
+                </span>
+
+                <p>
+                    {{ contenido.objetivo }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mission-heading">
+
+            <div>
+
+                <span class="section-label">
+                    ENTRENAMIENTO
+                </span>
+
+                <h2>
+                    Misiones del curso
+                </h2>
+
+            </div>
+
+
+            <div class="mission-count">
+                {{ misiones|length }} misiones
+            </div>
+
+        </div>
+
+
+
+        <div class="mission-list">
+
+            {% for mision in misiones %}
+
+                <article class="mission-row">
+
+                    <div class="mission-number">
+                        {{ mision.numero|stringformat:"02d" }}
+                    </div>
+
+
+                    <div class="mission-info">
+
+                        <span>
+                            MISIÓN {{ mision.numero }}
+                        </span>
+
+                        <h3>
+                            {{ mision.titulo }}
+                        </h3>
+
+                        {% if mision.descripcion %}
+                            <p>
+                                {{ mision.descripcion }}
+                            </p>
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="mission-action">
+
+                        {% if mision.url_descarga %}
+
+                            <a
+                                href="{{ mision.url_descarga }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="button button-secondary"
+                            >
+                                Descargar .miz
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <p>
+                    No hay misiones disponibles actualmente.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+
+
+        <div class="back-row">
+
+            <a
+                href="{% url 'dcs:f4e' %}"
+                class="button button-secondary"
+            >
+                ← Volver al F-4E Phantom II
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}
