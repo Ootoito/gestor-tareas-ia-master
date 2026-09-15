@@ -1,8 +1,6 @@
 from django.db import models
 
-@property
-def tiene_imagen_subida(self):
-    return bool(self.imagen_subida)
+
 class Aeronave(models.Model):
     """
     Aeronaves o módulos de DCS World.
@@ -84,9 +82,7 @@ class Aeronave(models.Model):
     def __str__(self):
         return self.nombre
 
-@property
-def tiene_imagen_subida(self):
-    return bool(self.imagen_subida)
+
 class ContenidoDCS(models.Model):
     """
     Agrupación de misiones pertenecientes a una aeronave.
@@ -243,6 +239,15 @@ class MisionDCS(models.Model):
         blank=True,
     )
 
+    # ---------------------------------------------------------
+    # URL histórica
+    # ---------------------------------------------------------
+    # Se mantiene para conservar compatibilidad con las misiones
+    # ya importadas de F-4E y Mirage F1.
+    #
+    # Las nuevas misiones pueden utilizar VersionMisionDCS
+    # cuando existan varias descargas para una misma misión.
+    #
     url_descarga = models.URLField(
         max_length=500,
         blank=True,
@@ -269,9 +274,75 @@ class MisionDCS(models.Model):
         verbose_name = "Misión DCS"
         verbose_name_plural = "Misiones DCS"
 
+    @property
+    def tiene_versiones(self):
+        """
+        Indica si la misión dispone de una o más versiones
+        de descarga almacenadas en VersionMisionDCS.
+        """
+        return self.versiones.filter(activo=True).exists()
+
     def __str__(self):
         return (
             f"{self.contenido.titulo} · "
             f"{self.numero:02d} · "
             f"{self.titulo}"
+        )
+
+
+class VersionMisionDCS(models.Model):
+    """
+    Una versión descargable de una misión.
+
+    Permite que una misma misión pueda disponer de varias
+    variantes, por ejemplo:
+
+    - Versión estándar
+    - Versión nocturna
+    - Versión con mal tiempo
+    - Versión con escolta armada
+    """
+
+    mision = models.ForeignKey(
+        MisionDCS,
+        on_delete=models.CASCADE,
+        related_name="versiones",
+    )
+
+    nombre = models.CharField(
+        max_length=150,
+        verbose_name="Nombre de la versión",
+    )
+
+    url_descarga = models.URLField(
+        max_length=500,
+        verbose_name="URL de descarga",
+    )
+
+    activo = models.BooleanField(
+        default=True,
+    )
+
+    orden = models.PositiveIntegerField(
+        default=0,
+    )
+
+    class Meta:
+        ordering = ["orden", "id"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["mision", "nombre"],
+                name="dcs_version_mision_nombre_unique",
+            ),
+        ]
+
+        verbose_name = "Versión de misión DCS"
+        verbose_name_plural = "Versiones de misiones DCS"
+
+    def __str__(self):
+        return (
+            f"{self.mision.contenido.titulo} · "
+            f"{self.mision.numero:02d} · "
+            f"{self.nombre}"
         )

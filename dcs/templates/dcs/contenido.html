@@ -295,16 +295,35 @@
 
                     <div class="mission-action">
 
-                        {% if mision.url_descarga %}
+                        {% if mision.url_descarga or mision.versiones.all %}
 
-                            <a
-                                href="{{ mision.url_descarga }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="button button-secondary"
-                            >
-                                Descargar .miz
-                            </a>
+                            <div class="mission-versions">
+
+                                {% if mision.url_descarga %}
+                                    <a
+                                        href="{{ mision.url_descarga }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="button button-secondary"
+                                    >
+                                        Versión estándar
+                                    </a>
+                                {% endif %}
+
+                                {% for version in mision.versiones.all %}
+                                    {% if version.activo %}
+                                        <a
+                                            href="{{ version.url_descarga }}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="button button-secondary"
+                                        >
+                                            {{ version.nombre }}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </div>
 
                         {% endif %}
 

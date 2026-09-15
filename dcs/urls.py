@@ -101,6 +101,34 @@ urlpatterns = [
         name="gestion_mision_eliminar",
     ),
 
+    # ============================================================
+    # VERSIONES DE MISIÓN
+    # ============================================================
+
+    path(
+        "gestion/misiones/<int:mision_id>/versiones/",
+        views_gestion.gestion_versiones_mision,
+        name="gestion_versiones_mision",
+    ),
+
+    path(
+        "gestion/misiones/<int:mision_id>/versiones/nueva/",
+        views_gestion.gestion_version_mision_nueva,
+        name="gestion_version_mision_nueva",
+    ),
+
+    path(
+        "gestion/versiones/<int:version_id>/editar/",
+        views_gestion.gestion_version_mision_editar,
+        name="gestion_version_mision_editar",
+    ),
+
+    path(
+        "gestion/versiones/<int:version_id>/eliminar/",
+        views_gestion.gestion_version_mision_eliminar,
+        name="gestion_version_mision_eliminar",
+    ),
+
     path(
         "gestion/aeronaves/<int:aeronave_id>/contenidos/nuevo/",
         views_gestion.gestion_contenido_nuevo,

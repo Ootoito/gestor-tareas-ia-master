@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ContenidoDCSForm, MisionDCSForm
-from .models import Aeronave, ContenidoDCS, MisionDCS
+from .forms import ContenidoDCSForm, MisionDCSForm, VersionMisionDCSForm
+from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS
 
 
 # ============================================================
@@ -322,7 +322,7 @@ def gestion_misiones(request, contenido_id):
 
     misiones = (
         contenido.misiones
-        .all()
+        .prefetch_related("versiones")
         .order_by("orden", "numero")
     )
 
@@ -355,6 +355,7 @@ def gestion_mision_editar(request, mision_id):
         form = MisionDCSForm(
             request.POST,
             instance=mision,
+            contenido=mision.contenido,
         )
 
         if form.is_valid():
@@ -371,7 +372,7 @@ def gestion_mision_editar(request, mision_id):
             )
 
     else:
-        form = MisionDCSForm(instance=mision)
+        form = MisionDCSForm(instance=mision, contenido=mision.contenido)
 
     return render(
         request,
@@ -398,7 +399,7 @@ def gestion_mision_nueva(request, contenido_id):
     )
 
     if request.method == "POST":
-        form = MisionDCSForm(request.POST)
+        form = MisionDCSForm(request.POST, contenido=contenido)
 
         if form.is_valid():
             mision = form.save(commit=False)
@@ -431,6 +432,7 @@ def gestion_mision_nueva(request, contenido_id):
         )
 
         form = MisionDCSForm(
+            contenido=contenido,
             initial={
                 "numero": (ultimo_numero or 0) + 1,
                 "orden": (ultimo_orden or 0) + 1,
@@ -491,5 +493,156 @@ def gestion_mision_eliminar(request, mision_id):
             "mision": mision,
             "contenido": contenido,
             "aeronave": aeronave,
+        },
+    )
+
+# ============================================================
+# VERSIONES DE MISIÓN
+# ============================================================
+
+@dcs_admin_required
+def gestion_versiones_mision(request, mision_id):
+    mision = get_object_or_404(
+        MisionDCS.objects.select_related(
+            "contenido", "contenido__aeronave"
+        ).prefetch_related("versiones"),
+        pk=mision_id,
+    )
+    versiones = mision.versiones.all().order_by("orden", "id")
+    return render(
+        request,
+        "dcs/gestion/versiones_mision.html",
+        {
+            "mision": mision,
+            "contenido": mision.contenido,
+            "aeronave": mision.contenido.aeronave,
+            "versiones": versiones,
+        },
+    )
+
+
+@dcs_admin_required
+def gestion_version_mision_nueva(request, mision_id):
+    mision = get_object_or_404(
+        MisionDCS.objects.select_related(
+            "contenido", "contenido__aeronave"
+        ),
+        pk=mision_id,
+    )
+
+    if request.method == "POST":
+        form = VersionMisionDCSForm(request.POST, mision=mision)
+        if form.is_valid():
+            version = form.save(commit=False)
+            version.mision = mision
+            version.save()
+            messages.success(
+                request,
+                f'Versión "{version.nombre}" creada correctamente.',
+            )
+            return redirect(
+                "dcs:gestion_versiones_mision", mision_id=mision.id
+            )
+    else:
+        ultimo_orden = (
+            mision.versiones.order_by("-orden")
+            .values_list("orden", flat=True)
+            .first()
+        )
+        form = VersionMisionDCSForm(
+            mision=mision,
+            initial={
+                "activo": True,
+                "orden": (ultimo_orden or 0) + 1,
+            },
+        )
+
+    return render(
+        request,
+        "dcs/gestion/version_mision_form.html",
+        {
+            "form": form,
+            "version": None,
+            "mision": mision,
+            "contenido": mision.contenido,
+            "aeronave": mision.contenido.aeronave,
+            "es_nueva": True,
+        },
+    )
+
+
+@dcs_admin_required
+def gestion_version_mision_editar(request, version_id):
+    version = get_object_or_404(
+        VersionMisionDCS.objects.select_related(
+            "mision",
+            "mision__contenido",
+            "mision__contenido__aeronave",
+        ),
+        pk=version_id,
+    )
+    mision = version.mision
+
+    if request.method == "POST":
+        form = VersionMisionDCSForm(
+            request.POST, instance=version, mision=mision
+        )
+        if form.is_valid():
+            version = form.save()
+            messages.success(
+                request,
+                f'Versión "{version.nombre}" actualizada correctamente.',
+            )
+            return redirect(
+                "dcs:gestion_versiones_mision", mision_id=mision.id
+            )
+    else:
+        form = VersionMisionDCSForm(instance=version, mision=mision)
+
+    return render(
+        request,
+        "dcs/gestion/version_mision_form.html",
+        {
+            "form": form,
+            "version": version,
+            "mision": mision,
+            "contenido": mision.contenido,
+            "aeronave": mision.contenido.aeronave,
+            "es_nueva": False,
+        },
+    )
+
+
+@dcs_admin_required
+def gestion_version_mision_eliminar(request, version_id):
+    version = get_object_or_404(
+        VersionMisionDCS.objects.select_related(
+            "mision",
+            "mision__contenido",
+            "mision__contenido__aeronave",
+        ),
+        pk=version_id,
+    )
+    mision = version.mision
+
+    if request.method == "POST":
+        nombre = version.nombre
+        version.delete()
+        messages.success(
+            request,
+            f'Versión "{nombre}" eliminada correctamente.',
+        )
+        return redirect(
+            "dcs:gestion_versiones_mision", mision_id=mision.id
+        )
+
+    return render(
+        request,
+        "dcs/gestion/version_mision_confirmar_eliminar.html",
+        {
+            "version": version,
+            "mision": mision,
+            "contenido": mision.contenido,
+            "aeronave": mision.contenido.aeronave,
         },
     )

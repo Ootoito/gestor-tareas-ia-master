@@ -3626,3 +3626,48 @@ a {
     }
 
 }
+
+/* ============================================================
+   VERSIONES DE DESCARGA DE MISIONES
+   ============================================================ */
+
+.mission-versions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    min-width: 190px;
+}
+
+.mission-versions .button {
+    width: 100%;
+
+    min-height: 40px;
+
+    padding:
+        8px 14px;
+
+    white-space: nowrap;
+
+    font-size: 0.86rem;
+}
+
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+
+@media (max-width: 700px) {
+
+    .mission-versions {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .mission-versions .button {
+        width: 100%;
+        white-space: normal;
+    }
+
+}

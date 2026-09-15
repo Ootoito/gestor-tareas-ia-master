@@ -1,0 +1,27 @@
+{% extends "dcs/base.html" %}
+{% block title %}Eliminar versión · Gestión DCS{% endblock %}
+{% block content %}
+<div class="dcs-admin">
+    <div class="dcs-admin-breadcrumb">
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}">{{ contenido.titulo }}</a><span>›</span>
+        <a href="{% url 'dcs:gestion_versiones_mision' mision.id %}">Misión {{ mision.numero|stringformat:"02d" }}</a><span>›</span>
+        <strong>Eliminar versión</strong>
+    </div>
+    <header class="dcs-admin-header">
+        <div>
+            <span class="eyebrow">ELIMINAR VERSIÓN</span>
+            <h1>{{ version.nombre }}</h1>
+            <p>Se eliminará únicamente esta variante; la misión y las demás versiones permanecerán intactas.</p>
+        </div>
+    </header>
+    <div class="dcs-admin-delete-panel">
+        <form method="post">
+            {% csrf_token %}
+            <div class="dcs-admin-form-actions">
+                <a href="{% url 'dcs:gestion_versiones_mision' mision.id %}" class="button button-secondary">Cancelar</a>
+                <button type="submit" class="button dcs-button-danger">Eliminar versión</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

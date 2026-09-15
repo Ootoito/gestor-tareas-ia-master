@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.text import slugify
 
-from .models import ContenidoDCS, MisionDCS
+from .models import ContenidoDCS, MisionDCS, VersionMisionDCS
 
 
 class MisionDCSForm(forms.ModelForm):
@@ -54,6 +54,34 @@ class MisionDCSForm(forms.ModelForm):
                 }
             ),
         }
+
+
+    def __init__(self, *args, contenido=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.contenido = contenido
+
+    def clean(self):
+        cleaned_data = super().clean()
+        numero = cleaned_data.get("numero")
+
+        if numero is None or self.contenido is None:
+            return cleaned_data
+
+        existentes = MisionDCS.objects.filter(
+            contenido=self.contenido,
+            numero=numero,
+        )
+
+        if self.instance and self.instance.pk:
+            existentes = existentes.exclude(pk=self.instance.pk)
+
+        if existentes.exists():
+            self.add_error(
+                "numero",
+                f"Ya existe la misión número {numero} en este contenido.",
+            )
+
+        return cleaned_data
 
 
 class ContenidoDCSForm(forms.ModelForm):
@@ -212,6 +240,58 @@ class ContenidoDCSForm(forms.ModelForm):
                     "Ya existe otro contenido con este slug "
                     "para esta aeronave."
                 ),
+            )
+
+        return cleaned_data
+
+class VersionMisionDCSForm(forms.ModelForm):
+
+    class Meta:
+        model = VersionMisionDCS
+        fields = ["nombre", "url_descarga", "activo", "orden"]
+
+        labels = {
+            "nombre": "Nombre de la versión",
+            "url_descarga": "URL de descarga",
+            "activo": "Versión activa",
+            "orden": "Orden",
+        }
+
+        widgets = {
+            "nombre": forms.TextInput(
+                attrs={
+                    "placeholder": "Ej.: Versión estándar, Versión nocturna..."
+                }
+            ),
+            "url_descarga": forms.URLInput(
+                attrs={"placeholder": "https://..."}
+            ),
+            "orden": forms.NumberInput(attrs={"min": 0}),
+        }
+
+    def __init__(self, *args, mision=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mision = mision
+
+    def clean(self):
+        cleaned_data = super().clean()
+        nombre = cleaned_data.get("nombre")
+
+        if not nombre or self.mision is None:
+            return cleaned_data
+
+        existentes = VersionMisionDCS.objects.filter(
+            mision=self.mision,
+            nombre=nombre,
+        )
+
+        if self.instance and self.instance.pk:
+            existentes = existentes.exclude(pk=self.instance.pk)
+
+        if existentes.exists():
+            self.add_error(
+                "nombre",
+                "Ya existe una versión con este nombre para esta misión.",
             )
 
         return cleaned_data

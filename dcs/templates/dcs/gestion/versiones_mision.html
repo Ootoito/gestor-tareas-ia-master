@@ -1,0 +1,52 @@
+{% extends "dcs/base.html" %}
+{% block title %}Versiones · Misión {{ mision.numero }} · Gestión DCS{% endblock %}
+{% block content %}
+<div class="dcs-admin">
+    <div class="dcs-admin-breadcrumb">
+        <a href="{% url 'dcs:gestion' %}">Gestión DCS</a><span>›</span>
+        <a href="{% url 'dcs:gestion_aeronave' aeronave.id %}">{{ aeronave.nombre }}</a><span>›</span>
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}">{{ contenido.titulo }}</a><span>›</span>
+        <strong>Misión {{ mision.numero|stringformat:"02d" }}</strong>
+    </div>
+    <header class="dcs-admin-header">
+        <div>
+            <span class="eyebrow">VERSIONES DE MISIÓN</span>
+            <h1>{{ mision.numero|stringformat:"02d" }} · {{ mision.titulo }}</h1>
+            <p>Gestiona las distintas variantes descargables de esta misión.</p>
+        </div>
+        <a href="{% url 'dcs:gestion_version_mision_nueva' mision.id %}" class="button button-primary">+ Nueva versión</a>
+    </header>
+    <div class="dcs-admin-mission-list">
+        {% for version in versiones %}
+        <article class="dcs-admin-mission-row">
+            <div class="dcs-admin-mission-number">{{ forloop.counter|stringformat:"02d" }}</div>
+            <div class="dcs-admin-mission-info">
+                <div class="dcs-admin-mission-title">
+                    <h3>{{ version.nombre }}</h3>
+                    <span class="dcs-admin-status{% if version.activo %} active{% endif %}">
+                        {% if version.activo %}Activa{% else %}Inactiva{% endif %}
+                    </span>
+                </div>
+                <div class="dcs-admin-mission-url">
+                    <span>URL</span>
+                    <a href="{{ version.url_descarga }}" target="_blank" rel="noopener noreferrer">{{ version.url_descarga }}</a>
+                </div>
+            </div>
+            <div class="dcs-admin-mission-actions">
+                <a href="{{ version.url_descarga }}" class="button button-secondary" target="_blank" rel="noopener noreferrer">Probar enlace</a>
+                <a href="{% url 'dcs:gestion_version_mision_editar' version.id %}" class="button button-primary">Editar</a>
+                <a href="{% url 'dcs:gestion_version_mision_eliminar' version.id %}" class="button dcs-button-danger">Eliminar</a>
+            </div>
+        </article>
+        {% empty %}
+        <div class="dcs-admin-empty">
+            <h3>Esta misión no tiene versiones</h3>
+            <p>Puedes crear variantes como estándar, nocturna o con mal tiempo.</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="dcs-admin-back">
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}" class="button button-secondary">← Volver a las misiones</a>
+    </div>
+</div>
+{% endblock %}

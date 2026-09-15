@@ -1,0 +1,35 @@
+{% extends "dcs/base.html" %}
+{% block title %}{% if es_nueva %}Nueva versión{% else %}Editar versión{% endif %} · Gestión DCS{% endblock %}
+{% block content %}
+<div class="dcs-admin">
+    <div class="dcs-admin-breadcrumb">
+        <a href="{% url 'dcs:gestion' %}">Gestión DCS</a><span>›</span>
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}">{{ contenido.titulo }}</a><span>›</span>
+        <a href="{% url 'dcs:gestion_versiones_mision' mision.id %}">Misión {{ mision.numero|stringformat:"02d" }}</a><span>›</span>
+        <strong>{% if es_nueva %}Nueva versión{% else %}Editar versión{% endif %}</strong>
+    </div>
+    <header class="dcs-admin-header">
+        <div>
+            <span class="eyebrow">VERSIÓN DE MISIÓN</span>
+            <h1>{% if es_nueva %}Nueva versión{% else %}{{ version.nombre }}{% endif %}</h1>
+            <p>Misión {{ mision.numero|stringformat:"02d" }} · {{ mision.titulo }}</p>
+        </div>
+    </header>
+    <form method="post" class="gestion-form">
+        {% csrf_token %}
+        {% if form.non_field_errors %}<div class="gestion-message gestion-message-error">{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}
+        <div class="gestion-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+            {% for error in field.errors %}<div class="gestion-message gestion-message-error">{{ error }}</div>{% endfor %}
+        </div>
+        {% endfor %}
+        <div class="dcs-admin-form-actions">
+            <a href="{% url 'dcs:gestion_versiones_mision' mision.id %}" class="button button-secondary">Cancelar</a>
+            <button type="submit" class="button button-primary">{% if es_nueva %}Crear versión{% else %}Guardar cambios{% endif %}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

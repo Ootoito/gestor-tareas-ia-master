@@ -114,7 +114,7 @@ Misiones · {{ contenido.titulo }} · Gestión DCS
                         {% if mision.url_descarga %}
 
                             <div class="dcs-admin-mission-url">
-                                <span>URL</span>
+                                <span>URL ESTÁNDAR</span>
 
                                 <a
                                     href="{{ mision.url_descarga }}"
@@ -128,7 +128,21 @@ Misiones · {{ contenido.titulo }} · Gestión DCS
                         {% else %}
 
                             <div class="dcs-admin-mission-url missing">
-                                Sin enlace de descarga
+                                Sin versión estándar
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if mision.versiones.all %}
+
+                            <div class="dcs-admin-mission-url">
+                                <span>VARIANTES ADICIONALES</span>
+
+                                <strong>
+                                    {{ mision.versiones.all|length }}
+                                    versión{{ mision.versiones.all|length|pluralize:"es" }}
+                                </strong>
                             </div>
 
                         {% endif %}
@@ -148,6 +162,13 @@ Misiones · {{ contenido.titulo }} · Gestión DCS
                                 Probar enlace
                             </a>
                         {% endif %}
+
+                        <a
+                            href="{% url 'dcs:gestion_versiones_mision' mision.id %}"
+                            class="button button-secondary"
+                        >
+                            Versiones
+                        </a>
 
                         <a
                             href="{% url 'dcs:gestion_mision_editar' mision.id %}"
