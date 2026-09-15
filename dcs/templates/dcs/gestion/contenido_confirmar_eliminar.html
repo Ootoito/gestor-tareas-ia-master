@@ -1,0 +1,190 @@
+{% extends "dcs/base.html" %}
+
+{% block title %}
+Eliminar contenido · Gestión DCS
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <div class="dcs-admin-breadcrumb">
+
+        <a href="{% url 'dcs:gestion' %}">
+            Gestión DCS
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_aeronave' aeronave.id %}">
+            {{ aeronave.nombre }}
+        </a>
+
+        <span>›</span>
+
+        <strong>Eliminar contenido</strong>
+
+    </div>
+
+
+    <header class="dcs-admin-header">
+
+        <div>
+
+            <span class="eyebrow">
+                ELIMINAR CONTENIDO
+            </span>
+
+            <h1>
+                {{ contenido.titulo }}
+            </h1>
+
+            <p>
+                {{ aeronave.nombre }}
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <section class="dcs-admin-delete-card">
+
+        <div class="dcs-admin-delete-icon">
+            !
+        </div>
+
+
+        <div class="dcs-admin-delete-content">
+
+            {% if puede_eliminar %}
+
+                <h2>
+                    ¿Eliminar este contenido?
+                </h2>
+
+                <p>
+                    Estás a punto de eliminar definitivamente:
+                </p>
+
+
+                <div class="dcs-admin-delete-mission">
+
+                    <span>
+                        {{ contenido.get_tipo_display|upper }}
+                    </span>
+
+                    <strong>
+                        {{ contenido.titulo }}
+                    </strong>
+
+                    {% if contenido.descripcion %}
+                        <p>
+                            {{ contenido.descripcion }}
+                        </p>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="dcs-admin-delete-warning">
+
+                    <strong>
+                        Esta acción no se puede deshacer.
+                    </strong>
+
+                    <p>
+                        El contenido desaparecerá
+                        definitivamente de la plataforma.
+                    </p>
+
+                </div>
+
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="dcs-admin-form-actions">
+
+                        <a
+                            href="{% url 'dcs:gestion_aeronave' aeronave.id %}"
+                            class="button button-secondary"
+                        >
+                            Cancelar
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="button dcs-button-danger"
+                        >
+                            Sí, eliminar contenido
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+            {% else %}
+
+                <h2>
+                    Este contenido no se puede eliminar
+                </h2>
+
+                <p>
+                    <strong>{{ contenido.titulo }}</strong>
+                    contiene actualmente
+                    {{ numero_misiones }}
+                    {% if numero_misiones == 1 %}
+                        misión.
+                    {% else %}
+                        misiones.
+                    {% endif %}
+                </p>
+
+
+                <div class="dcs-admin-delete-warning">
+
+                    <strong>
+                        Eliminación bloqueada.
+                    </strong>
+
+                    <p>
+                        Para evitar borrar misiones accidentalmente,
+                        el gestor no permite eliminar un curso,
+                        campaña o colección mientras tenga
+                        misiones asociadas.
+                    </p>
+
+                </div>
+
+
+                <div class="dcs-admin-form-actions">
+
+                    <a
+                        href="{% url 'dcs:gestion_aeronave' aeronave.id %}"
+                        class="button button-secondary"
+                    >
+                        Volver
+                    </a>
+
+                    <a
+                        href="{% url 'dcs:gestion_misiones' contenido.id %}"
+                        class="button"
+                    >
+                        Ver misiones
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

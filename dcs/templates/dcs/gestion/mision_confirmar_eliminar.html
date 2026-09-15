@@ -1,0 +1,134 @@
+{% extends "dcs/base.html" %}
+
+{% block title %}
+Eliminar misión · Gestión DCS
+{% endblock %}
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <div class="dcs-admin-breadcrumb">
+
+        <a href="{% url 'dcs:gestion' %}">
+            Gestión DCS
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_aeronave' aeronave.id %}">
+            {{ aeronave.nombre }}
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}">
+            {{ contenido.titulo }}
+        </a>
+
+        <span>›</span>
+
+        <strong>Eliminar misión</strong>
+
+    </div>
+
+
+    <header class="dcs-admin-header">
+
+        <div>
+
+            <span class="eyebrow">
+                ELIMINAR MISIÓN
+            </span>
+
+            <h1>
+                Misión {{ mision.numero|stringformat:"02d" }}
+            </h1>
+
+            <p>
+                {{ contenido.titulo }} · {{ aeronave.nombre }}
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <section class="dcs-admin-delete-card">
+
+        <div class="dcs-admin-delete-icon">
+            !
+        </div>
+
+
+        <div class="dcs-admin-delete-content">
+
+            <h2>¿Eliminar esta misión?</h2>
+
+            <p>
+                Estás a punto de eliminar definitivamente:
+            </p>
+
+
+            <div class="dcs-admin-delete-mission">
+
+                <span>
+                    MISIÓN {{ mision.numero|stringformat:"02d" }}
+                </span>
+
+                <strong>
+                    {{ mision.titulo }}
+                </strong>
+
+                {% if mision.descripcion %}
+                    <p>
+                        {{ mision.descripcion }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+
+            <div class="dcs-admin-delete-warning">
+
+                <strong>Esta acción no se puede deshacer.</strong>
+
+                <p>
+                    La misión desaparecerá del gestor y,
+                    si estaba activa, también de la página pública.
+                </p>
+
+            </div>
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="dcs-admin-form-actions">
+
+                    <a
+                        href="{% url 'dcs:gestion_misiones' contenido.id %}"
+                        class="button button-secondary"
+                    >
+                        Cancelar
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="button dcs-button-danger"
+                    >
+                        Sí, eliminar misión
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

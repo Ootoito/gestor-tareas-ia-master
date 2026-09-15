@@ -1,0 +1,151 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+{% block title %}
+Gestión DCS · Ootoito Missions
+{% endblock %}
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <header class="dcs-admin-header">
+
+        <div>
+            <span class="eyebrow">ZONA PRIVADA</span>
+            <h1>Gestión de contenidos DCS</h1>
+            <p>
+                Administra las aeronaves, campañas,
+                cursos y misiones publicadas en la web.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dcs:gestion_logout' %}"
+            class="button button-secondary"
+        >
+            Cerrar sesión
+        </a>
+
+    </header>
+
+
+    <section class="dcs-admin-stats">
+
+        <article>
+            <strong>{{ total_aeronaves }}</strong>
+            <span>Aeronaves</span>
+        </article>
+
+        <article>
+            <strong>{{ total_contenidos }}</strong>
+            <span>Campañas / cursos</span>
+        </article>
+
+        <article>
+            <strong>{{ total_misiones }}</strong>
+            <span>Misiones</span>
+        </article>
+
+    </section>
+
+
+    <section class="dcs-admin-section">
+
+        <header class="dcs-admin-section-header">
+
+            <div>
+                <span class="eyebrow">HANGAR</span>
+                <h2>Aeronaves</h2>
+            </div>
+
+            <button
+                type="button"
+                class="button button-primary"
+                disabled
+            >
+                + Nueva aeronave
+            </button>
+
+        </header>
+
+
+        <div class="dcs-admin-aircraft">
+
+            {% for aeronave in aeronaves %}
+
+                <article class="dcs-admin-aircraft-row">
+
+                    <div class="dcs-admin-aircraft-main">
+
+                        <div class="dcs-admin-aircraft-image">
+
+                            {% if aeronave.imagen %}
+                                <img
+                                    src="{% static 'dcs/'|add:aeronave.imagen %}"
+                                    alt="{{ aeronave.nombre }}"
+                                >
+                            {% endif %}
+
+                        </div>
+
+                        <div class="dcs-admin-aircraft-text">
+
+                            <h3>{{ aeronave.nombre }}</h3>
+
+                            <p>
+                                {{ aeronave.contenidos.all|length }}
+                                contenido{{ aeronave.contenidos.all|length|pluralize }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dcs-admin-aircraft-actions">
+
+                        {% if aeronave.activo %}
+                            <span class="dcs-admin-status active">
+                                Activa
+                            </span>
+                        {% else %}
+                            <span class="dcs-admin-status">
+                                Inactiva
+                            </span>
+                        {% endif %}
+
+                        <a
+                            href="{% url 'dcs:aeronave' aeronave.slug %}"
+                            class="button button-secondary"
+                            target="_blank"
+                        >
+                            Ver
+                        </a>
+
+                        <a
+                            href="{% url 'dcs:gestion_aeronave' aeronave.id %}"
+                            class="button button-primary"
+                        >
+                            Gestionar
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="dcs-admin-empty">
+                    No hay aeronaves registradas.
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

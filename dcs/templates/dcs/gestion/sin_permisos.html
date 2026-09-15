@@ -1,0 +1,33 @@
+{% extends "dcs/base.html" %}
+
+{% block title %}
+Sin permisos · Gestión DCS
+{% endblock %}
+
+{% block content %}
+
+<section class="section">
+
+    <div class="empty-state">
+
+        <span class="eyebrow">Acceso restringido</span>
+
+        <h1>No tienes permisos para acceder</h1>
+
+        <p>
+            Esta zona está reservada a los usuarios
+            autorizados para gestionar los contenidos DCS.
+        </p>
+
+        <a
+            href="{% url 'dcs:inicio' %}"
+            class="button button-primary"
+        >
+            Volver a DCS
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,288 @@
+{% extends "dcs/base.html" %}
+{% load static %}
+
+{% block title %}
+{{ aeronave.nombre }} · Gestión DCS
+{% endblock %}
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <div class="dcs-admin-breadcrumb">
+        <a href="{% url 'dcs:gestion' %}">
+            Gestión DCS
+        </a>
+
+        <span>›</span>
+
+        <strong>{{ aeronave.nombre }}</strong>
+    </div>
+
+
+    <header class="dcs-admin-aircraft-header">
+
+        <div class="dcs-admin-aircraft-header-image">
+
+            {% if aeronave.imagen_subida %}
+                <img
+                    src="{{ aeronave.imagen_subida.url }}"
+                    alt="{{ aeronave.nombre }}"
+                >
+
+            {% elif aeronave.imagen %}
+                <img
+                    src="{% static 'dcs/'|add:aeronave.imagen %}"
+                    alt="{{ aeronave.nombre }}"
+                >
+            {% endif %}
+
+        </div>
+
+
+        <div class="dcs-admin-aircraft-header-info">
+
+            <span class="eyebrow">
+                AERONAVE
+            </span>
+
+            <h1>
+                {{ aeronave.nombre }}
+            </h1>
+
+            {% if aeronave.descripcion %}
+                <p>
+                    {{ aeronave.descripcion }}
+                </p>
+            {% endif %}
+
+
+            <div class="dcs-admin-header-meta">
+
+                {% if aeronave.activo %}
+                    <span class="dcs-admin-status active">
+                        Activa
+                    </span>
+                {% else %}
+                    <span class="dcs-admin-status">
+                        Inactiva
+                    </span>
+                {% endif %}
+
+
+                <span>
+                    {{ contenidos|length }}
+                    contenido{{ contenidos|length|pluralize }}
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="dcs-admin-header-actions">
+
+            <a
+                href="{% url 'dcs:aeronave' aeronave.slug %}"
+                class="button button-secondary"
+                target="_blank"
+            >
+                Ver página pública
+            </a>
+
+
+            {# Se activará cuando hagamos el CRUD de aeronaves #}
+            <button
+                type="button"
+                class="button button-primary"
+                disabled
+            >
+                Editar aeronave
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <section class="dcs-admin-section">
+
+        <header class="dcs-admin-section-header">
+
+            <div>
+                <span class="eyebrow">
+                    CONTENIDOS
+                </span>
+
+                <h2>
+                    Campañas, cursos y misiones
+                </h2>
+            </div>
+
+
+            <a
+                href="{% url 'dcs:gestion_contenido_nuevo' aeronave.id %}"
+                class="button button-primary"
+            >
+                + Nuevo contenido
+            </a>
+
+        </header>
+
+
+        <div class="dcs-admin-content-list">
+
+            {% for contenido in contenidos %}
+
+                <article class="dcs-admin-content-row">
+
+                    <div class="dcs-admin-content-main">
+
+                        <div class="dcs-admin-content-image">
+
+                            {% if contenido.imagen_subida %}
+                                <img
+                                    src="{{ contenido.imagen_subida.url }}"
+                                    alt="{{ contenido.titulo }}"
+                                >
+
+                            {% elif contenido.imagen %}
+                                <img
+                                    src="{% static 'dcs/'|add:contenido.imagen %}"
+                                    alt="{{ contenido.titulo }}"
+                                >
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="dcs-admin-content-text">
+
+                            <div class="dcs-admin-content-tags">
+
+                                <span class="dcs-admin-type">
+                                    {{ contenido.get_tipo_display }}
+                                </span>
+
+
+                                {% if contenido.estado == "publicado" %}
+
+                                    <span class="dcs-admin-status active">
+                                        Publicado
+                                    </span>
+
+                                {% elif contenido.estado == "desarrollo" %}
+
+                                    <span class="dcs-admin-status warning">
+                                        En desarrollo
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="dcs-admin-status">
+                                        Oculto
+                                    </span>
+
+                                {% endif %}
+
+
+                                {% if not contenido.activo %}
+
+                                    <span class="dcs-admin-status">
+                                        Inactivo
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <h3>
+                                {{ contenido.titulo }}
+                            </h3>
+
+
+                            <p>
+                                {{ contenido.misiones.all|length }}
+                                misi{{ contenido.misiones.all|length|pluralize:"ón,ones" }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="dcs-admin-content-actions">
+
+                        <a
+                            href="{% url 'dcs:contenido' aeronave.slug contenido.slug %}"
+                            class="button button-secondary"
+                            target="_blank"
+                        >
+                            Ver
+                        </a>
+
+
+                        <a
+                            href="{% url 'dcs:gestion_contenido_editar' contenido.id %}"
+                            class="button button-secondary"
+                        >
+                            Editar
+                        </a>
+
+
+                        <a
+                            href="{% url 'dcs:gestion_misiones' contenido.id %}"
+                            class="button button-primary"
+                        >
+                            Misiones
+                        </a>
+
+
+                        <a
+                            href="{% url 'dcs:gestion_contenido_eliminar' contenido.id %}"
+                            class="button dcs-button-danger"
+                        >
+                            Eliminar
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="dcs-admin-empty">
+
+                    <h3>
+                        Todavía no hay contenidos
+                    </h3>
+
+                    <p>
+                        Esta aeronave aún no tiene campañas,
+                        cursos o colecciones de misiones.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <div class="dcs-admin-back">
+
+        <a
+            href="{% url 'dcs:gestion' %}"
+            class="button button-secondary"
+        >
+            ← Volver al panel
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

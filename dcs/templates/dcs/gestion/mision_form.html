@@ -1,0 +1,230 @@
+{% extends "dcs/base.html" %}
+
+{% block title %}
+{% if es_nueva %}
+Nueva misión
+{% else %}
+Editar misión
+{% endif %}
+· Gestión DCS
+{% endblock %}
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <div class="dcs-admin-breadcrumb">
+
+        <a href="{% url 'dcs:gestion' %}">
+            Gestión DCS
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_aeronave' aeronave.id %}">
+            {{ aeronave.nombre }}
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_misiones' contenido.id %}">
+            {{ contenido.titulo }}
+        </a>
+
+        <span>›</span>
+
+        <strong>
+            {% if es_nueva %}
+                Nueva misión
+            {% else %}
+                Misión {{ mision.numero|stringformat:"02d" }}
+            {% endif %}
+        </strong>
+
+    </div>
+
+
+    <header class="dcs-admin-header">
+
+        <div>
+
+            <span class="eyebrow">
+                {% if es_nueva %}
+                    NUEVA MISIÓN
+                {% else %}
+                    EDITAR MISIÓN
+                {% endif %}
+            </span>
+
+            <h1>
+                {% if es_nueva %}
+                    Crear misión
+                {% else %}
+                    Misión {{ mision.numero|stringformat:"02d" }}
+                {% endif %}
+            </h1>
+
+            <p>
+                {{ contenido.titulo }} · {{ aeronave.nombre }}
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <section class="dcs-admin-form-card">
+
+        <form method="post" class="dcs-admin-form">
+
+            {% csrf_token %}
+
+
+            {% if form.non_field_errors %}
+
+                <div class="dcs-admin-form-errors">
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+
+            <div class="dcs-admin-form-grid">
+
+                <div class="dcs-admin-field">
+
+                    <label for="{{ form.numero.id_for_label }}">
+                        {{ form.numero.label }}
+                    </label>
+
+                    {{ form.numero }}
+
+                    {% for error in form.numero.errors %}
+                        <span class="dcs-admin-field-error">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="dcs-admin-field">
+
+                    <label for="{{ form.orden.id_for_label }}">
+                        {{ form.orden.label }}
+                    </label>
+
+                    {{ form.orden }}
+
+                    {% for error in form.orden.errors %}
+                        <span class="dcs-admin-field-error">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <div class="dcs-admin-field">
+
+                <label for="{{ form.titulo.id_for_label }}">
+                    {{ form.titulo.label }}
+                </label>
+
+                {{ form.titulo }}
+
+                {% for error in form.titulo.errors %}
+                    <span class="dcs-admin-field-error">
+                        {{ error }}
+                    </span>
+                {% endfor %}
+
+            </div>
+
+
+            <div class="dcs-admin-field">
+
+                <label for="{{ form.descripcion.id_for_label }}">
+                    {{ form.descripcion.label }}
+                </label>
+
+                {{ form.descripcion }}
+
+                {% for error in form.descripcion.errors %}
+                    <span class="dcs-admin-field-error">
+                        {{ error }}
+                    </span>
+                {% endfor %}
+
+            </div>
+
+
+            <div class="dcs-admin-field">
+
+                <label for="{{ form.url_descarga.id_for_label }}">
+                    {{ form.url_descarga.label }}
+                </label>
+
+                {{ form.url_descarga }}
+
+                <small>
+                    Enlace utilizado por el botón de descarga
+                    de la página pública.
+                </small>
+
+                {% for error in form.url_descarga.errors %}
+                    <span class="dcs-admin-field-error">
+                        {{ error }}
+                    </span>
+                {% endfor %}
+
+            </div>
+
+
+            <label class="dcs-admin-checkbox">
+
+                {{ form.activo }}
+
+                <span>
+                    <strong>Misión activa</strong>
+
+                    <small>
+                        Solo las misiones activas aparecen
+                        en la página pública.
+                    </small>
+                </span>
+
+            </label>
+
+
+            <div class="dcs-admin-form-actions">
+
+                <a
+                    href="{% url 'dcs:gestion_misiones' contenido.id %}"
+                    class="button button-secondary"
+                >
+                    Cancelar
+                </a>
+
+                <button
+                    type="submit"
+                    class="button button-primary"
+                >
+                    {% if es_nueva %}
+                        Crear misión
+                    {% else %}
+                        Guardar cambios
+                    {% endif %}
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</div>
+
+{% endblock %}

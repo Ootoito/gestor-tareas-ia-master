@@ -1,0 +1,202 @@
+{% extends "dcs/base.html" %}
+
+{% block title %}
+Misiones · {{ contenido.titulo }} · Gestión DCS
+{% endblock %}
+
+{% block content %}
+
+<div class="dcs-admin">
+
+    <div class="dcs-admin-breadcrumb">
+
+        <a href="{% url 'dcs:gestion' %}">
+            Gestión DCS
+        </a>
+
+        <span>›</span>
+
+        <a href="{% url 'dcs:gestion_aeronave' aeronave.id %}">
+            {{ aeronave.nombre }}
+        </a>
+
+        <span>›</span>
+
+        <strong>{{ contenido.titulo }}</strong>
+
+    </div>
+
+
+    <header class="dcs-admin-header">
+
+        <div>
+            <span class="eyebrow">
+                {{ contenido.get_tipo_display|upper }}
+            </span>
+
+            <h1>{{ contenido.titulo }}</h1>
+
+            <p>
+                Gestiona las misiones, enlaces de descarga
+                y estado de publicación de este contenido.
+            </p>
+        </div>
+
+        <a
+            href="{% url 'dcs:contenido' aeronave.slug contenido.slug %}"
+            class="button button-secondary"
+            target="_blank"
+        >
+            Ver página pública
+        </a>
+
+    </header>
+
+
+    <section class="dcs-admin-section">
+
+        <header class="dcs-admin-section-header">
+
+            <div>
+                <span class="eyebrow">MISIONES</span>
+
+                <h2>
+                    {{ misiones|length }}
+                    misi{{ misiones|length|pluralize:"ón,ones" }}
+                </h2>
+            </div>
+
+            <a
+                href="{% url 'dcs:gestion_mision_nueva' contenido.id %}"
+                class="button button-primary"
+            >
+                + Nueva misión
+            </a>
+
+        </header>
+
+
+        <div class="dcs-admin-mission-list">
+
+            {% for mision in misiones %}
+
+                <article class="dcs-admin-mission-row">
+
+                    <div class="dcs-admin-mission-number">
+                        {{ mision.numero|stringformat:"02d" }}
+                    </div>
+
+
+                    <div class="dcs-admin-mission-info">
+
+                        <div class="dcs-admin-mission-title">
+
+                            <h3>{{ mision.titulo }}</h3>
+
+                            {% if mision.activo %}
+                                <span class="dcs-admin-status active">
+                                    Activa
+                                </span>
+                            {% else %}
+                                <span class="dcs-admin-status">
+                                    Inactiva
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if mision.descripcion %}
+                            <p>{{ mision.descripcion }}</p>
+                        {% endif %}
+
+
+                        {% if mision.url_descarga %}
+
+                            <div class="dcs-admin-mission-url">
+                                <span>URL</span>
+
+                                <a
+                                    href="{{ mision.url_descarga }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {{ mision.url_descarga }}
+                                </a>
+                            </div>
+
+                        {% else %}
+
+                            <div class="dcs-admin-mission-url missing">
+                                Sin enlace de descarga
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="dcs-admin-mission-actions">
+
+                        {% if mision.url_descarga %}
+                            <a
+                                href="{{ mision.url_descarga }}"
+                                class="button button-secondary"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Probar enlace
+                            </a>
+                        {% endif %}
+
+                        <a
+                            href="{% url 'dcs:gestion_mision_editar' mision.id %}"
+                            class="button button-primary"
+                        >
+                            Editar
+                        </a>
+                        
+                        <a
+                            href="{% url 'dcs:gestion_mision_eliminar' mision.id %}"
+                            class="button dcs-button-danger"
+                        >
+                            Eliminar
+                        </a>
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="dcs-admin-empty">
+
+                    <h3>No hay misiones</h3>
+
+                    <p>
+                        Este contenido todavía no tiene
+                        ninguna misión registrada.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <div class="dcs-admin-back">
+
+        <a
+            href="{% url 'dcs:gestion_aeronave' aeronave.id %}"
+            class="button button-secondary"
+        >
+            ← Volver a {{ aeronave.nombre }}
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

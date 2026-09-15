@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-
+from . import views_gestion
 
 app_name = "dcs"
 
@@ -52,6 +52,73 @@ urlpatterns = [
     ),
 
     # ============================================================
+    # URL GESTION DE LA PLATAFORMA (DCS)
+    # ============================================================
+
+    path(
+        "gestion/login/",
+        views_gestion.gestion_login,
+        name="gestion_login",
+    ),
+    path(
+        "gestion/logout/",
+        views_gestion.gestion_logout,
+        name="gestion_logout",
+    ),
+    path(
+        "gestion/",
+        views_gestion.gestion_panel,
+        name="gestion",
+    ),
+
+    path(
+        "gestion/aeronaves/<int:aeronave_id>/",
+        views_gestion.gestion_aeronave,
+        name="gestion_aeronave",
+    ),
+
+    path(
+        "gestion/contenidos/<int:contenido_id>/misiones/",
+        views_gestion.gestion_misiones,
+        name="gestion_misiones",
+    ),
+
+    path(
+        "gestion/misiones/<int:mision_id>/editar/",
+        views_gestion.gestion_mision_editar,
+        name="gestion_mision_editar",
+    ),
+
+    path(
+        "gestion/contenidos/<int:contenido_id>/misiones/nueva/",
+        views_gestion.gestion_mision_nueva,
+        name="gestion_mision_nueva",
+    ),
+
+    path(
+        "gestion/misiones/<int:mision_id>/eliminar/",
+        views_gestion.gestion_mision_eliminar,
+        name="gestion_mision_eliminar",
+    ),
+
+    path(
+        "gestion/aeronaves/<int:aeronave_id>/contenidos/nuevo/",
+        views_gestion.gestion_contenido_nuevo,
+        name="gestion_contenido_nuevo",
+    ),
+
+    path(
+        "gestion/contenidos/<int:contenido_id>/editar/",
+        views_gestion.gestion_contenido_editar,
+        name="gestion_contenido_editar",
+    ),
+
+    path(
+        "gestion/contenidos/<int:contenido_id>/eliminar/",
+        views_gestion.gestion_contenido_eliminar,
+        name="gestion_contenido_eliminar",
+    ),
+    # ============================================================
     # URL GENÉRICA DE AERONAVE
     # ============================================================
 
@@ -61,6 +128,7 @@ urlpatterns = [
         name="aeronave",
     ),
 
+    
     # ============================================================
     # URL GENÉRICA DE CURSO / CAMPAÑA / COLECCIÓN
     # ============================================================
@@ -70,4 +138,5 @@ urlpatterns = [
         views.contenido_detalle,
         name="contenido",
     ),
+    
 ]

@@ -1,6 +1,8 @@
 from django.db import models
 
-
+@property
+def tiene_imagen_subida(self):
+    return bool(self.imagen_subida)
 class Aeronave(models.Model):
     """
     Aeronaves o módulos de DCS World.
@@ -25,6 +27,15 @@ class Aeronave(models.Model):
         blank=True,
     )
 
+    # ---------------------------------------------------------
+    # Imagen histórica
+    # ---------------------------------------------------------
+    # Mantiene compatibilidad con las imágenes que actualmente
+    # forman parte de static/dcs/.
+    #
+    # Ejemplo:
+    # imagenes/F4EPhantom.png
+    #
     imagen = models.CharField(
         max_length=255,
         blank=True,
@@ -32,6 +43,21 @@ class Aeronave(models.Model):
             "Ruta de la imagen dentro de static/dcs/. "
             "Ejemplo: imagenes/F4EPhantom.png"
         ),
+    )
+
+    # ---------------------------------------------------------
+    # Imagen subida desde el gestor
+    # ---------------------------------------------------------
+    # Las nuevas imágenes administradas desde la zona privada
+    # se almacenarán en:
+    #
+    # MEDIA_ROOT/dcs/aeronaves/
+    #
+    imagen_subida = models.ImageField(
+        upload_to="dcs/aeronaves/",
+        blank=True,
+        null=True,
+        verbose_name="Imagen subida",
     )
 
     activo = models.BooleanField(
@@ -47,10 +73,20 @@ class Aeronave(models.Model):
         verbose_name = "Aeronave"
         verbose_name_plural = "Aeronaves"
 
+    @property
+    def tiene_imagen_subida(self):
+        """
+        Indica si la aeronave dispone de una imagen
+        almacenada mediante MEDIA.
+        """
+        return bool(self.imagen_subida)
+
     def __str__(self):
         return self.nombre
 
-
+@property
+def tiene_imagen_subida(self):
+    return bool(self.imagen_subida)
 class ContenidoDCS(models.Model):
     """
     Agrupación de misiones pertenecientes a una aeronave.
@@ -113,6 +149,15 @@ class ContenidoDCS(models.Model):
         blank=True,
     )
 
+    # ---------------------------------------------------------
+    # Imagen histórica
+    # ---------------------------------------------------------
+    # Mantiene compatibilidad con las imágenes que actualmente
+    # forman parte de static/dcs/.
+    #
+    # Ejemplo:
+    # imagenes/fuegoenelestrecho.png
+    #
     imagen = models.CharField(
         max_length=255,
         blank=True,
@@ -120,6 +165,21 @@ class ContenidoDCS(models.Model):
             "Ruta de la imagen dentro de static/dcs/. "
             "Ejemplo: imagenes/fuegoenelestrecho.png"
         ),
+    )
+
+    # ---------------------------------------------------------
+    # Imagen subida desde el gestor
+    # ---------------------------------------------------------
+    # Las nuevas imágenes administradas desde la zona privada
+    # se almacenarán en:
+    #
+    # MEDIA_ROOT/dcs/contenidos/
+    #
+    imagen_subida = models.ImageField(
+        upload_to="dcs/contenidos/",
+        blank=True,
+        null=True,
+        verbose_name="Imagen subida",
     )
 
     estado = models.CharField(
@@ -148,6 +208,14 @@ class ContenidoDCS(models.Model):
 
         verbose_name = "Contenido DCS"
         verbose_name_plural = "Contenidos DCS"
+
+    @property
+    def tiene_imagen_subida(self):
+        """
+        Indica si el contenido dispone de una imagen
+        almacenada mediante MEDIA.
+        """
+        return bool(self.imagen_subida)
 
     def __str__(self):
         return f"{self.aeronave.nombre} · {self.titulo}"

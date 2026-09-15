@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Acceso · Gestión DCS</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'dcs/css/dcs.css' %}"
+    >
+</head>
+
+<body>
+
+<main class="gestion-login-page">
+
+    <section class="gestion-login-card">
+
+        <div class="gestion-login-header">
+            <span class="eyebrow">Ootoito Missions</span>
+
+            <h1>Gestión DCS</h1>
+
+            <p>
+                Acceso privado para la administración
+                de aeronaves, campañas, cursos y misiones.
+            </p>
+        </div>
+
+        {% if messages %}
+            <div class="gestion-messages">
+                {% for message in messages %}
+                    <div class="gestion-message gestion-message-error">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="gestion-form">
+            {% csrf_token %}
+
+            <div class="gestion-field">
+                <label for="username">Usuario</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    autocomplete="username"
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="gestion-field">
+                <label for="password">Contraseña</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="button button-primary">
+                Entrar
+            </button>
+        </form>
+
+        <div class="gestion-login-footer">
+            <a href="{% url 'dcs:inicio' %}">
+                ← Volver a DCS
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
