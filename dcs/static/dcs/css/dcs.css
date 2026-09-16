@@ -1161,6 +1161,27 @@ a {
 
 }
 
+.aircraft-card-image {
+    width: 100%;
+    height: 230px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #080c13;
+}
+
+.aircraft-card-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
 
 .aircraft-content {
 
@@ -1828,7 +1849,7 @@ a {
 .operation-image {
     position: relative;
 
-    min-height: 260px;
+    height: 340px;
 
     display: flex;
     align-items: center;
@@ -1884,15 +1905,17 @@ a {
 
 
 .operation-content {
+    flex: 1;
+    min-height: 245px;
+
     padding: 28px;
 
     display: flex;
-
     flex-direction: column;
+    align-items: center;
 
-    align-items: flex-start;
+    text-align: center;
 }
-
 
 .operation-type {
     color: var(--signal);
@@ -1905,10 +1928,10 @@ a {
 }
 
 
-.operation-content h2 {
+.operation-content h3 {
     margin: 7px 0 10px;
 
-    font-size: 1.7rem;
+    font-size: 1.2rem;
 }
 
 
@@ -1920,7 +1943,14 @@ a {
     color: var(--muted);
 }
 
+.operation-meta {
+    margin-top: auto;
+    margin-bottom: 4px;
+}
 
+.operation-content .button {
+    margin-top: 0;
+}
 
 /* ============================================================
    CURSO / CAMPAÑA

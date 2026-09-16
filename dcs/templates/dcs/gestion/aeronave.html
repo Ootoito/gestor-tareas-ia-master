@@ -91,14 +91,12 @@
             </a>
 
 
-            {# Se activará cuando hagamos el CRUD de aeronaves #}
-            <button
-                type="button"
+            <a
+                href="{% url 'dcs:gestion_aeronave_editar' aeronave.id %}"
                 class="button button-primary"
-                disabled
             >
                 Editar aeronave
-            </button>
+            </a>
 
         </div>
 

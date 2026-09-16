@@ -1,8 +1,99 @@
 from django import forms
 from django.utils.text import slugify
 
-from .models import ContenidoDCS, MisionDCS, VersionMisionDCS
+from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS
 
+class AeronaveForm(forms.ModelForm):
+    """
+    Formulario de edición de una aeronave DCS.
+
+    La imagen histórica almacenada en static/dcs/ no se modifica
+    desde el gestor. Las nuevas imágenes se almacenan mediante
+    imagen_subida en MEDIA_ROOT/dcs/aeronaves/.
+    """
+
+    slug = forms.SlugField(
+        required=False,
+        label="Slug",
+        help_text=(
+            "Se genera automáticamente a partir del nombre "
+            "si se deja vacío."
+        ),
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Se generará automáticamente",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Aeronave
+
+        fields = [
+            "nombre",
+            "slug",
+            "descripcion",
+            "imagen_subida",
+            "activo",
+            "orden",
+        ]
+
+        labels = {
+            "nombre": "Nombre",
+            "slug": "Slug",
+            "descripcion": "Descripción",
+            "imagen_subida": "Imagen",
+            "activo": "Aeronave activa",
+            "orden": "Orden",
+        }
+
+        widgets = {
+            "nombre": forms.TextInput(
+                attrs={
+                    "placeholder": "Nombre de la aeronave",
+                }
+            ),
+            "descripcion": forms.Textarea(
+                attrs={
+                    "rows": 5,
+                    "placeholder": "Descripción de la aeronave",
+                }
+            ),
+            "imagen_subida": forms.ClearableFileInput(
+                attrs={
+                    "accept": "image/*",
+                }
+            ),
+            "orden": forms.NumberInput(
+                attrs={
+                    "min": 0,
+                }
+            ),
+        }
+
+    def clean_slug(self):
+        slug = self.cleaned_data.get("slug")
+        nombre = self.cleaned_data.get("nombre", "")
+
+        if not slug:
+            slug = slugify(nombre)
+
+        if not slug:
+            raise forms.ValidationError(
+                "No se ha podido generar un slug válido."
+            )
+
+        existentes = Aeronave.objects.filter(slug=slug)
+
+        if self.instance and self.instance.pk:
+            existentes = existentes.exclude(pk=self.instance.pk)
+
+        if existentes.exists():
+            raise forms.ValidationError(
+                "Ya existe otra aeronave con este slug."
+            )
+
+        return slug
 
 class MisionDCSForm(forms.ModelForm):
     class Meta:

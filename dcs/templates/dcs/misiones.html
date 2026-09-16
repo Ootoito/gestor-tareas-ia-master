@@ -46,14 +46,25 @@ Hangar · Misiones DCS World
                 <article class="aircraft-card">
 
 
-                    {% if aeronave.imagen %}
+                    {% if aeronave.imagen_subida or aeronave.imagen %}
 
                         <div class="aircraft-card-image">
 
-                            <img
-                                src="{% static 'dcs/' %}{{ aeronave.imagen }}"
-                                alt="{{ aeronave.nombre }}"
-                            >
+                            {% if aeronave.imagen_subida %}
+
+                                <img
+                                    src="{{ aeronave.imagen_subida.url }}"
+                                    alt="{{ aeronave.nombre }}"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{% static 'dcs/' %}{{ aeronave.imagen }}"
+                                    alt="{{ aeronave.nombre }}"
+                                >
+
+                            {% endif %}
 
                         </div>
 

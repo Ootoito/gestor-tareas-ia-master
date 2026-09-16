@@ -4,7 +4,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import ContenidoDCSForm, MisionDCSForm, VersionMisionDCSForm
+from .forms import (
+    AeronaveForm,
+    ContenidoDCSForm,
+    MisionDCSForm,
+    VersionMisionDCSForm,
+)
 from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS
 
 
@@ -138,7 +143,50 @@ def gestion_aeronave(request, aeronave_id):
         },
     )
 
+# ============================================================
+# EDITAR AERONAVE
+# ============================================================
 
+@dcs_admin_required
+def gestion_aeronave_editar(request, aeronave_id):
+    aeronave = get_object_or_404(
+        Aeronave,
+        pk=aeronave_id,
+    )
+
+    if request.method == "POST":
+        form = AeronaveForm(
+            request.POST,
+            request.FILES,
+            instance=aeronave,
+        )
+
+        if form.is_valid():
+            aeronave = form.save()
+
+            messages.success(
+                request,
+                f'Aeronave "{aeronave.nombre}" actualizada correctamente.',
+            )
+
+            return redirect(
+                "dcs:gestion_aeronave",
+                aeronave_id=aeronave.id,
+            )
+
+    else:
+        form = AeronaveForm(
+            instance=aeronave,
+        )
+
+    return render(
+        request,
+        "dcs/gestion/aeronave_form.html",
+        {
+            "form": form,
+            "aeronave": aeronave,
+        },
+    )
 # ============================================================
 # CREAR CONTENIDO
 # ============================================================

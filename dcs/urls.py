@@ -78,6 +78,12 @@ urlpatterns = [
     ),
 
     path(
+        "gestion/aeronaves/<int:aeronave_id>/editar/",
+        views_gestion.gestion_aeronave_editar,
+        name="gestion_aeronave_editar",
+    ),
+    
+    path(
         "gestion/contenidos/<int:contenido_id>/misiones/",
         views_gestion.gestion_misiones,
         name="gestion_misiones",
