@@ -2052,6 +2052,9 @@ a {
         var(--radius);
 }
 
+.briefing-panel-single {
+    grid-template-columns: 1fr;
+}
 
 .briefing-panel > div {
     padding: 28px;

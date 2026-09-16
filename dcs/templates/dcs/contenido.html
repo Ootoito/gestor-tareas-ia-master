@@ -103,13 +103,16 @@
 
 
 
-        {% if contenido.imagen %}
-
+        {% if contenido.imagen_subida %}
+            <img
+                src="{{ contenido.imagen_subida.url }}"
+                alt="{{ contenido.titulo }}"
+            >
+        {% elif contenido.imagen %}
             <img
                 src="{% static 'dcs/' %}{{ contenido.imagen }}"
                 alt="{{ contenido.titulo }}"
             >
-
         {% endif %}
 
     </div>
@@ -154,7 +157,7 @@
 
         {% if contenido.situacion or contenido.objetivo %}
 
-            <div class="briefing-panel">
+            <div class="briefing-panel{% if not contenido.situacion or not contenido.objetivo %} briefing-panel-single{% endif %}">
 
 
                 {% if contenido.situacion %}

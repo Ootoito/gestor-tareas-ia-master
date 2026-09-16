@@ -50,14 +50,25 @@
         </div>
 
 
-        {% if aeronave.imagen %}
+        {% if aeronave.imagen_subida or aeronave.imagen %}
 
             <div class="aircraft-hero-image">
 
-                <img
-                    src="{% static 'dcs/' %}{{ aeronave.imagen }}"
-                    alt="{{ aeronave.nombre }}"
-                >
+                {% if aeronave.imagen_subida %}
+
+                    <img
+                        src="{{ aeronave.imagen_subida.url }}"
+                        alt="{{ aeronave.nombre }}"
+                    >
+
+                {% else %}
+
+                    <img
+                        src="{% static 'dcs/' %}{{ aeronave.imagen }}"
+                        alt="{{ aeronave.nombre }}"
+                    >
+
+                {% endif %}
 
             </div>
 
@@ -99,14 +110,25 @@
                 <article class="operation-card">
 
 
-                    {% if contenido.imagen %}
+                    {% if contenido.imagen_subida or contenido.imagen %}
 
                         <div class="operation-image">
 
-                            <img
-                                src="{% static 'dcs/' %}{{ contenido.imagen }}"
-                                alt="{{ contenido.titulo }}"
-                            >
+                            {% if contenido.imagen_subida %}
+
+                                <img
+                                    src="{{ contenido.imagen_subida.url }}"
+                                    alt="{{ contenido.titulo }}"
+                                >
+
+                            {% else %}
+
+                                <img
+                                    src="{% static 'dcs/' %}{{ contenido.imagen }}"
+                                    alt="{{ contenido.titulo }}"
+                                >
+
+                            {% endif %}
 
 
                             {% if contenido.estado == "desarrollo" %}
