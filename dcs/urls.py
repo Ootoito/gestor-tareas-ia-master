@@ -23,6 +23,12 @@ urlpatterns = [
         name="misiones",
     ),
 
+    path(
+        "herramientas/",
+        views.herramientas,
+        name="herramientas",
+    ),
+
     # ============================================================
     # COMPATIBILIDAD CON LAS URL ANTIGUAS DEL F-4E
     # ============================================================

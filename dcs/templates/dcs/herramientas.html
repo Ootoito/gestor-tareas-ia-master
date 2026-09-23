@@ -1,0 +1,108 @@
+{% extends "dcs/base.html" %}
+
+
+{% block title %}
+Utilidades y herramientas · DCS World · Ootoito
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="aircraft-hero">
+
+    <div class="content-container">
+
+        <span class="eyebrow">
+            DIGITAL COMBAT SIMULATOR
+        </span>
+
+        <h1>
+            Utilidades y herramientas
+        </h1>
+
+        <p>
+            Una selección de aplicaciones, documentación y recursos
+            útiles para la preparación y el vuelo en DCS World.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="content-container">
+
+        <div class="section-heading">
+
+            <div>
+                <span class="section-label">
+                    RECURSOS DCS
+                </span>
+
+                <h2>
+                    Herramientas recomendadas
+                </h2>
+
+                <p>
+                    Recursos creados por miembros de la comunidad que pueden
+                    resultar útiles durante la planificación, preparación
+                    y desarrollo de las misiones.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+
+                <div class="feature-icon">
+                    📚
+                </div>
+
+                <h3>
+                    Biblioteca DCS
+                </h3>
+
+                <p>
+                    Biblioteca de documentación para DCS World creada
+                    por Sas. Permite consultar manuales, cartas,
+                    checklists, briefings y otros recursos de ayuda
+                    para el simulador.
+                </p>
+
+                <a
+                    href="https://sasrz.github.io/DCS/#/"
+                    class="button button-primary"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Abrir Biblioteca DCS ↗
+                </a>
+
+            </article>
+
+        </div>
+
+
+        <div class="back-row">
+
+            <a
+                href="{% url 'dcs:inicio' %}"
+                class="button button-secondary"
+            >
+                ← Volver al inicio
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

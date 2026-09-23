@@ -10,6 +10,13 @@ def inicio(request):
     )
 
 
+def herramientas(request):
+    return render(
+        request,
+        "dcs/herramientas.html",
+    )
+
+
 def misiones(request):
     aeronaves = (
         Aeronave.objects
