@@ -10,6 +10,8 @@ urlpatterns = [
 
     path("dcs/", include("dcs.urls")),
 
+    path("portfolio/", include("portfolio.urls")),
+
     path("", include("gestor_tareas.urls")),
 ]
 

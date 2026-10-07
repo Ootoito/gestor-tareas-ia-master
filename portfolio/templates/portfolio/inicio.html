@@ -1,0 +1,508 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Portfolio | Wladimir Cova</title>
+
+    <link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         CABECERA
+         ===================================================== -->
+
+    <header class="cabecera">
+
+        <nav class="navegacion">
+
+            <a class="logo" href="#inicio" aria-label="Inicio">
+                <span class="logo-p">P</span>
+                <span class="logo-w">W</span>
+                <span class="logo-c">C</span>
+                <span class="logo-f">F</span>
+                <span class="logo-punto">.</span>
+            </a>
+
+            <div class="menu">
+                <a href="#inicio">Inicio</a>
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#tecnologias">Tecnologías</a>
+                <a href="#proyectos">Proyectos</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- =================================================
+             PORTADA / HERO
+             ================================================= -->
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-contenido">
+
+                <!-- COLUMNA IZQUIERDA -->
+
+                <div class="hero-texto">
+
+                    <p class="saludo">
+                        Hola, soy
+                    </p>
+
+                    <h1>
+                        Wladimir Cova
+                    </h1>
+
+                    <h2>
+                        Analista programador
+                        <span>& desarrollador web</span>
+                    </h2>
+
+                    <div class="linea-acento"></div>
+
+                    <p class="descripcion">
+                        Más de 30 años desarrollando soluciones de software.
+                        Actualmente centrado en Python, Django, bases de datos,
+                        automatización e inteligencia artificial.
+                    </p>
+
+                    <div class="acciones">
+
+                        <a
+                            class="boton boton-principal"
+                            href="#proyectos"
+                        >
+                            Ver mis proyectos
+                        </a>
+
+                        <a
+                            class="boton boton-secundario"
+                            href="#sobre-mi"
+                        >
+                            Sobre mí
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- COLUMNA DERECHA -->
+
+                <div class="hero-visual">
+
+                    <div class="circulo circulo-1"></div>
+                    <div class="circulo circulo-2"></div>
+
+
+                    <!-- PANEL DE CÓDIGO -->
+
+                    <div class="codigo-panel">
+
+                        <div class="codigo-cabecera">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <pre><code><span class="codigo-keyword">def</span> <span class="codigo-funcion">desarrollar</span>():
+    ideas = [
+        <span class="codigo-texto">"soluciones"</span>,
+        <span class="codigo-texto">"automatización"</span>,
+        <span class="codigo-texto">"datos"</span>,
+        <span class="codigo-texto">"personas"</span>
+    ]
+
+    <span class="codigo-keyword">return</span> proyectos(ideas)</code></pre>
+
+                    </div>
+
+
+                    <!-- FOTO -->
+
+                    <img
+                        class="foto-perfil"
+                        src="{% static 'portfolio/img/mi_foto.png' %}"
+                        alt="Wladimir Cova"
+                    >
+
+
+                    <!-- TECNOLOGÍAS FLOTANTES -->
+
+                    <div class="tecnologias-flotantes">
+
+                        <span>Python</span>
+                        <span>Django</span>
+                        <span>PostgreSQL</span>
+                        <span>SQL Server</span>
+                        <span>MySQL</span>
+                        <span>VB.NET</span>
+                        <span>IA</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <a
+                class="scroll-indicador"
+                href="#sobre-mi"
+                aria-label="Ir a Sobre mí"
+            >
+                ↓
+            </a>
+
+        </section>
+
+
+        <!-- =================================================
+             SOBRE MÍ
+             ================================================= -->
+
+        <section class="sobre-mi" id="sobre-mi">
+
+            <div class="contenedor">
+
+                <div class="titulo-seccion">
+
+                    <p class="etiqueta">
+                        Conóceme un poco mejor
+                    </p>
+
+                    <h2>
+                        Sobre mí
+                    </h2>
+
+                </div>
+
+
+                <div class="sobre-mi-contenido">
+
+                    <!-- TEXTO -->
+
+                    <div class="sobre-mi-texto">
+
+                        <p>
+                            Soy analista programador con
+                            <strong>más de 30 años de experiencia</strong>
+                            en el desarrollo de aplicaciones orientadas a la
+                            gestión y al tratamiento de datos. Actualmente
+                            trabajo como
+                            <strong>
+                                analista programador en el Instituto Canario
+                                de la Vivienda del Gobierno de Canarias
+                            </strong>.
+                        </p>
+
+                        <p>
+                            A lo largo de mi trayectoria profesional he
+                            trabajado con diferentes tecnologías y sistemas
+                            de bases de datos, entre ellos
+                            <strong>
+                                VB.NET, SQL Server, MySQL y PostgreSQL
+                            </strong>,
+                            desarrollando y manteniendo aplicaciones utilizadas
+                            en entornos reales de gestión.
+                        </p>
+
+                        <p>
+                            En los últimos años he ampliado ese recorrido hacia
+                            el desarrollo web moderno con
+                            <strong>Python y Django</strong>,
+                            tecnologías que actualmente utilizo tanto en mi
+                            evolución profesional como en el desarrollo de
+                            proyectos personales.
+                        </p>
+
+                        <p>
+                            Me interesa especialmente convertir procesos
+                            complejos o repetitivos en aplicaciones sencillas
+                            de utilizar, combinando desarrollo, bases de datos
+                            y automatización.
+                        </p>
+
+                        <p>
+                            Continúo formándome en nuevas tecnologías,
+                            desarrollo web e inteligencia artificial,
+                            aplicando lo aprendido a proyectos reales.
+                        </p>
+
+                    </div>
+
+
+                    <!-- TARJETAS -->
+
+                    <div class="perfil-grid">
+
+                        <article class="perfil-item">
+
+                            <span>+30</span>
+
+                            <h3>Años de experiencia</h3>
+
+                            <p>
+                                Desarrollo y análisis de aplicaciones
+                                de gestión.
+                            </p>
+
+                        </article>
+
+
+                        <article class="perfil-item">
+
+                            <span>PY</span>
+
+                            <h3>Backend</h3>
+
+                            <p>
+                                Python, Django y desarrollo de lógica
+                                de negocio.
+                            </p>
+
+                        </article>
+
+
+                        <article class="perfil-item">
+
+                            <span>DB</span>
+
+                            <h3>Bases de datos</h3>
+
+                            <p>
+                                PostgreSQL, SQL Server, MySQL y SQL.
+                            </p>
+
+                        </article>
+
+
+                        <article class="perfil-item">
+
+                            <span>IA</span>
+
+                            <h3>Evolución</h3>
+
+                            <p>
+                                Desarrollo web, automatización e
+                                inteligencia artificial.
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TECNOLOGÍAS
+             ================================================= -->
+
+        <section class="tecnologias" id="tecnologias">
+
+            <div class="contenedor">
+
+                <div class="titulo-seccion">
+
+                    <p class="etiqueta">
+                        Experiencia y evolución
+                    </p>
+
+                    <h2>
+                        Tecnologías
+                    </h2>
+
+                    <p class="introduccion-seccion">
+                        Más de tres décadas trabajando con distintas
+                        generaciones de tecnologías, combinando experiencia
+                        consolidada con herramientas actuales y aprendizaje
+                        continuo.
+                    </p>
+
+                </div>
+
+
+                <div class="tecnologias-grid">
+
+
+                    <!-- EXPERIENCIA CONSOLIDADA -->
+
+                    <article class="tecnologia-bloque">
+
+                        <div class="tecnologia-cabecera">
+
+                            <span class="tecnologia-icono">
+                                &lt;/&gt;
+                            </span>
+
+                            <div>
+                                <p class="tecnologia-tipo">
+                                    Trayectoria
+                                </p>
+
+                                <h3>
+                                    Experiencia consolidada
+                                </h3>
+                            </div>
+
+                        </div>
+
+
+                        <p class="tecnologia-descripcion">
+                            Tecnologías y sistemas con los que he trabajado
+                            durante distintas etapas de mi trayectoria
+                            profesional.
+                        </p>
+
+
+                        <div class="chips">
+
+                            <span>VB.NET</span>
+                            <span>SQL</span>
+                            <span>SQL Server</span>
+                            <span>MySQL</span>
+                            <span>PostgreSQL</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- STACK ACTUAL -->
+
+                    <article class="tecnologia-bloque tecnologia-destacada">
+
+                        <div class="tecnologia-cabecera">
+
+                            <span class="tecnologia-icono">
+                                { }
+                            </span>
+
+                            <div>
+                                <p class="tecnologia-tipo">
+                                    Presente
+                                </p>
+
+                                <h3>
+                                    Stack actual
+                                </h3>
+                            </div>
+
+                        </div>
+
+
+                        <p class="tecnologia-descripcion">
+                            Tecnologías que utilizo actualmente para construir
+                            aplicaciones web y desarrollar proyectos
+                            personales.
+                        </p>
+
+
+                        <div class="chips">
+
+                            <span>Python</span>
+                            <span>Django</span>
+                            <span>PostgreSQL</span>
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                            <span>Git</span>
+                            <span>GitHub</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- EN EVOLUCIÓN -->
+
+                    <article class="tecnologia-bloque">
+
+                        <div class="tecnologia-cabecera">
+
+                            <span class="tecnologia-icono">
+                                AI
+                            </span>
+
+                            <div>
+                                <p class="tecnologia-tipo">
+                                    Aprendizaje continuo
+                                </p>
+
+                                <h3>
+                                    En evolución
+                                </h3>
+                            </div>
+
+                        </div>
+
+
+                        <p class="tecnologia-descripcion">
+                            Áreas en las que continúo ampliando conocimientos
+                            y experimentando mediante proyectos reales.
+                        </p>
+
+
+                        <div class="chips">
+
+                            <span>Inteligencia artificial</span>
+                            <span>Integración de IA</span>
+                            <span>Automatización</span>
+                            <span>APIs</span>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- FRASE FINAL -->
+
+                <div class="filosofia-tecnologica">
+
+                    <span class="filosofia-linea"></span>
+
+                    <p>
+                        Las tecnologías cambian.
+                        <strong>
+                            La capacidad de analizar un problema y construir
+                            una solución permanece.
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PRÓXIMAS SECCIONES
+             ================================================= -->
+
+        <section id="proyectos"></section>
+
+        <section id="contacto"></section>
+
+    </main>
+
+</body>
+</html>
