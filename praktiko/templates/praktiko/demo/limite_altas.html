@@ -1,0 +1,15 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+{% block title %}Demostraciones temporalmente limitadas{% endblock %}
+{% block page_title %}🛡️ Límite de demostraciones{% endblock %}
+{% block page_subtitle %}Protección de acceso temporal{% endblock %}
+{% block content %}
+<section class="praktiko-section">
+  <div class="praktiko-card" style="max-width:740px;margin:2rem auto;padding:2rem;">
+    <h2>Has alcanzado el límite de nuevas demostraciones</h2>
+    <p>Para proteger el servicio, solo se pueden iniciar dos demostraciones desde la misma conexión en un periodo de dos horas.</p>
+    <p>Puedes volver a intentarlo más tarde. Si ya tienes una demostración activa, puedes seguir utilizándola hasta que finalice.</p>
+    <div class="form-actions"><a class="praktiko-btn praktiko-btn-main" href="{% url 'praktiko:pagina_demo' %}">Volver al acceso de demostración</a></div>
+  </div>
+</section>
+{% endblock %}

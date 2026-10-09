@@ -1,0 +1,39 @@
+{% extends "praktiko/base.html" %}
+{% load i18n %}
+
+{% block title %}{% if demo_caducada %}Demostración finalizada{% else %}Consultas de IA agotadas{% endif %}{% endblock %}
+{% block page_title %}🤖 {% if demo_caducada %}Demostración finalizada{% else %}Consultas de IA agotadas{% endif %}{% endblock %}
+{% block page_subtitle %}Demostración de Praktiko{% endblock %}
+
+{% block content %}
+<section class="praktiko-section" aria-labelledby="aviso-ia-titulo">
+    <div class="praktiko-card" style="max-width: 740px; margin: 1.5rem auto; padding: clamp(1.25rem, 4vw, 2rem);">
+        {% if demo_caducada %}
+            <h2 id="aviso-ia-titulo" style="margin-top: 0;">⏳ Tu demostración ha finalizado</h2>
+            <p>Han transcurrido las dos horas disponibles para esta cuenta temporal.</p>
+            <p>Gracias por probar Praktiko. Puedes volver a la página de acceso para iniciar una nueva demostración cuando esté habilitada.</p>
+        {% else %}
+            <h2 id="aviso-ia-titulo" style="margin-top: 0;">✨ Has utilizado tus consultas de IA</h2>
+            <p>Has alcanzado el límite de consultas de inteligencia artificial de esta demostración.</p>
+            <div style="background: rgba(100,116,139,.09); border-radius: 12px; padding: 1rem; margin: 1.25rem 0;">
+                <p style="display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 .6rem;">
+                    <strong>Consultas utilizadas</strong>
+                    <strong>{{ consultas_utilizadas }} de {{ consultas_limite }}</strong>
+                </p>
+                <div role="progressbar" aria-label="Consultas de IA utilizadas" aria-valuemin="0" aria-valuemax="{{ consultas_limite }}" aria-valuenow="{{ consultas_utilizadas }}" style="height: 9px; border-radius: 999px; background: #dbe2ea; overflow: hidden;">
+                    <div style="width: 100%; height: 100%; background: #64748b; border-radius: 999px;"></div>
+                </div>
+            </div>
+            <p>Tu demostración sigue activa. Puedes continuar usando tus diccionarios, practicar vocabulario, realizar exámenes y explorar las demás funciones de Praktiko.</p>
+        {% endif %}
+        <div class="form-actions" style="margin-top: 1.5rem;">
+            {% if demo_caducada %}
+                <a href="{% url 'praktiko:pagina_demo' %}" class="praktiko-btn praktiko-btn-main">Volver al acceso de demostración</a>
+            {% else %}
+                <a href="{% url 'praktiko:asistente_ia' %}" class="praktiko-btn praktiko-btn-main">Volver al asistente IA</a>
+                <a href="{% url 'praktiko:home' %}" class="praktiko-btn">Ir al inicio</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

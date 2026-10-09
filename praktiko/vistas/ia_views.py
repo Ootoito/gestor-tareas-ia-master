@@ -3,6 +3,8 @@ from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.conf import settings
+from praktiko.models import SesionDemo
 from django.utils import timezone
 
 from praktiko.models import (
@@ -13,12 +15,33 @@ from praktiko.models import (
     Tema,
 )
 
+from praktiko.servicios.limite_ia_demo import reservar_solicitud_ia
+
 from praktiko.servicios.ia_service import (
     generar_prompt_recomendacion,
     generar_recomendacion_openai,
     generar_prompt_vocabulario,
     generar_vocabulario_openai,
 )
+
+
+def respuesta_limite_ia(request):
+    """Aviso visual para demos sin permitir nuevas llamadas a OpenAI."""
+    sesion = SesionDemo.objects.filter(usuario=request.user).only(
+        "caduca_en", "solicitudes_ia"
+    ).first()
+    caducada = sesion is not None and sesion.caduca_en <= timezone.now()
+    limite = max(0, int(getattr(settings, "PRAKTIKO_DEMO_IA_LIMITE", 5)))
+    return render(
+        request,
+        "praktiko/ia/limite_demo.html",
+        {
+            "demo_caducada": caducada,
+            "consultas_utilizadas": min(sesion.solicitudes_ia, limite) if sesion else 0,
+            "consultas_limite": limite,
+        },
+        status=403 if caducada else 429,
+    )
 
 
 def obtener_criterios_dominio(total_preguntas):
@@ -236,6 +259,10 @@ def recomendacion_estudio(request):
         tendencia=tendencia,
     )
 
+    permitida, es_demo = reservar_solicitud_ia(request.user)
+    if not permitida:
+        return respuesta_limite_ia(request)
+
     recomendacion_ia = generar_recomendacion_openai(
         prompt_ia
     )
@@ -403,6 +430,9 @@ def crear_vocabulario_tema(request):
                 palabras_existentes=palabras_existentes,
             )
 
+            permitida, es_demo = reservar_solicitud_ia(request.user)
+            if not permitida:
+                return respuesta_limite_ia(request)
             respuesta = generar_vocabulario_openai(prompt)
             palabras_existentes_normalizadas = {
                 normalizar_texto_comparacion(palabra)

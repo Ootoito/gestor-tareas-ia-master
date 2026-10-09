@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demostración local · Praktiko</title>
+  <link rel="stylesheet" href="{% static 'praktiko/css/praktiko.css' %}">
+  <style>
+    .demo-wrap {min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:#101a30;color:#f8fafc;font-family:system-ui,sans-serif}
+    .demo-card {max-width:560px;width:100%;background:#1d2b45;border:1px solid #40516a;border-radius:20px;padding:32px;box-shadow:0 18px 50px #0004}
+    .demo-card h1 {font-size:2rem;margin:0 0 14px;color:#fff}
+    .demo-card p,.demo-card li {line-height:1.6;color:#d5e0ee}
+    .demo-card button {border:0;border-radius:12px;background:#47b6e8;color:#092038;font-weight:700;padding:14px 20px;cursor:pointer;font-size:1rem}
+    .demo-card button:hover {background:#7cd4f9}
+    .demo-card a {color:#8dd9ff}
+    .demo-note {font-size:.9rem;margin-top:20px}
+  </style>
+</head>
+<body class="demo-wrap">
+  <main class="demo-card">
+    <h1>📚 Prueba Praktiko</h1>
+    <p>Esta es una demostración <strong>exclusivamente local</strong>. Se creará una cuenta temporal para esta sesión, con un diccionario y vocabulario de ejemplo.</p>
+    {% if user.is_authenticated %}
+      <p>Actualmente has iniciado sesión como <strong>{{ user.username }}</strong>. Para crear otra demostración, cierra la sesión primero.</p>
+      <p><a href="{% url 'praktiko:home' %}">Volver a Praktiko</a></p>
+    {% else %}
+      <form method="post" action="{% url 'praktiko:iniciar_demo' %}">
+        {% csrf_token %}
+        <button type="submit">Iniciar demostración</button>
+      </form>
+    {% endif %}
+    <p class="demo-note">La sesión dura dos horas. La limpieza de cuentas caducadas sigue siendo manual en esta fase. No utilizar en producción.</p>
+  </main>
+</body>
+</html>

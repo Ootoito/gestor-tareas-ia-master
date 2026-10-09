@@ -1,5 +1,6 @@
 from django.urls import path
 
+from praktiko.vistas import demo_views
 from praktiko.vistas import auth_views
 from praktiko.vistas import home_views
 from praktiko.vistas import diccionario_views
@@ -20,6 +21,8 @@ from praktiko import ayuda_views
 app_name = "praktiko"
 
 urlpatterns = [
+    path("demo/", demo_views.pagina_demo, name="pagina_demo"),
+    path("demo/iniciar/", demo_views.iniciar_demo, name="iniciar_demo"),
     path("login/", auth_views.login_praktiko, name="login"),
     path("logout/", auth_views.logout_praktiko, name="logout"),
 

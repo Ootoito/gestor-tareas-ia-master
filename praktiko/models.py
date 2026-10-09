@@ -675,3 +675,25 @@ class EstadisticaEntradaUsuario(models.Model):
             (self.aciertos / self.veces_preguntada) * 100,
             2,
         )
+
+class SesionDemo(models.Model):
+    """Identificador explícito de las cuentas temporales de Praktiko."""
+    usuario = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="praktiko_sesion_demo")
+    creada_en = models.DateTimeField(auto_now_add=True)
+    caduca_en = models.DateTimeField(db_index=True)
+    solicitudes_ia = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Sesión de demostración"
+        verbose_name_plural = "Sesiones de demostración"
+
+
+class ControlAltaDemo(models.Model):
+    """Ventana de control por origen; nunca almacena la IP en claro."""
+    origen_hash = models.CharField(max_length=64, unique=True)
+    ventana_inicio = models.DateTimeField(default=timezone.now)
+    altas = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Control de altas de demostración"
+        verbose_name_plural = "Controles de altas de demostración"

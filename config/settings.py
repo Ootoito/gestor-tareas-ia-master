@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'praktiko.demo_middleware.CaducidadDemoMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -138,3 +139,6 @@ USE_I18N = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# En local conserva el valor de DEBUG; en produccion (DEBUG=False) queda
+# desactivado salvo activacion explicita mediante variable de entorno.
+PRAKTIKO_DEMO_ENABLED = os.getenv("PRAKTIKO_DEMO_ENABLED", str(DEBUG)).strip().lower() in ("1", "true", "yes", "on")
