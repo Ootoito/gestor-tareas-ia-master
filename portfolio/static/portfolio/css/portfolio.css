@@ -941,7 +941,267 @@ body {
     font-weight: 600;
 }
 
+/* =========================================================
+   PROYECTOS
+   ========================================================= */
 
+.proyectos {
+    position: relative;
+
+    padding: 110px 30px 120px;
+
+    background: #111c31;
+}
+
+
+/* =========================================================
+   GRID DE PROYECTOS
+   ========================================================= */
+
+.proyectos-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 28px;
+}
+
+
+/* =========================================================
+   TARJETA DE PROYECTO
+   ========================================================= */
+
+.proyecto-tarjeta {
+    overflow: hidden;
+
+    border: 1px solid #24324a;
+    border-radius: 14px;
+
+    background: #0f172a;
+
+    transition:
+        transform 0.25s,
+        border-color 0.25s,
+        box-shadow 0.25s;
+}
+
+.proyecto-tarjeta:hover {
+    transform: translateY(-6px);
+
+    border-color: rgba(56, 189, 248, 0.6);
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.22);
+}
+
+
+/* =========================================================
+   IMAGEN DEL PROYECTO
+   ========================================================= */
+
+.proyecto-imagen {
+    position: relative;
+
+    height: 280px;
+
+    overflow: hidden;
+
+    border-bottom: 1px solid #24324a;
+
+    background: #0b1324;
+}
+
+.proyecto-imagen img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: transform 0.4s;
+}
+
+.proyecto-tarjeta:hover .proyecto-imagen img {
+    transform: scale(1.03);
+}
+
+
+/* =========================================================
+   PROYECTO SIN IMAGEN
+   ========================================================= */
+
+.proyecto-sin-imagen {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(56, 189, 248, 0.12),
+            transparent 42%
+        ),
+        linear-gradient(
+            145deg,
+            #0b1324,
+            #111c31
+        );
+}
+
+.proyecto-codigo {
+    color: #38bdf8;
+
+    font-family: Consolas, "Courier New", monospace;
+
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.proyecto-nombre-visual {
+    color: #64748b;
+
+    font-size: 0.85rem;
+    font-weight: bold;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   CONTENIDO DEL PROYECTO
+   ========================================================= */
+
+.proyecto-contenido {
+    padding: 28px;
+}
+
+.proyecto-meta {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.proyecto-estado {
+    color: #38bdf8;
+
+    font-size: 0.72rem;
+    font-weight: bold;
+
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+}
+
+.proyecto-numero {
+    color: #475569;
+
+    font-size: 0.75rem;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.proyecto-contenido h3 {
+    color: white;
+
+    font-size: 1.55rem;
+
+    margin-bottom: 15px;
+}
+
+.proyecto-descripcion {
+    min-height: 78px;
+
+    color: #94a3b8;
+
+    font-size: 0.98rem;
+    line-height: 1.7;
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   TECNOLOGÍAS DEL PROYECTO
+   ========================================================= */
+
+.proyecto-tecnologias {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 26px;
+}
+
+.proyecto-tecnologias span {
+    padding: 7px 10px;
+
+    color: #cbd5e1;
+
+    font-size: 0.75rem;
+
+    border: 1px solid #2b3b55;
+    border-radius: 5px;
+
+    background: #111c31;
+}
+
+
+/* =========================================================
+   ENLACES DEL PROYECTO
+   ========================================================= */
+
+.proyecto-enlaces {
+    display: flex;
+
+    gap: 22px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #24324a;
+}
+
+.proyecto-enlaces a {
+    color: #38bdf8;
+
+    font-size: 0.9rem;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s,
+        transform 0.2s;
+}
+
+.proyecto-enlaces a:hover {
+    color: white;
+
+    transform: translateX(3px);
+}
+
+
+/* =========================================================
+   SIN PROYECTOS
+   ========================================================= */
+
+.sin-proyectos {
+    color: #94a3b8;
+
+    font-size: 1rem;
+}
 /* =========================================================
    RESPONSIVE
    ========================================================= */
@@ -973,6 +1233,10 @@ body {
 
     .tecnologia-bloque {
         min-height: auto;
+    }
+
+    .proyectos-grid {
+        grid-template-columns: 1fr;
     }
 
 }
@@ -1104,7 +1368,8 @@ body {
     }
 
     .sobre-mi,
-    .tecnologias {
+    .tecnologias,
+    .proyectos {
         padding: 80px 22px;
     }
 
@@ -1121,3 +1386,22 @@ body {
     }
 
 }
+/* Formulario de contacto */
+.contacto-seccion { padding: 100px 24px; background: #101827; color: #f4f7fb; }
+.contacto-contenedor { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 55px; align-items: start; }
+.contacto-intro h2 { font-size: clamp(2rem, 4vw, 3rem); margin: 8px 0 18px; }
+.contacto-intro p { line-height: 1.75; color: #cbd5e1; }
+.contacto-etiqueta { color: #67e8f9 !important; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; }
+.contacto-formulario { background: #1c293a; padding: 30px; border: 1px solid #344459; border-radius: 18px; }
+.contacto-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.contacto-campo { margin-bottom: 18px; }
+.contacto-campo label { display: block; margin-bottom: 7px; font-weight: 600; color: #f1f5f9; }
+.contacto-campo input, .contacto-campo textarea { display: block; box-sizing: border-box; width: 100%; padding: 12px 14px; border: 1px solid #64748b; border-radius: 9px; background: #0f172a; color: #fff; font: inherit; }
+.contacto-campo input:focus, .contacto-campo textarea:focus { outline: 2px solid #67e8f9; outline-offset: 1px; }
+.contacto-campo .errorlist { color: #fecaca; padding-left: 20px; }
+.contacto-trampa { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.contacto-enviar { cursor: pointer; border: 0; }
+.contacto-aviso { padding: 12px 14px; border-radius: 8px; background: #69352d; color: #fff; margin-bottom: 18px; }
+.contacto-exito { background: #17583f; }
+.contacto-privacidad { font-size: .84rem; color: #cbd5e1; line-height: 1.5; margin-top: 18px; }
+@media (max-width: 780px) { .contacto-contenedor { grid-template-columns: 1fr; gap: 28px; } .contacto-campos { grid-template-columns: 1fr; gap: 0; } .contacto-formulario { padding: 22px; } }

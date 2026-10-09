@@ -1,0 +1,25 @@
+.detalle-pagina { min-height: 100vh; background: #0b1324; color: #e2e8f0; font-family: Arial, sans-serif; }
+.detalle-cabecera { max-width: 1050px; margin: auto; padding: 35px 24px 10px; }
+.detalle-regresar { color: #38bdf8; text-decoration: none; font-weight: 600; }
+.detalle-regresar:hover, .detalle-enlaces a:hover { color: #fff; }
+.detalle-contenedor { max-width: 1050px; margin: auto; padding: 55px 24px 100px; }
+.detalle-etiqueta { color: #38bdf8; text-transform: uppercase; font-size: .8rem; letter-spacing: 2px; }
+.detalle-contenedor h1 { font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.15; color: #fff; margin: 16px 0 20px; }
+.detalle-resumen { color: #a9b8cc; font-size: 1.25rem; line-height: 1.7; max-width: 800px; }
+.detalle-imagen { margin-top: 38px; overflow: hidden; border-radius: 14px; border: 1px solid #24324a; }
+.detalle-imagen img { display: block; width: 100%; max-height: 480px; object-fit: cover; }
+.detalle-seccion { border-top: 1px solid #24324a; margin-top: 45px; padding-top: 30px; }
+.detalle-seccion h2 { font-size: 1.4rem; color: #fff; margin-bottom: 20px; }
+.detalle-descripcion { max-width: 800px; color: #a9b8cc; line-height: 1.85; }
+.detalle-descripcion p { margin-bottom: 1em; }
+.detalle-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.detalle-chips span { padding: 9px 13px; border: 1px solid #2b3b55; border-radius: 6px; background: #111c31; color: #cbd5e1; }
+.detalle-enlaces a { color: #38bdf8; display: inline-block; margin-right: 25px; margin-bottom: 12px; text-decoration: none; }
+
+/* Presentación de funcionalidades del proyecto destacado */
+.detalle-funciones { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.detalle-funciones article { background:#111c31; border:1px solid #2b3b55; border-radius:12px; padding:20px; }
+.detalle-funciones h3 { color:#f8fafc; font-size:1.08rem; margin:0 0 10px; }
+.detalle-funciones p { color:#a9b8cc; line-height:1.65; margin:0; }
+.detalle-aviso { margin-top:20px; color:#a9b8cc; font-size:.95rem; }
+@media (max-width:650px) { .detalle-funciones { grid-template-columns:1fr; } }

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ proyecto.titulo }} | Portfolio</title>
+    <link rel="stylesheet" href="{% static 'portfolio/css/portfolio.css' %}">
+    <link rel="stylesheet" href="{% static 'portfolio/css/detalle_proyecto.css' %}">
+</head>
+<body class="detalle-pagina">
+    <header class="detalle-cabecera">
+        <a href="{% url 'inicio' %}" class="detalle-regresar">← Volver al portfolio</a>
+    </header>
+    <main class="detalle-contenedor">
+        <p class="detalle-etiqueta">Proyecto personal · {{ proyecto.get_estado_display }}</p>
+        <h1>{{ proyecto.titulo }}</h1>
+        <p class="detalle-resumen">{{ proyecto.descripcion_corta }}</p>
+
+        {% if proyecto.imagen %}
+            <div class="detalle-imagen"><img src="{{ proyecto.imagen.url }}" alt="{{ proyecto.titulo }}"></div>
+        {% endif %}
+
+        {% if proyecto.descripcion %}
+            <section class="detalle-seccion">
+                <h2>Sobre el proyecto</h2>
+                <div class="detalle-descripcion">{{ proyecto.descripcion|linebreaks }}</div>
+            </section>
+        {% endif %}
+
+        {% if proyecto.slug == "gestor-de-tareas" or proyecto.slug == "gestor-tareas" or proyecto.slug == "gestor_tareas" %}
+            <section class="detalle-seccion" aria-labelledby="funcionalidades-gestor">
+                <h2 id="funcionalidades-gestor">Funcionalidades principales</h2>
+                <div class="detalle-funciones">
+                    <article><h3>Organización de tareas</h3><p>Estados, prioridades, responsables, fechas y seguimiento del trabajo.</p></article>
+                    <article><h3>Equipos y colaboración</h3><p>Grupos de trabajo, técnicos, notas, subtareas y mensajería interna.</p></article>
+                    <article><h3>Panel de control</h3><p>Indicadores y distribución de tareas para visualizar la actividad del equipo.</p></article>
+                    <article><h3>Asistencia con IA</h3><p>Generación de subtareas, análisis de prioridades y resúmenes de actividad.</p></article>
+                </div>
+                <p class="detalle-aviso">El acceso público de demostración está pendiente de desarrollo.</p>
+            </section>
+        {% endif %}
+
+        {% if proyecto.tecnologias %}
+            <section class="detalle-seccion">
+                <h2>Tecnologías</h2>
+                <div class="detalle-chips">
+                    {% for tecnologia in proyecto.tecnologias_lista %}
+                        <span>{{ tecnologia }}</span>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        {% if proyecto.url_proyecto or proyecto.url_github %}
+            <section class="detalle-seccion detalle-enlaces">
+                <h2>Enlaces</h2>
+                {% if proyecto.url_proyecto %}
+                    <a href="{{ proyecto.url_proyecto }}" target="_blank" rel="noopener noreferrer">{% if proyecto.slug == "praktiko" %}Probar demostración ↗{% else %}Abrir proyecto ↗{% endif %}</a>
+                {% endif %}
+                {% if proyecto.url_github %}
+                    <a href="{{ proyecto.url_github }}" target="_blank" rel="noopener noreferrer">Ver código en GitHub ↗</a>
+                {% endif %}
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>

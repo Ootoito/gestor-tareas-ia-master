@@ -15,8 +15,6 @@ from gestor_tareas.vistas.common import validar_acceso_gestor
 def dashboard_gestor(request):
     acceso = validar_acceso_gestor(request)
 
-    import os
-    print("OPENAI_API_KEY:", os.environ.get("OPENAI_API_KEY"))
 
     if not acceso:
         messages.error(request, "No tienes permiso o grupo asignado para Gestor de tareas.")

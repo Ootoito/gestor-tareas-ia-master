@@ -494,13 +494,215 @@
         </section>
 
 
-        <!-- =================================================
-             PRÓXIMAS SECCIONES
-             ================================================= -->
+<!-- =================================================
+     PROYECTOS
+     ================================================= -->
 
-        <section id="proyectos"></section>
+<section class="proyectos" id="proyectos">
 
-        <section id="contacto"></section>
+    <div class="contenedor">
+
+        <div class="titulo-seccion">
+
+            <p class="etiqueta">
+                Trabajo personal
+            </p>
+
+            <h2>
+                Mis proyectos
+            </h2>
+
+            <p class="introduccion-seccion">
+                Aplicaciones y proyectos personales en los que combino
+                desarrollo web, programación, bases de datos y
+                experimentación con nuevas tecnologías.
+            </p>
+
+        </div>
+
+
+        <div class="proyectos-grid">
+
+            {% for proyecto in proyectos_destacados %}
+
+                <article class="proyecto-tarjeta">
+
+
+                    <!-- =====================================
+                         ZONA VISUAL
+                         ===================================== -->
+
+                    <div class="proyecto-imagen">
+
+                        {% if proyecto.imagen %}
+
+                            <img
+                                src="{{ proyecto.imagen.url }}"
+                                alt="{{ proyecto.titulo }}"
+                            >
+
+                        {% else %}
+
+                            <div class="proyecto-sin-imagen">
+
+                                <span class="proyecto-codigo">
+                                    &lt;/&gt;
+                                </span>
+
+                                <span class="proyecto-nombre-visual">
+                                    {{ proyecto.titulo }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- =====================================
+                         INFORMACIÓN
+                         ===================================== -->
+
+                    <div class="proyecto-contenido">
+
+
+                        <!-- ESTADO -->
+
+                        <div class="proyecto-meta">
+
+                            <span class="proyecto-estado">
+                                {{ proyecto.get_estado_display }}
+                            </span>
+
+                            <span class="proyecto-numero">
+                                Proyecto
+                            </span>
+
+                        </div>
+
+
+                        <!-- TÍTULO -->
+
+                        <h3>
+                            {{ proyecto.titulo }}
+                        </h3>
+
+
+                        <!-- DESCRIPCIÓN -->
+
+                        <p class="proyecto-descripcion">
+                            {{ proyecto.descripcion_corta }}
+                        </p>
+
+
+                        <!-- TECNOLOGÍAS -->
+
+                        {% if proyecto.tecnologias %}
+
+                            <div class="proyecto-tecnologias">
+
+                                {% for tecnologia in proyecto.tecnologias_lista %}
+
+                                    <span>
+                                        {{ tecnologia }}
+                                    </span>
+
+                                {% endfor %}
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <!-- ENLACES -->
+
+                        <div class="proyecto-enlaces">
+                            <a href="{% url 'detalle_proyecto' slug=proyecto.slug %}">
+                                Ver detalles →
+                            </a>
+
+                                {% if proyecto.url_proyecto %}
+
+                                    <a
+                                        href="{{ proyecto.url_proyecto }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {% if proyecto.slug == "praktiko" %}Probar demo →{% else %}Ver proyecto →{% endif %}
+                                    </a>
+
+                                {% endif %}
+
+
+                                {% if proyecto.url_github %}
+
+                                    <a
+                                        href="{{ proyecto.url_github }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GitHub →
+                                    </a>
+
+                                {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            {% empty %}
+
+                <p class="sin-proyectos">
+                    Próximamente añadiré nuevos proyectos.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =================================================
+     CONTACTO
+     ================================================= -->
+
+<section id="contacto" class="contacto-seccion">
+    <div class="contacto-contenedor">
+        <div class="contacto-intro">
+            <p class="contacto-etiqueta">Hablemos</p>
+            <h2>Contacto</h2>
+            <p>¿Tienes una consulta sobre mis proyectos o una propuesta de colaboración? Escríbeme y te responderé cuando me sea posible.</p>
+        </div>
+        <form class="contacto-formulario" method="post" action="{% url 'contacto' %}#contacto">
+            {% csrf_token %}
+            {% if request.GET.contacto == 'enviado' or estado_contacto == 'enviado' %}
+                <p class="contacto-aviso contacto-exito" role="status">Tu mensaje se ha enviado correctamente. ¡Gracias por escribir!</p>
+            {% elif estado_contacto == 'limite' %}
+                <p class="contacto-aviso" role="alert">Has alcanzado el límite de mensajes. Prueba de nuevo más tarde.</p>
+            {% elif estado_contacto == 'error_envio' %}
+                <p class="contacto-aviso" role="alert">No se pudo enviar el mensaje. Inténtalo más tarde.</p>
+            {% elif estado_contacto == 'error_validacion' %}
+                <p class="contacto-aviso" role="alert">Revisa los campos señalados e inténtalo de nuevo.</p>
+            {% endif %}
+            <div class="contacto-campos">
+                <div class="contacto-campo"><label for="id_nombre">Nombre</label>{{ formulario_contacto.nombre }}{{ formulario_contacto.nombre.errors }}</div>
+                <div class="contacto-campo"><label for="id_correo">Correo electrónico</label>{{ formulario_contacto.correo }}{{ formulario_contacto.correo.errors }}</div>
+            </div>
+            <div class="contacto-campo"><label for="id_asunto">Asunto</label>{{ formulario_contacto.asunto }}{{ formulario_contacto.asunto.errors }}</div>
+            <div class="contacto-campo"><label for="id_mensaje">Mensaje</label>{{ formulario_contacto.mensaje }}{{ formulario_contacto.mensaje.errors }}</div>
+            <div class="contacto-trampa" aria-hidden="true"><label for="id_web">Dejar en blanco</label>{{ formulario_contacto.web }}</div>
+            <button class="boton boton-principal contacto-enviar" type="submit">Enviar mensaje →</button>
+            <p class="contacto-privacidad">Los datos se utilizarán únicamente para responder a tu consulta. No incluyas información sensible.</p>
+        </form>
+    </div>
+</section>
 
     </main>
 
