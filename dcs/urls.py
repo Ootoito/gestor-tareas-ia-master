@@ -141,6 +141,12 @@ urlpatterns = [
         name="gestion_version_mision_eliminar",
     ),
 
+    # Documentos específicos de misión
+    path("gestion/misiones/<int:mision_id>/documentos/", views_gestion.gestion_documentos_mision, name="gestion_documentos_mision"),
+    path("gestion/misiones/<int:mision_id>/documentos/nuevo/", views_gestion.gestion_documento_mision_nuevo, name="gestion_documento_mision_nuevo"),
+    path("gestion/documentos/<int:documento_id>/editar/", views_gestion.gestion_documento_mision_editar, name="gestion_documento_mision_editar"),
+    path("gestion/documentos/<int:documento_id>/eliminar/", views_gestion.gestion_documento_mision_eliminar, name="gestion_documento_mision_eliminar"),
+
     path(
         "gestion/aeronaves/<int:aeronave_id>/contenidos/nuevo/",
         views_gestion.gestion_contenido_nuevo,

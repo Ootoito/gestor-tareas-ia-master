@@ -346,3 +346,20 @@ class VersionMisionDCS(models.Model):
             f"{self.mision.numero:02d} · "
             f"{self.nombre}"
         )
+
+class DocumentoMisionDCS(models.Model):
+    """Documento externo asociado exclusivamente a una misión."""
+    mision = models.ForeignKey(MisionDCS, on_delete=models.CASCADE, related_name="documentos")
+    titulo = models.CharField(max_length=200)
+    descripcion = models.CharField(max_length=500, blank=True)
+    url_descarga = models.URLField(max_length=1000)
+    activo = models.BooleanField(default=True)
+    orden = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["orden", "id"]
+        verbose_name = "Documento de misión DCS"
+        verbose_name_plural = "Documentos de misiones DCS"
+
+    def __str__(self):
+        return f"{self.mision} · {self.titulo}"

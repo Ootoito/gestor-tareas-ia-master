@@ -1,0 +1,3 @@
+{% extends "dcs/base.html" %}
+{% block title %}Eliminar documento · Gestión DCS{% endblock %}
+{% block content %}<div class="dcs-admin"><header class="dcs-admin-header"><div><span class="eyebrow">CONFIRMAR ELIMINACIÓN</span><h1>Eliminar {{ documento.titulo }}</h1><p>Esta acción elimina solo el enlace asociado a la misión {{ mision.numero }}. No elimina el archivo externo.</p></div></header><form method="post" class="gestion-form">{% csrf_token %}<div class="dcs-admin-form-actions"><a class="button button-secondary" href="{% url 'dcs:gestion_documentos_mision' mision.id %}">Cancelar</a><button type="submit" class="button dcs-button-danger">Eliminar documento</button></div></form></div>{% endblock %}

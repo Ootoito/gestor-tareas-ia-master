@@ -1,0 +1,14 @@
+{% extends "dcs/base.html" %}
+{% block title %}Documentos de misión · Gestión DCS{% endblock %}
+{% block content %}
+<div class="dcs-admin">
+  <div class="dcs-admin-breadcrumb"><a href="{% url 'dcs:gestion_misiones' mision.contenido.id %}">Misiones de {{ mision.contenido.titulo }}</a> <span>›</span> <strong>Documentos</strong></div>
+  <header class="dcs-admin-header"><div><span class="eyebrow">DOCUMENTACIÓN DE MISIÓN</span><h1>{{ mision.numero|stringformat:"02d" }} · {{ mision.titulo }}</h1><p>Enlaces externos exclusivos de esta misión.</p></div><a class="button button-primary" href="{% url 'dcs:gestion_documento_mision_nuevo' mision.id %}">+ Añadir documento</a></header>
+  <div class="dcs-admin-mission-list">
+    {% for documento in documentos %}
+      <article class="dcs-admin-mission-row"><div class="dcs-admin-mission-number">{{ forloop.counter|stringformat:"02d" }}</div><div class="dcs-admin-mission-info"><div class="dcs-admin-mission-title"><h3>{{ documento.titulo }}</h3><span class="dcs-admin-status{% if documento.activo %} active{% endif %}">{% if documento.activo %}Visible{% else %}Oculto{% endif %}</span></div>{% if documento.descripcion %}<p>{{ documento.descripcion }}</p>{% endif %}<div class="dcs-admin-mission-url"><span>URL</span><a href="{{ documento.url_descarga }}" target="_blank" rel="noopener noreferrer">{{ documento.url_descarga }}</a></div></div><div class="dcs-admin-mission-actions"><a href="{{ documento.url_descarga }}" target="_blank" rel="noopener noreferrer" class="button button-secondary">Probar</a><a class="button button-primary" href="{% url 'dcs:gestion_documento_mision_editar' documento.id %}">Editar</a><a class="button dcs-button-danger" href="{% url 'dcs:gestion_documento_mision_eliminar' documento.id %}">Eliminar</a></div></article>
+    {% empty %}<div class="dcs-admin-empty"><h3>Esta misión todavía no tiene documentos</h3><p>Puedes añadir un briefing, una guía, cartas o instrucciones.</p></div>{% endfor %}
+  </div>
+  <div class="dcs-admin-back"><a class="button button-secondary" href="{% url 'dcs:gestion_misiones' mision.contenido.id %}">← Volver a las misiones</a></div>
+</div>
+{% endblock %}

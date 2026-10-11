@@ -163,6 +163,8 @@ Misiones · {{ contenido.titulo }} · Gestión DCS
                             </a>
                         {% endif %}
 
+                        <a href="{% url 'dcs:gestion_documentos_mision' mision.id %}" class="button button-secondary">Documentos</a>
+
                         <a
                             href="{% url 'dcs:gestion_versiones_mision' mision.id %}"
                             class="button button-secondary"

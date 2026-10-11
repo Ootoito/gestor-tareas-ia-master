@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.text import slugify
 
-from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS
+from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS, DocumentoMisionDCS
 
 class AeronaveForm(forms.ModelForm):
     """
@@ -386,3 +386,11 @@ class VersionMisionDCSForm(forms.ModelForm):
             )
 
         return cleaned_data
+
+
+class DocumentoMisionDCSForm(forms.ModelForm):
+    class Meta:
+        model = DocumentoMisionDCS
+        fields = ["titulo", "descripcion", "url_descarga", "activo", "orden"]
+        labels = {"titulo": "Título del documento", "descripcion": "Descripción (opcional)", "url_descarga": "URL del documento", "activo": "Visible", "orden": "Orden"}
+        widgets = {"url_descarga": forms.URLInput(attrs={"placeholder": "https://..."}), "orden": forms.NumberInput(attrs={"min": 0})}

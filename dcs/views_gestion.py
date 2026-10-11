@@ -9,8 +9,9 @@ from .forms import (
     ContenidoDCSForm,
     MisionDCSForm,
     VersionMisionDCSForm,
+    DocumentoMisionDCSForm,
 )
-from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS
+from .models import Aeronave, ContenidoDCS, MisionDCS, VersionMisionDCS, DocumentoMisionDCS
 
 
 # ============================================================
@@ -694,3 +695,56 @@ def gestion_version_mision_eliminar(request, version_id):
             "aeronave": mision.contenido.aeronave,
         },
     )
+
+
+# ============================================================
+# DOCUMENTOS EXTERNOS DE CADA MISIÓN
+# ============================================================
+
+@dcs_admin_required
+def gestion_documentos_mision(request, mision_id):
+    mision = get_object_or_404(MisionDCS.objects.select_related("contenido__aeronave"), pk=mision_id)
+    return render(request, "dcs/gestion/documentos_mision.html", {
+        "mision": mision, "contenido": mision.contenido,
+        "documentos": mision.documentos.all(),
+    })
+
+
+@dcs_admin_required
+def gestion_documento_mision_nuevo(request, mision_id):
+    mision = get_object_or_404(MisionDCS.objects.select_related("contenido__aeronave"), pk=mision_id)
+    if request.method == "POST":
+        form = DocumentoMisionDCSForm(request.POST)
+        if form.is_valid():
+            documento = form.save(commit=False)
+            documento.mision = mision
+            documento.save()
+            messages.success(request, "Documento añadido correctamente.")
+            return redirect("dcs:gestion_documentos_mision", mision_id=mision.id)
+    else:
+        ultimo = mision.documentos.order_by("-orden").values_list("orden", flat=True).first()
+        form = DocumentoMisionDCSForm(initial={"activo": True, "orden": (ultimo or 0) + 1})
+    return render(request, "dcs/gestion/documento_mision_form.html", {"form": form, "mision": mision, "documento": None})
+
+
+@dcs_admin_required
+def gestion_documento_mision_editar(request, documento_id):
+    documento = get_object_or_404(DocumentoMisionDCS.objects.select_related("mision__contenido__aeronave"), pk=documento_id)
+    mision = documento.mision
+    form = DocumentoMisionDCSForm(request.POST or None, instance=documento)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Documento actualizado correctamente.")
+        return redirect("dcs:gestion_documentos_mision", mision_id=mision.id)
+    return render(request, "dcs/gestion/documento_mision_form.html", {"form": form, "mision": mision, "documento": documento})
+
+
+@dcs_admin_required
+def gestion_documento_mision_eliminar(request, documento_id):
+    documento = get_object_or_404(DocumentoMisionDCS.objects.select_related("mision__contenido__aeronave"), pk=documento_id)
+    mision = documento.mision
+    if request.method == "POST":
+        documento.delete()
+        messages.success(request, "Documento eliminado correctamente.")
+        return redirect("dcs:gestion_documentos_mision", mision_id=mision.id)
+    return render(request, "dcs/gestion/documento_mision_confirmar_eliminar.html", {"documento": documento, "mision": mision})

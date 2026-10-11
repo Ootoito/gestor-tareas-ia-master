@@ -330,6 +330,17 @@
 
                         {% endif %}
 
+                        {% if mision.documentos.all %}
+                            <div class="mission-documents" style="margin-top:12px; display:flex; flex-direction:column; gap:7px;">
+                                <strong style="font-size:.85rem;">Documentación de esta misión</strong>
+                                {% for documento in mision.documentos.all %}
+                                    {% if documento.activo %}
+                                        <a href="{{ documento.url_descarga }}" target="_blank" rel="noopener noreferrer" class="button button-secondary" title="{{ documento.descripcion }}">📄 {{ documento.titulo }} ↗</a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
                     </div>
 
                 </article>
